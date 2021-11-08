@@ -25,8 +25,9 @@ using uI = unsigned int;
 using Pll = pair<LL, LL>;
 
 // struct ModInt {
-//   uLL b, m;
-//   ModInt(int mod) : b(mod), m(((uLL)1 << 64) / mod) {}
+//   uLL b;
+//   __uint128_t m;
+//   ModInt(int mod) : b(mod), m(((__uint128_t)1 << 64) / mod) {}
 // };
 // uLL operator%(uLL a, ModInt b) {
 //   uLL q = a - (b.m * a >> 64) * b.b;
@@ -153,14 +154,134 @@ using OUT::putc;
 using OUT::putst;
 }  // namespace IO
 
+const int kN = 5e5 + 1;
+
+struct E {
+  LL s;
+  int l, r, ma, mb, sm, ct, ta[2], tb[2];
+#define rt 1, 1, n
+#define md (l + r >> 1)
+#define ls (x << 1)
+#define rs (x << 1 | 1)
+} e[kN << 2];
+
+int n, q, o, l, r, v;
+
+void PushUp(int x) {
+  e[x].ma = max(e[ls].ma, e[rs].ma), e[x].mb = max(e[ls].mb, e[rs].mb), e[x].s = e[ls].s + e[rs].s;
+  if (e[ls].ma == e[rs].ma) {
+    e[x].sm = max(e[ls].sm, e[rs].sm), e[x].ct = e[ls].ct + e[rs].ct;
+  } else if (e[ls].ma > e[rs].ma) {
+    e[x].sm = max(e[ls].sm, e[rs].ma), e[x].ct = e[ls].ct;
+  } else {
+    e[x].sm = max(e[rs].sm, e[ls].ma), e[x].ct = e[rs].ct;
+  }
+}
+
+void Build(int x, int l, int r) {
+  e[x].l = l, e[x].r = r;
+  if (l == r) {
+    e[x].s = e[x].ma = IO::redi(e[x].mb), e[x].sm = INT32_MIN, e[x].ct = 1;
+    return;
+  }
+  Build(ls, l, md), Build(rs, md + 1, r), PushUp(x);
+}
+
+void Update(int x, int ama, int amb, int ana, int anb) {
+  e[x].s += 1LL * ama * e[x].ct + 1LL * ana * (e[x].r - e[x].l + 1 - e[x].ct);
+  e[x].mb = max(e[x].mb, e[x].ma + amb), e[x].tb[0] = max(e[x].tb[0], e[x].ta[0] + amb);
+  e[x].tb[1] = max(e[x].tb[1], e[x].ta[1] + anb);
+  e[x].ma += ama, e[x].ta[0] += ama, e[x].ta[1] += ana;
+  if (e[x].sm != INT32_MIN) {
+    e[x].sm += ana;
+  }
+}
+
+void PushDown(int x) {
+  int mx = max(e[ls].ma, e[rs].ma);
+  Update(ls, e[x].ta[mx != e[ls].ma], e[x].tb[mx != e[ls].ma], e[x].ta[1], e[x].tb[1]);
+  Update(rs, e[x].ta[mx != e[rs].ma], e[x].tb[mx != e[rs].ma], e[x].ta[1], e[x].tb[1]);
+  e[x].ta[0] = e[x].ta[1] = e[x].tb[0] = e[x].tb[1] = 0;
+}
+
+void Update_sum(int x, int l, int r, int v) {
+  if (l > e[x].r || r < e[x].l) {
+    return;
+  }
+  if (l <= e[x].l && e[x].r <= r) {
+    Update(x, v, v, v, v);
+    return;
+  }
+  PushDown(x), Update_sum(ls, l, r, v), Update_sum(rs, l, r, v), PushUp(x);
+}
+
+void Update_min(int x, int l, int r, int v) {
+  if (l > e[x].r || r < e[x].l || v >= e[x].ma) {
+    return;
+  }
+  if (l <= e[x].l && e[x].r <= r && v > e[x].sm) {
+    Update(x, v - e[x].ma, v - e[x].ma, 0, 0);
+  }
+  PushDown(x), Update_min(ls, l, r, v), Update_min(rs, l, r, v), PushUp(x);
+}
+
+LL Query_sum(int x, int l, int r) {
+  if (l > e[x].r || r < e[x].l) {
+    return 0;
+  }
+  if (l <= e[x].l && e[x].r <= r) {
+    return e[x].s;
+  }
+  PushDown(x);
+  return Query_sum(ls, l, r) + Query_sum(rs, l, r);
+}
+
+int Query_max(int x, int l, int r) {
+  if (l > e[x].r || r < e[x].l) {
+    return INT32_MIN;
+  }
+  if (l <= e[x].l && e[x].r <= r) {
+    return e[x].ma;
+  }
+  PushDown(x);
+  return max(Query_max(ls, l, r), Query_max(rs, l, r));
+}
+
+int Query_maxb(int x, int l, int r) {
+  if (l > e[x].r || r < e[x].l) {
+    return INT32_MIN;
+  }
+  if (l <= e[x].l && e[x].r <= r) {
+    return e[x].mb;
+  }
+  PushDown(x);
+  return max(Query_maxb(ls, l, r), Query_maxb(rs, l, r));
+}
+
 int main() {
+#define ONLINE_JUDGE
 #ifndef ONLINE_JUDGE
   freopen(".in", "r", stdin);
   freopen(".out", "w", stdout);
 #endif
   ios_base::sync_with_stdio(0);
   cin.tie(0), cout.tie(0);
-
+  IO::redi(n), IO::redi(q);
+  Build(rt);
+  while (q--) {
+    IO::redi(o), IO::redi(l), IO::redi(r);
+    if (o == 1) {
+      IO::redi(v), Update_sum(1, l, r, v);
+    } else if (o == 2) {
+      IO::redi(v), Update_min(1, l, r, v);
+    } else if (o == 3) {
+      IO::put(Query_sum(1, l, r));
+    } else if (o == 4) {
+      IO::put(Query_max(1, l, r));
+    } else {
+      IO::put(Query_maxb(1, l, r));
+    }
+  }
 #ifdef TIME
   double t = 1.0 * clock() / CLOCKS_PER_SEC;
   cerr << "\n\nTIME: " << t << "s\n";
