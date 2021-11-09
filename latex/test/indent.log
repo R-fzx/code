@@ -1,0 +1,26 @@
+INFO: latexindent.exe version 3.5.3, 2018-10-13, a script to indent .tex files
+      latexindent.exe lives here: C:/texlive/2019/bin/win32/
+      Tue Nov  9 13:43:49 2021
+      Filename: d:/wsfxk/code/latex/tikz/__latexindent_temp.tex
+INFO: Processing switches:
+      -y|--yaml: YAML settings specified via command line
+      -c|--cruft: cruft directory
+INFO: Directory for backup files and d:/wsfxk/code/latex/test/indent.log: d:/wsfxk/code/latex/test/
+INFO: YAML settings read: defaultSettings.yaml
+      Reading defaultSettings.yaml from C:/texlive/2019/bin/win32/defaultSettings.yaml
+      Reading defaultSettings.yaml (2nd attempt, TeXLive, Windows) from C:/texlive/2019/bin/win32/../../texmf-dist/scripts/latexindent/defaultSettings.yaml
+INFO: YAML settings read: indentconfig.yaml or .indentconfig.yaml
+      Home directory is C:\Users\wsfxk (didn't find either indentconfig.yaml or .indentconfig.yaml)
+      To specify user settings you would put indentconfig.yaml here: C:\Users\wsfxk/indentconfig.yaml
+      Alternatively, you can use the hidden file .indentconfig.yaml as: C:\Users\wsfxk/.indentconfig.yaml
+INFO: YAML settings read: -y switch
+      Updating masterSettings with defaultIndent:   
+INFO: Phase 1: searching for objects
+INFO: Phase 2: finding surrounding indentation
+INFO: Phase 3: indenting objects
+INFO: Phase 4: final indentation check
+INFO: Output routine:
+      Not outputting to file; see -w and -o switches for more options.
+      --------------
+INFO: Please direct all communication/issues to:
+      https://github.com/cmhughes/latexindent.pl

@@ -1,0 +1,6 @@
+PWD d:/wsfxk/code/latex/OI-statement
+INPUT c:/texlive/2019/texmf.cnf
+INPUT c:/texlive/2019/texmf-dist/web2c/texmf.cnf
+INPUT c:/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT d:/wsfxk/code/latex/OI-statement/statement.tex
+OUTPUT d:/wsfxk/code/latex/OI-statement/statement.log

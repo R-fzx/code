@@ -181,7 +181,7 @@ void PushUp(int x) {
 void Build(int x, int l, int r) {
   e[x].l = l, e[x].r = r;
   if (l == r) {
-    e[x].s = e[x].ma = IO::redi(e[x].mb), e[x].sm = INT32_MIN, e[x].ct = 1;
+    IO::redi(e[x].mb), e[x].s = e[x].ma = e[x].mb, e[x].sm = INT32_MIN, e[x].ct = 1;
     return;
   }
   Build(ls, l, md), Build(rs, md + 1, r), PushUp(x);
