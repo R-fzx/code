@@ -1,8 +1,27 @@
-\documentclass[border=4pt]{standalone}
+\documentclass{article}
 \usepackage{xcolor,amsmath,ctex,tikz,lmodern}
 \usetikzlibrary{backgrounds,fit,calc,positioning}
 \usetikzlibrary{shapes.geometric,shapes.misc}
 \begin{document}
+	\begin{tikzpicture}[scale=2]
+		\draw[help lines,step=.3] (0,-1.1) grid (2*pi+.1,1.1);
+		\draw[->,thick] (-2.7,0) -- (2*pi+.2,0) node[anchor=north] {$x$};
+		\draw[->,thick] (0,-1.2) -- (0,1.2) node[anchor=east]  {$y$};
+		\draw (-.05, 1) -- (.05, 1) node[anchor=east] at(0, 1)  {$1$};
+		\draw (-.05,-1) -- (.05,-1) node[anchor=east] at(0,-1) {$-1$};
+		\foreach \x/\y in {0.5/\frac{1}{2},1/,1.5/\frac{3}{2},2/2}
+		\draw (\x*pi,-.05) -- (\x*pi,.05) node at(\x*pi,-.2) {$\y\pi$};
+		\draw[thick] (-1.5,0) circle[radius=1];
+		\filldraw[draw=green!50!black,fill=green!50!white]
+			(-1.5,0) -- +(.3,0) arc [start angle=0,end angle=30,radius=.3] -- cycle;
+		\path (-1.5,0) ++ (15:.5) node[color=green!80!black] {$30^\circ$};
+		\draw[thick]        (-1.5,0) -- +(30:1) -- (pi/6,.5);
+		\draw[thick,dashed] (pi/6,.5) -- (pi/6,0);
+		\node at (pi/6,-.2) {$\frac{1}{6}\pi$};
+		\draw[samples=50,domain=0:2*pi,very thick,color=red!70!white]
+		plot(\x,{sin(\x r)});
+	\end{tikzpicture}
+	\\
 	\begin{tikzpicture}[scale=1.5,
 		stream/.style={
 			text height=1.5ex,text depth=.25ex,
