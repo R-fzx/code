@@ -115,18 +115,18 @@ using OUT::putc;
 using OUT::putst;
 }  // namespace IO
 
-struct BigInt {
+struct BigUint {
   static const int BASE = 100000000, WIDTH = 8;
   vector<int> s;
   int len;
-  BigInt& clean() {
+  BigUint& clean() {
     while (!s.back() && s.size() > 1) s.pop_back();
     return *this;
   }
-  BigInt(uLL num = 0) { *this = num; }
-  BigInt(string s) { *this = s; }
+  BigUint(uLL num = 0) { *this = num; }
+  BigUint(string s) { *this = s; }
   // BigInt(char *s) { *this = string(s); }
-  BigInt& operator=(long long num) {
+  BigUint& operator=(long long num) {
     s.clear();
     long long t = num;
     while (t) t /= 10, len++;
@@ -134,68 +134,68 @@ struct BigInt {
     while (num > 0);
     return *this;
   }
-  BigInt& operator=(const string& str) {
+  BigUint& operator=(const string& str) {
     s.clear();
     int x, l = ((len = str.length()) - 1) / WIDTH + 1;
     for (int i = 0, end, start; i < l; i++) end = str.length() - i * WIDTH, start = max(0, end - WIDTH), sscanf(str.substr(start, end - start).c_str(), "%d", &x), s.push_back(x);
     return (*this).clean();
   }
-  BigInt operator+(const BigInt& b) const {
-    BigInt c;
+  BigUint operator+(const BigUint& b) const {
+    BigUint c;
     c.s.clear();
     for (int i = 0, g = 0, x; g || i < s.size() || i < b.s.size(); i++) x = g, i < s.size() && (x += s[i]), i < b.s.size() && (x += b.s[i]), c.s.push_back(x % BASE), g = x / BASE;
     return c;
   }
-  BigInt operator-(const BigInt& b) const {
+  BigUint operator-(const BigUint& b) const {
     assert(b <= *this);
-    BigInt c;
+    BigUint c;
     c.s.clear();
     for (int i = 0, g = 0, x; g || i < s.size() || i < b.s.size(); i++) x = s[i] + g, i < b.s.size() && (x -= b.s[i]), x < 0 ? (g = -1, x += BASE) : (g = 0), c.s.push_back(x);
     return c.clean();
   }
-  BigInt operator*(const BigInt& b) const {
+  BigUint operator*(const BigUint& b) const {
     int i, j;
     uLL g, x;
     vector<uLL> v(s.size() + b.s.size(), 0);
-    BigInt c;
+    BigUint c;
     c.s.clear();
     for (i = 0; i < s.size(); i++)
       for (j = 0; j < b.s.size(); j++) v[i + j] += (uLL)(s[i]) * b.s[j];
     for (i = 0, g = 0; g || i < v.size(); i++) x = v[i] + g, c.s.push_back(x % BASE), g = x / BASE;
     return c.clean();
   }
-  BigInt operator/(const BigInt& b) const {
+  BigUint operator/(const BigUint& b) const {
     assert(b > 0);
-    BigInt c = *this, m;
+    BigUint c = *this, m;
     for (int i = s.size() - 1; i >= 0; i--) m = m * BASE + s[i], c.s[i] = bsearch(b, m), m -= b * c.s[i];
     return c.clean();
   }
-  BigInt operator%(const BigInt& b) const {
-    BigInt c = *this, m;
+  BigUint operator%(const BigUint& b) const {
+    BigUint c = *this, m;
     for (int i = s.size() - 1; i >= 0; i--) m = m * BASE + s[i], c.s[i] = bsearch(b, m), m -= b * c.s[i];
     return m;
   }
-  int bsearch(const BigInt& b, const BigInt& m) const {
+  int bsearch(const BigUint& b, const BigUint& m) const {
     int x;
     for (int L = 0, R = BASE - 1; x = (L + R) >> 1, b * x > m || b * (x + 1) <= m; (b * x <= m ? L : R) = x) 1;
     return x;
   }
-  BigInt& operator+=(const BigInt& b) { return *this = *this + b; }
-  BigInt& operator-=(const BigInt& b) { return *this = *this - b; }
-  BigInt& operator*=(const BigInt& b) { return *this = *this * b; }
-  BigInt& operator/=(const BigInt& b) { return *this = *this / b; }
-  BigInt& operator%=(const BigInt& b) { return *this = *this % b; }
-  bool operator<(const BigInt& b) const {
+  BigUint& operator+=(const BigUint& b) { return *this = *this + b; }
+  BigUint& operator-=(const BigUint& b) { return *this = *this - b; }
+  BigUint& operator*=(const BigUint& b) { return *this = *this * b; }
+  BigUint& operator/=(const BigUint& b) { return *this = *this / b; }
+  BigUint& operator%=(const BigUint& b) { return *this = *this % b; }
+  bool operator<(const BigUint& b) const {
     if (s.size() != b.s.size()) return s.size() < b.s.size();
     for (int i = s.size() - 1; i >= 0; i--)
       if (s[i] != b.s[i]) return s[i] < b.s[i];
     return false;
   }
-  bool operator>(const BigInt& b) const { return b < *this; }
-  bool operator<=(const BigInt& b) const { return !(b < *this); }
-  bool operator>=(const BigInt& b) const { return !(*this < b); }
-  bool operator!=(const BigInt& b) const { return b < *this || *this < b; }
-  bool operator==(const BigInt& b) const { return !(b < *this) && !(b > *this); }
+  bool operator>(const BigUint& b) const { return b < *this; }
+  bool operator<=(const BigUint& b) const { return !(b < *this); }
+  bool operator>=(const BigUint& b) const { return !(*this < b); }
+  bool operator!=(const BigUint& b) const { return b < *this || *this < b; }
+  bool operator==(const BigUint& b) const { return !(b < *this) && !(b > *this); }
   void read() {
     string _s;
     IO::redst(_s), *this = _s;

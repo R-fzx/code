@@ -1,418 +1,233 @@
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#ifdef _WIN32
-#include <windows.h>
-#include <conio.h>
-#endif
-#include <time.h>
+// #define TIME
+// #define DEBUG_
+#include <algorithm>
+#include <cassert>
+#include <cctype>
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <ctime>
+#include <iomanip>
+#include <iostream>
+#include <limits>
+#include <map>
+#include <random>
+#include <set>
+#include <unordered_map>
+#include <vector>
 
-struct point
-{
-    double x[3];
+#ifdef DEBUG_
+#define debug(format, ...) printf(format, ##__VA_ARGS__)
+#else
+#define debug(...)
+#endif
+
+using namespace std;
+using LL = long long;
+using uLL = unsigned long long;
+using uI = unsigned int;
+using Pll = pair<LL, LL>;
+
+random_device rd;
+mt19937 rnd(rd());
+mt19937_64 rnd_64(rd());
+
+namespace IO {
+namespace IN {
+#define getc() (p1 == p2 && (p2 = (p1 = buf) + inbuf->sgetn(buf, MAX_INPUT), p1 == p2) ? EOF : *p1++)
+const int MAX_INPUT = 1000000;
+char buf[MAX_INPUT], *p1, *p2;
+template <typename T>
+inline int redi(T& x) {
+  static std::streambuf* inbuf = cin.rdbuf();
+  int f = x = 0, flag = 1;
+  char ch = getc();
+  if (ch == EOF) return EOF;
+  while (!std::isdigit(ch)) ch == '-' && (f = 1), ch = getc();
+  if (std::isdigit(ch)) x = x * 10 + ch - '0', ch = getc(), flag = 0;
+  while (std::isdigit(ch)) x = x * 10 + ch - 48, ch = getc();
+  return x = f ? -x : x, ch == EOF ? EOF : flag;
+}
+template <typename T, typename... Args>
+inline int redi(T& a, Args&... args) { return redi(a) != EOF ? redi(args...), 0 : EOF; }
+inline int redc(char& ch) {
+  static std::streambuf* inbuf = cin.rdbuf();
+  return (ch = getc()) == EOF ? EOF : 0;
+}
+inline int redst(char* st) {
+  if (redc(*st) != EOF && (*st))
+    while (redc(*(++st)) != EOF) 1;
+  else
+    return EOF;
+  return 0;
+}
+inline int redst(string& s) {
+  s = "";
+  char c;
+  for (; redc(c) != EOF && !isspace(c); s.push_back(c)) 1;
+  return c == EOF ? EOF : 0;
+}
+#undef getc
+}  // namespace IN
+namespace OUT {
+template <typename T>
+inline void put_non(T x) {
+  static std::streambuf* outbuf = cout.rdbuf();
+  static char stack[21];
+  static int top = 0;
+  if (x < 0) outbuf->sputc('-'), x = -x;
+  if (!x) {
+    outbuf->sputc('0');
+    return;
+  }
+  while (x) stack[++top] = x % 10 + '0', x /= 10;
+  while (top) outbuf->sputc(stack[top]), --top;
+}
+template <typename T>
+inline void put(const char ch, T x) { put_non(x), putc(ch); }
+template <typename T>
+inline void put(T x) { put('\n', x); }
+inline void putc(const char ch) {
+  static std::streambuf* outbuf = cout.rdbuf();
+  outbuf->sputc(ch);
+}
+inline void putst(const char* st) {
+  static std::streambuf* outbuf = cout.rdbuf();
+  do outbuf->sputc(*(st++));
+  while (*st);
+}
+inline void putst(string st) { putst(st.c_str()); }
+template <typename T>
+inline void put(const char* st, T x) { put_non(x), putst(st); }
+template <typename T, typename... Args>
+inline void put(T a, Args... args) { put(a), put(args...); }
+template <typename T, typename... Args>
+inline void put(const char ch, T a, Args... args) { put(ch, a), put(ch, args...); }
+template <typename T, typename... Args>
+inline void put(const char* st, T a, Args... args) { put(st, a), put(st, args...); }
+}  // namespace OUT
+using IN::redc;
+using IN::redi;
+using IN::redst;
+using OUT::put;
+using OUT::put_non;
+using OUT::putc;
+using OUT::putst;
+}  // namespace IO
+struct BigInt {
+  static const int BASE = 100000000, WIDTH = 8;
+  vector<int> s;
+  int len;
+  BigInt& clean() {
+    while (!s.back() && s.size() > 1) s.pop_back();
+    return *this;
+  }
+  BigInt(uLL num = 0) { *this = num; }
+  BigInt(string s) { *this = s; }
+  // BigInt(char *s) { *this = string(s); }
+  BigInt& operator=(long long num) {
+    s.clear();
+    long long t = num;
+    while (t) t /= 10, len++;
+    do s.push_back(num % BASE), num /= BASE;
+    while (num > 0);
+    return *this;
+  }
+  BigInt& operator=(const string& str) {
+    s.clear();
+    int x, l = ((len = str.length()) - 1) / WIDTH + 1;
+    for (int i = 0, end, start; i < l; i++) end = str.length() - i * WIDTH, start = max(0, end - WIDTH), sscanf(str.substr(start, end - start).c_str(), "%d", &x), s.push_back(x);
+    return (*this).clean();
+  }
+  BigInt operator+(const BigInt& b) const {
+    BigInt c;
+    c.s.clear();
+    for (int i = 0, g = 0, x; g || i < s.size() || i < b.s.size(); i++) x = g, i < s.size() && (x += s[i]), i < b.s.size() && (x += b.s[i]), c.s.push_back(x % BASE), g = x / BASE;
+    return c;
+  }
+  BigInt operator-(const BigInt& b) const {
+    assert(b <= *this);
+    BigInt c;
+    c.s.clear();
+    for (int i = 0, g = 0, x; g || i < s.size() || i < b.s.size(); i++) x = s[i] + g, i < b.s.size() && (x -= b.s[i]), x < 0 ? (g = -1, x += BASE) : (g = 0), c.s.push_back(x);
+    return c.clean();
+  }
+  BigInt operator*(const BigInt& b) const {
+    int i, j;
+    uLL g, x;
+    vector<uLL> v(s.size() + b.s.size(), 0);
+    BigInt c;
+    c.s.clear();
+    for (i = 0; i < s.size(); i++)
+      for (j = 0; j < b.s.size(); j++) v[i + j] += (uLL)(s[i]) * b.s[j];
+    for (i = 0, g = 0; g || i < v.size(); i++) x = v[i] + g, c.s.push_back(x % BASE), g = x / BASE;
+    return c.clean();
+  }
+  BigInt operator/(const BigInt& b) const {
+    assert(b > 0);
+    BigInt c = *this, m;
+    for (int i = s.size() - 1; i >= 0; i--) m = m * BASE + s[i], c.s[i] = bsearch(b, m), m -= b * c.s[i];
+    return c.clean();
+  }
+  BigInt operator%(const BigInt& b) const {
+    BigInt c = *this, m;
+    for (int i = s.size() - 1; i >= 0; i--) m = m * BASE + s[i], c.s[i] = bsearch(b, m), m -= b * c.s[i];
+    return m;
+  }
+  int bsearch(const BigInt& b, const BigInt& m) const {
+    int x;
+    for (int L = 0, R = BASE - 1; x = (L + R) >> 1, b * x > m || b * (x + 1) <= m; (b * x <= m ? L : R) = x) 1;
+    return x;
+  }
+  BigInt& operator+=(const BigInt& b) { return *this = *this + b; }
+  BigInt& operator-=(const BigInt& b) { return *this = *this - b; }
+  BigInt& operator*=(const BigInt& b) { return *this = *this * b; }
+  BigInt& operator/=(const BigInt& b) { return *this = *this / b; }
+  BigInt& operator%=(const BigInt& b) { return *this = *this % b; }
+  bool operator<(const BigInt& b) const {
+    if (s.size() != b.s.size()) return s.size() < b.s.size();
+    for (int i = s.size() - 1; i >= 0; i--)
+      if (s[i] != b.s[i]) return s[i] < b.s[i];
+    return false;
+  }
+  bool operator>(const BigInt& b) const { return b < *this; }
+  bool operator<=(const BigInt& b) const { return !(b < *this); }
+  bool operator>=(const BigInt& b) const { return !(*this < b); }
+  bool operator!=(const BigInt& b) const { return b < *this || *this < b; }
+  bool operator==(const BigInt& b) const { return !(b < *this) && !(b > *this); }
+  void read() {
+    string _s;
+    IO::redst(_s), *this = _s;
+  }
+  void write() {
+    clean(), IO::put_non(s.back());
+    for (int i = s.size() - 2; ~i; --i) {
+      char sc[20];
+      sprintf(sc, "%08d", s[i]), IO::putst(sc);
+    }
+  }
 };
-struct edge
-{
-    struct point a, b;
-};
-struct plane
-{
-    // k[0]x+k[1]y+k[2]z=d
-    double k[3], d;
-};
-typedef struct point point;
-typedef struct edge edge;
-typedef struct plane plane;
-
-#define PI 3.14159265358
-point cubePoint[8] = {{0.5, 0.5, -0.5}, {0.5, 0.5, 0.5}, {-0.5, 0.5, 0.5}, {-0.5, 0.5, -0.5}, {0.5, -0.5, -0.5}, {0.5, -0.5, 0.5}, {-0.5, -0.5, 0.5}, {-0.5, -0.5, -0.5}};
-int cubePlaneGroup[6][4] = {{0, 1, 5, 4}, {1, 2, 6, 5}, {2, 3, 7, 6}, {3, 0, 4, 7}, {0, 1, 2, 3}, {4, 5, 6, 7}};
-int PlaneNumber[6];
-int table[6][6] = {{2, 4, 5, 3, 1, 6}, {1, 3, 6, 4, 2, 5}, {1, 5, 6, 2, 3, 4}, {2, 6, 5, 1, 4, 3}, {4, 6, 3, 1, 5, 2}, {3, 5, 4, 2, 6, 1}};
-double cube2dPoint[8][2];
-int cubeDisplayPoint[8][2];
-point camera = {2, 1.5, 2};
-point cameraY = {-2, 2, 2};
-const double cameraR = 3.5;
-double displayPlaneSize = 4;
-const int displayPixelSize = 30;
-// 终端英文字符宽高比例需要1:2
-const int displayPixelWidth = 60;
-char displayBuff[30][60];
-double angleA = -PI / 4;
-double angleB = PI / 4;
-double speed = 0.05;
-
-void draw();
-
-#ifndef _WIN32
-#include <termios.h>
-#include <unistd.h>
-char getch()
-{
-    char buf = 0;
-    struct termios old = {0};
-    fflush(stdout);
-    if (tcgetattr(0, &old) < 0)
-        perror("tcsetattr()");
-    old.c_lflag &= ~ICANON; // local modes = Non Canonical mode
-    old.c_lflag &= ~ECHO;   // local modes = Disable echo.
-    old.c_cc[VMIN] = 1;     // control chars (MIN value) = 1
-    old.c_cc[VTIME] = 0;    // control chars (TIME value) = 0 (No time)
-    if (tcsetattr(0, TCSANOW, &old) < 0)
-        perror("tcsetattr ICANON");
-    if (read(0, &buf, 1) < 0)
-        perror("read()");
-    old.c_lflag |= ICANON; // local modes = Canonical mode
-    old.c_lflag |= ECHO;   // local modes = Enable echo.
-    if (tcsetattr(0, TCSADRAIN, &old) < 0)
-        perror("tcsetattr ~ICANON");
-    return buf;
+LL Pow(LL b, LL e, LL m) {
+  LL s = 1;
+  for (; e; e >>= 1, (e & 1) && (s = s * b % m), b = b * b % m) 1;
+  return s;
 }
+
+struct E {
+  int a = 3, b = 0;
+} x;
+
+int main() {
+#define ONLINE_JUDGE
+#ifndef ONLINE_JUDGE
+  freopen(".in", "r", stdin);
+  freopen(".out", "w", stdout);
 #endif
-
-plane getDisplayPlane()
-{
-    double d = 0;
-    for (int i = 0; i < 3; i++)
-    {
-        d += camera.x[i] * camera.x[i];
-    }
-    return (plane){{camera.x[0], camera.x[1], camera.x[2]}, -d};
-}
-
-point getDisplayCenter()
-{
-    return (point){-camera.x[0], -camera.x[1], -camera.x[2]};
-}
-
-point getVector(point a, point b)
-{
-    return (point){b.x[0] - a.x[0], b.x[1] - a.x[1], b.x[2] - a.x[2]};
-}
-
-double innerProduct(point a, point b)
-{
-    double res = 0;
-    for (int i = 0; i < 3; i++)
-    {
-        res += a.x[i] * b.x[i];
-    }
-    return res;
-}
-
-point crossProduct(point a, point b)
-{
-    return (point){a.x[1] * b.x[2] - a.x[2] * b.x[1], a.x[2] * b.x[0] - a.x[0] * b.x[2], a.x[0] * b.x[1] - a.x[1] * b.x[0]};
-}
-
-double getLength(point a)
-{
-    double sqr = 0;
-    for (int i = 0; i < 3; i++)
-    {
-        sqr += a.x[i] * a.x[i];
-    }
-    return sqrt(sqr);
-}
-
-point getPoint(edge a, plane b)
-{
-    point res;
-    for (int i = 0; i < 3; i++)
-    {
-        double k = b.k[i];
-        double d = b.d;
-        for (int j = 0; j < 3; j++)
-        {
-            if (i != j)
-            {
-                k += b.k[j] * (a.a.x[j] - a.b.x[j]) / (a.a.x[i] - a.b.x[i]);
-                d -= b.k[j] * (a.b.x[j] * a.a.x[i] - a.a.x[j] * a.b.x[i]) / (a.a.x[i] - a.b.x[i]);
-            }
-        }
-        res.x[i] = d / k;
-    }
-    return res;
-}
-
-void initCamera()
-{
-
-    camera.x[0] = cos(angleA) * cos(angleB) * cameraR;
-    camera.x[1] = sin(angleA) * cameraR;
-    camera.x[2] = cos(angleA) * sin(angleB) * cameraR;
-
-    cameraY.x[0] = cos(angleA + PI / 2) * cos(angleB) * cameraR;
-    cameraY.x[1] = sin(angleA + PI / 2) * cameraR;
-    cameraY.x[2] = cos(angleA + PI / 2) * sin(angleB) * cameraR;
-}
-
-void drawLine(const int a[2], const int b[2])
-{
-
-    if (a[0] == b[0] && a[1] == b[1])
-    {
-        return;
-    }
-    int step[2];
-    for (int i = 0; i < 2; i++)
-    {
-        if (a[i] - b[i] > 0)
-        {
-            step[i] = -1;
-        }
-        else if (a[i] - b[i] == 0)
-        {
-            step[i] = 0;
-        }
-        else
-        {
-            step[i] = 1;
-        }
-    }
-    if (abs(a[0] - b[0]) > abs(a[1] - b[1]))
-    {
-        int j = a[1];
-        double k = (a[1] - b[1]) * 1.0 / (a[0] - b[0]);
-        for (int i = a[0] + step[0]; (b[0] - i) / step[0] > 0; i += step[0])
-        {
-            if (fabs(1.0 * (j + step[1] - a[1]) / (i - a[0]) - k) < fabs(1.0 * (j - a[1]) / (i - a[0]) - k))
-            {
-                j += step[1];
-            }
-            if (displayBuff[i][j] == 0)
-            {
-                displayBuff[i][j] = '*';
-            }
-        }
-    }
-    else
-    {
-        int j = a[0];
-        double k = (a[0] - b[0]) * 1.0 / (a[1] - b[1]);
-        for (int i = a[1] + step[1]; (b[1] - i) / step[1] > 0; i += step[1])
-        {
-            if (fabs(1.0 * (j + step[0] - a[0]) / (i - a[1]) - k) < fabs(1.0 * (j - a[0]) / (i - a[1]) - k))
-            {
-                j += step[0];
-            }
-            if (displayBuff[j][i] == 0)
-            {
-                displayBuff[j][i] = '*';
-            }
-        }
-    }
-}
-
-void fswap(double *a, double *b)
-{
-    double tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
-
-void fill(int r, int c, char ch)
-{
-    if (r < 1 || c < 1 || r >= displayPixelSize || c >= displayPixelWidth)
-    {
-        return;
-    }
-    if (displayBuff[r][c] != 0)
-    {
-        return;
-    }
-    displayBuff[r][c] = ch;
-    fill(r + 1, c, ch);
-    fill(r - 1, c, ch);
-    fill(r, c + 1, ch);
-    fill(r, c - 1, ch);
-}
-
-int sqr(int x)
-{
-    return x * 2;
-}
-
-void drawCube()
-{
-    memset(displayBuff, 0, sizeof(displayBuff));
-    double dis[6][2] = {0};
-
-    for (int i = 0; i < 6; i++)
-    {
-        dis[i][0] = i;
-        for (int j = 0; j < 4; j++)
-        {
-            dis[i][1] += getLength(getVector(camera, cubePoint[cubePlaneGroup[i][j]]));
-        }
-        for (int j = i - 1; j >= 0; j--)
-        {
-            if (dis[j][1] > dis[j + 1][1])
-            {
-                fswap(&dis[j][1], &dis[j + 1][1]);
-                fswap(&dis[j][0], &dis[j + 1][0]);
-            }
-        }
-    }
-    for (int i = 0; i < 6; i++)
-    {
-        int planeId = (int)dis[i][0];
-        int hide = 0;
-        int xy[4][2];
-        for (int j = 0; j < 4; j++)
-        {
-            memcpy(xy[j], cubeDisplayPoint[cubePlaneGroup[planeId][j]], sizeof(xy[j]));
-        }
-        for (int j = 0; j < 4; j++)
-        {
-            if (displayBuff[xy[j][0]][xy[j][1]] != 0 && displayBuff[xy[j][0]][xy[j][1]] != '+')
-            {
-                hide = 1;
-            }
-        }
-        if (hide)
-        {
-            continue;
-        }
-
-        for (int j = 0; j < 4; j++)
-        {
-            drawLine(xy[j], xy[(j + 1) % 4]);
-        }
-        for (int j = 0; j < 4; j++)
-        {
-            displayBuff[xy[j][0]][xy[j][1]] = '+';
-        }
-        int center[2];
-        if (sqr(xy[0][0] - xy[2][0]) + sqr(xy[0][1] - xy[2][1]) > sqr(xy[1][0] - xy[3][0]) + sqr(xy[1][1] - xy[3][1]))
-        {
-            center[0] = (xy[0][0] + xy[2][0]) / 2.0 + 0.5;
-            center[1] = (xy[0][1] + xy[2][1]) / 2.0 + 0.5;
-        }
-        else
-        {
-            center[0] = (xy[1][0] + xy[3][0]) / 2.0 + 0.5;
-            center[1] = (xy[1][1] + xy[3][1]) / 2.0 + 0.5;
-        }
-        fill(center[0], center[1], ' ');
-        displayBuff[center[0]][center[1]] = '0' + PlaneNumber[planeId];
-    }
-}
-
-void randomCast()
-{
-    int tableIdx = rand() % 6;
-    int offset = rand();
-    for (int i = 0; i < 4; i++)
-    {
-        PlaneNumber[i] = table[tableIdx][(i + offset) % 4];
-    }
-    for (int i = 4; i < 6; i++)
-    {
-        PlaneNumber[i] = table[tableIdx][i];
-    }
-}
-
-void cls()
-{
-#ifdef _WIN32
-    COORD pos = {0, 0};
-    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleCursorPosition(out, pos);
+  ios_base::sync_with_stdio(0);
+  cin.tie(0), cout.tie(0);
+#ifdef TIME
+  double t = 1.0 * clock() / CLOCKS_PER_SEC;
+  cerr << "\n\nTIME: " << t << "s\n";
 #endif
-#ifndef _WIN32
-    printf("\033c");
-#endif
-}
-
-void draw()
-{
-    initCamera();
-    for (int i = 0; i < 8; i++)
-    {
-        point p = getPoint((edge){camera, cubePoint[i]}, getDisplayPlane());
-        point v = getVector(getDisplayCenter(), p);
-        double vlen = getLength(v);
-        double cos = innerProduct(v, cameraY) / getLength(cameraY) / vlen;
-        double sin = sqrt(fabs(1 - cos * cos));
-        int largeThanPi = innerProduct(crossProduct(cameraY, v), camera) < 0;
-        double y = cos * vlen;
-        double x = -sin * vlen;
-        if (largeThanPi)
-        {
-            x *= -1;
-        }
-        cube2dPoint[i][0] = x;
-        cube2dPoint[i][1] = y;
-        cubeDisplayPoint[i][1] = ((x + displayPlaneSize / 2) / displayPlaneSize * displayPixelSize * 2 + 0.5);
-        cubeDisplayPoint[i][0] = ((y + displayPlaneSize / 2) / displayPlaneSize * displayPixelSize + 0.5);
-    }
-    drawCube();
-    char output[displayPixelSize * displayPixelSize * 2 + displayPixelSize + 1];
-    int idx = 0;
-    for (int i = 0; i < displayPixelSize; i++)
-    {
-        for (int j = 0; j < displayPixelSize * 2; j++)
-        {
-            if (displayBuff[i][j] == 0)
-            {
-                displayBuff[i][j] = '.';
-            }
-            output[idx++] = displayBuff[i][j];
-        }
-        output[idx++] = '\n';
-    }
-    output[idx++] = 0;
-    cls();
-    printf("%s", output);
-}
-void start()
-{
-    while (1)
-    {
-        int key = getch();
-        switch (key)
-        {
-        case 27:
-        {
-            exit(0);
-        }
-        case 'w':
-        {
-            angleA -= speed;
-            break;
-        }
-        case 's':
-        {
-            angleA += speed;
-            break;
-        }
-        case 'a':
-        {
-            angleB += speed;
-            break;
-        }
-        case 'd':
-        {
-            angleB -= speed;
-            break;
-        }
-        case 'r':
-            randomCast();
-            break;
-        };
-        draw();
-    }
-}
-
-int main()
-{
-#ifdef _WIN32
-    system("cls");
-#endif
-    srand(time(0));
-    randomCast();
-    draw();
-    start();
+  return 0;
 }

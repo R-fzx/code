@@ -1,20 +1,18 @@
 $$
 \Large{我的简历}
 $$
-
 ## 基本信息
-![](https://cdn.luogu.com.cn/upload/image_hosting/1tr8mhdv.png?x-oss-process=image/resize,m_lfit,h_170,w_225)
 - 姓名：范梓轩
 - 性别：男
 - 年龄：11 岁
 - 所读学校：博才洋湖小学
+- 出生日期：2021.5.17
+- 民族：汉族
 ## 兴趣爱好及特长
-- 阅读（四大名著、科幻小说、《哈利波特》、最喜欢的是《三体》）
-
+- 阅读（四大名著、科幻小说、《哈利波特》等）
 - 编程（C++/C/Python/Java/Javascript）
-- 拼魔方（三阶魔方、四阶魔方、五阶魔方、二阶魔方、镜面魔方、金字塔魔方、粽子魔方、六阶魔方、七阶魔方、八阶魔方、九阶魔方、十阶魔方、五魔方、SQL 魔方）
+- 拼魔方（二阶魔方、三阶魔方、四阶魔方、五阶魔方、镜面魔方、金字塔魔方、粽子魔方、五魔方、SQL 魔方等）
 - 游泳
-
 ## 学习成绩
 $$
 \begin{array}{|c|c|c|c|c|}
@@ -29,44 +27,46 @@ $$
 \end{array}
 $$
 ## 报告书
-
 $$
 \begin{array}{|c|c|c|c|}
   \hline\\
-  年级 & 体育 & 美术 & 其他 & 综合性评语\\\hline
-  一年级上学期 & 优 & 优 & 优 & \\\hline
-  一年级下学期 & 优 & 优 & 优 & \\\hline
-  二年级上学期 & 良 & 优 & 优 & \\\hline
-  二年级下学期 & 良 & 优 & 优 & \\\hline
-  三年级上学期 & 良 & 优 & 优 & \\\hline
-  三年级下学期 & 优 & 优 & 优 & \\\hline
-  四年级上学期 & 优 & 良 & 优 & \\\hline
-  四年级下学期 & 良 & 优 & 优 & \\\hline
-  五年级上学期 & 优 & 良 & 优 & \\\hline
-  五年级下学期 & 良 & 优 & 优 & \\\hline
+  年级 & 语文 & 数学 & 英语\\\hline
+  一年级上学期 & 优 & 优 & 优 \\\hline
+  一年级下学期 & 优 & 优 & 优 \\\hline
+  二年级上学期 & 优 & 优 & 优 \\\hline
+  二年级下学期 & 优 & 优 & 优 \\\hline
+  三年级上学期 & 优 & 优 & 优 \\\hline
+  三年级下学期 & 优 & 优 & 优 \\\hline
+  四年级上学期 & 优 & 优 & 优 \\\hline
+  四年级下学期 & 优 & 优 & 优 \\\hline
+  五年级上学期 & 优 & 优 & 优 \\\hline
+  五年级下学期 & 优 & 优 & 优 \\\hline
 \end{array}
 $$
+## 奖项
+- 2017.1.X：在 2016 年下学期中被评为**发言之星**
+- 2017.1.X：在 2016 年下学期中被评为**学习之星**
+- 2017.5.X：在 2017 年上学期中被评为**乐学之星**
+- 2017.12.30：在 ”计算小达人“ 比赛中荣获**一等奖**
+- 2018.1.X：在 2017 年下学期中被评为**乐学之星**
+- 2018.3.5：在寒假实践活动中**表现优秀**
+- 2019.1.6：在 2018 年秋五年级奥数培训班中荣获**一等奖**
+- 2019.5.31：在 2019 年上学期中被评为**才艺之星**
+- 2019.6.30：在 2019 年春五年级奥数培训班中荣获**一等奖**
+- 2019.7.X：在 ”计算小达人“ 比赛中荣获**一等奖**
+- 2019.11.8：在综合实践活动中被评为**最佳质疑者**
+- 2019.12.29：在 2019 年秋六年级奥数培训班中荣获**二等奖**
+- 2020.5.29：在 2020 年上学期中被评为**乐学之星**
+- 2020.9.16：在 “计算小达人” 比赛中被评为**数学小明星**
+- 2020 年 CSP-J 荣获**二等奖**
+- 2021.1.X：在 2020 年下学期中被评为**学习之星**
+- 2021.1.X：在期末总复习积累运用与课文理解测试中荣获**三等奖**
+- 2021.5.10：在 2021 年上学期 “笔尖上的智慧”  数学期中学习活动中被评为**数学满分之星**
+- 2021.5.X：在 2021 年上学期中被评为**学习之星**
+- 2021.7.9：在 “笔尖上的智慧” 数学期末学习活动中被评为**满分奖**
+- 2021 年 CSP-J 荣获**一等奖**
+- 2021 年 CSP-S 荣获**二等奖**
 
-## 奖状
+## 自我介绍
 
-
-
-![3692A32FFC32D5938F7E937CE6D5622F.jpg](https://i.loli.net/2021/11/11/TSfH5evtgQBqWLI.jpg)
-![6F9DD2DF30881C25E0781500CB8ECBDF.jpg](https://i.loli.net/2021/11/11/EdYDWuGg7eHcICn.jpg)
-![200555C2A73D761E28AAA4427ECE7BD5.jpg](https://i.loli.net/2021/11/11/NMcJjQhT4vYDWml.jpg)
-![6A08FF02E5EED146B95EF7E51F42C45F.jpg](https://i.loli.net/2021/11/11/AUs7KbexFpPaTCu.jpg)
-![5941B11933EC33163B5D56C43D467D83.jpg](https://i.loli.net/2021/11/11/hxQEPJvIDKAmiwn.jpg)
-![694B8ADA82EA0037E4E5D9DE43A74E7C.jpg](https://i.loli.net/2021/11/11/MbVfOxWAGqDeJjs.jpg)
-![6D76D18BD552F11E935C285BF511BE55.jpg](https://i.loli.net/2021/11/11/hONAuFTSaD9IBi5.jpg)
-![25AC731D9C373862FCC71D549C59B1D3.jpg](https://i.loli.net/2021/11/11/utRKWQnHV35MPfL.jpg)
-![27FFFD8D6B503718FAD89AE38E8609AD.jpg](https://i.loli.net/2021/11/11/nhvFwYpQN4lxTUk.jpg)
-![0338A9D108EFE7FAE295D442F6372D4C.jpg](https://i.loli.net/2021/11/11/cPO6XEorLlJHBin.jpg)![C52151499862FA83FAF3E91ED882CDEA.jpg](https://i.loli.net/2021/11/11/hWkfw8ACNReu6I4.jpg)
-![B6A45EFAA6C5903A244C7082F5121666.jpg](https://i.loli.net/2021/11/11/icMYQK2qwEyNXds.jpg)
-![B903538E4A85E453FEAFEE4F6EB16BA5.jpg](https://i.loli.net/2021/11/11/Y5kCyV7ZJeMvWz8.jpg)
-![E1BC8393D5836C3EABC9C43BA88EE1EF.jpg](https://i.loli.net/2021/11/11/D1S9KMcfAQ6rXIL.jpg)
-![A51673BFE8A9C09EB6EDA6C272D62BFC.jpg](https://i.loli.net/2021/11/11/iI8L3CycmJ7HjbT.jpg)
-![FD5334769C18A82EE9A3FB824332C313.jpg](https://i.loli.net/2021/11/11/2p4m5RIklVLgY1F.jpg)
-![5674934D46C9F1960DAED62E4E1A925D.jpg](https://i.loli.net/2021/11/11/qzaw7PCpVybhnFO.jpg)
-![B85DA0D93E36AAAB08DD9BD377554C95.jpg](https://i.loli.net/2021/11/11/jIlaOuvwKBsQoPA.jpg)
-![F9A12B284ED726B80EE68B85C70B423E.jpg](https://i.loli.net/2021/11/11/zwi8snpl47qygfv.jpg)
-![E33636E2A344DB7002ABDDE5A4C8901C.jpg](https://i.loli.net/2021/11/11/eChOupqRzfoLjKH.jpg)
+我是一个活泼开朗、自信善良、阳光大方的男孩。我勤奋好学、认真努力、思维敏捷、尊敬老师，在班级各方面表现出色，学习成绩稳定，在班上始终名列前茅，热爱数学、热爱编程，经常帮助同学解答数学难题同时帮助老师批改试卷，有较强的人际关系以及沟通能力，与同学相处融洽。

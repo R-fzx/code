@@ -83,14 +83,14 @@ inline void put_non(T x) {
   while (x) stack[++top] = x % 10 + '0', x /= 10;
   while (top) outbuf->sputc(stack[top]), --top;
 }
-inline void putc(const char ch) {
-  static std::streambuf* outbuf = cout.rdbuf();
-  outbuf->sputc(ch);
-}
 template <typename T>
 inline void put(const char ch, T x) { put_non(x), putc(ch); }
 template <typename T>
 inline void put(T x) { put('\n', x); }
+inline void putc(const char ch) {
+  static std::streambuf* outbuf = cout.rdbuf();
+  outbuf->sputc(ch);
+}
 inline void putst(const char* st) {
   static std::streambuf* outbuf = cout.rdbuf();
   do outbuf->sputc(*(st++));
@@ -208,8 +208,17 @@ struct BigUint {
     }
   }
 };
+LL Pow(LL b, LL e, LL m) {
+  LL s = 1;
+  for (; e; e >>= 1, (e & 1) && (s = s * b % m), b = b * b % m) 1;
+  return s;
+}
 
-int t, a, b, c;
+const int kN = 2001;
+const LL kM = 1e9 + 7;
+
+int n, k, m;
+LL f[kN][kN], ft[kN], iv[kN];
 
 int main() {
 #define ONLINE_JUDGE
@@ -219,15 +228,32 @@ int main() {
 #endif
   ios_base::sync_with_stdio(0);
   cin.tie(0), cout.tie(0);
-  cin >> t;
-  while (t--) {
-    cin >> a >> b >> c;
-    int x = a + b + c;
-    IO::put(x % 3);
+  IO::redi(n), IO::redi(k), m = n * k;
+  if (k == 1) {
+    IO::put(1);
+    return 0;
   }
+  ft[0] = iv[0] = 1;
+  for (int i = 1; i <= m; ++i) {
+    iv[i] = Pow(ft[i] = ft[i - 1] * i % kM, kM - 2, kM);
+  }
+  for (int i = 0; i <= n; ++i) {
+    f[i][0] = 1;
+  }
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j <= i; ++j) {
+      LL x = (n - 1) * k - i - (j - 1) * (k - 1) + 1, y = k - 2;
+      f[i][j] = (f[i - 1][j] + f[i][j - 1] * (n - j + 1) % kM * ft[x + y] % kM * iv[y] % kM * iv[x] % kM) % kM;
+    }
+  }
+  IO::put(f[n][n]);
 #ifdef TIME
   double t = 1.0 * clock() / CLOCKS_PER_SEC;
   cerr << "\n\nTIME: " << t << "s\n";
 #endif
   return 0;
 }
+/*
+C(x,y) = ft[y] * iv[x] * iv[y - x]
+f[i][j] = f[i - 1][j] + f[i][j - 1] * (n - j + 1) * ft[n * k - i - (j - 1) * (k - 1) - 1] * iv[k - 2] * iv[(n - 1) * k - i - (j - 1) * (k - 1) + 1]
+*/

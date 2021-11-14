@@ -275,16 +275,16 @@ LL pow(LL a, LL p, LL mod) {
   for (; p; p >>= 1, a = a * a % mod) (p & 1) && (s = s * a % mod);
   return s % mod;
 }
-bool is_prime(LL x) {
-  if (x == 1) return 0;
-  LL t = x - 1, k = 0;
+bool is_prime(LL P) {
+  if (P == 1) return 0;
+  LL t = P - 1, k = 0;
   while (!(t & 1)) k++, t >>= 1;
   for (LL i = 0; i < kN; i++) {
-    if (x == kTs[i]) return 1;
-    LL a = pow(kTs[i], t, x), nxt = a;
+    if (P == kTs[i]) return 1;
+    LL a = pow(kTs[i], t, P), nxt = a;
     for (LL j = 1; j <= k; j++) {
-      nxt = (a * a) % x;
-      if (nxt == 1 && a != 1 && a != x - 1) return 0;
+      nxt = (a * a) % P;
+      if (nxt == 1 && a != 1 && a != P - 1) return 0;
       a = nxt;
     }
     if (a != 1) return 0;
@@ -294,6 +294,23 @@ bool is_prime(LL x) {
 }  // namespace Prime
 using Prime::is_prime;
 
+const int kN = 2e5 + 1;
+
+int n, k;
+LL a[kN], s, f[kN];
+
+void Update(int x, LL v) {
+  for (int i = x; i <= n; i += i & -i) f[i] += v;
+}
+void Update(int l, int r, LL v) {
+  Update(l, v), Update(r + 1, -v);
+}
+LL Query(int x) {
+  LL s = 0;
+  for (int i = x; i; i -= i & -i) s += f[i];
+  return s;
+}
+
 int main() {
 #define ONLINE_JUDGE
 #ifndef ONLINE_JUDGE
@@ -302,7 +319,19 @@ int main() {
 #endif
   ios_base::sync_with_stdio(0);
   cin.tie(0), cout.tie(0);
-
+  IO::redi(n), IO::redi(k);
+  for (int i = 1; i <= n; ++i) {
+    IO::redi(a[i]);
+  }
+  sort(a + 1, a + n + 1);
+  for (int i = 1; i <= n; ++i) {
+    Update(i, i, a[i]);
+  }
+  for (int i = 1; i <= n - k + 1; ++i) {
+    LL x = Query(i);
+    s += x, Update(i, i + k - 1, -x);
+  }
+  IO::put(s);
 #ifdef TIME
   double t = 1.0 * clock() / CLOCKS_PER_SEC;
   cerr << "\n\nTIME: " << t << "s\n";
