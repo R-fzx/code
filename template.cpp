@@ -40,13 +40,24 @@ char buf[MAX_INPUT], *p1, *p2;
 template <typename T>
 inline int redi(T& x) {
   static std::streambuf* inbuf = cin.rdbuf();
-  int f = x = 0, flag = 1;
+  bool f = x = 0, flag = 1;
   char ch = getc();
   if (ch == EOF) return EOF;
-  while (!std::isdigit(ch)) ch == '-' && (f = 1), ch = getc();
+  while (!std::isdigit(ch)) f |= ch == '-', ch = getc();
   if (std::isdigit(ch)) x = x * 10 + ch - '0', ch = getc(), flag = 0;
   while (std::isdigit(ch)) x = x * 10 + ch - 48, ch = getc();
   return x = f ? -x : x, ch == EOF ? EOF : flag;
+}
+template <>
+inline int redi<double>(double& x) {
+  static std::streambuf* inbuf = cin.rdbuf();
+  LL y, z;
+  int _y = redi(y), _z = redi(z);
+  if (_y == EOF || _z == EOF) {
+    return EOF;
+  }
+  
+  return ;
 }
 template <typename T, typename... Args>
 inline int redi(T& a, Args&... args) { return redi(a) != EOF ? redi(args...), 0 : EOF; }
@@ -275,16 +286,16 @@ LL pow(LL a, LL p, LL mod) {
   for (; p; p >>= 1, a = a * a % mod) (p & 1) && (s = s * a % mod);
   return s % mod;
 }
-bool is_prime(LL x) {
-  if (x == 1) return 0;
-  LL t = x - 1, k = 0;
+bool is_prime(LL P) {
+  if (P == 1) return 0;
+  LL t = P - 1, k = 0;
   while (!(t & 1)) k++, t >>= 1;
   for (LL i = 0; i < kN; i++) {
-    if (x == kTs[i]) return 1;
-    LL a = pow(kTs[i], t, x), nxt = a;
+    if (P == kTs[i]) return 1;
+    LL a = pow(kTs[i], t, P), nxt = a;
     for (LL j = 1; j <= k; j++) {
-      nxt = (a * a) % x;
-      if (nxt == 1 && a != 1 && a != x - 1) return 0;
+      nxt = (a * a) % P;
+      if (nxt == 1 && a != 1 && a != P - 1) return 0;
       a = nxt;
     }
     if (a != 1) return 0;

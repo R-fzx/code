@@ -1,6 +1,7 @@
 {
   "C_Cpp.errorSquiggles": "Enabled",
   "files.associations": {
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "limits": "cpp"
   }
 }

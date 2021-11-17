@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
-int main() {
-  freopen("template.cpp", "r", stdin);
-  freopen("template.out", "w", stdout);
+int main(int argc, char *argv[]) {
+  freopen(argv[1], "r", stdin);
+  freopen("translate.out", "w", stdout);
   string s;
   while (getline(cin, s)) {
     cout << "      \"";
