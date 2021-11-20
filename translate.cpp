@@ -2,7 +2,7 @@
 using namespace std;
 int main(int argc, char *argv[]) {
   freopen(argv[1], "r", stdin);
-  freopen("translate.out", "w", stdout);
+  cout << "{\n  \"Polygon template\": {\n    \"scope\": \"cpp\",\n    \"prefix\": \"polygon\",\n    \"body\": [\n";
   string s;
   while (getline(cin, s)) {
     cout << "      \"";
@@ -17,5 +17,9 @@ int main(int argc, char *argv[]) {
     }
     cout << "\",\n";
   }
+  cout << "    ],\n"
+      "    \"description\": \"Polygon template\"\n"
+      "  }\n"
+      "}\n";
   return 0;
 }

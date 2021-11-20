@@ -23,7 +23,7 @@ inline void print(T *f, int n) {
 }
 #define clr(f, n) memset(f, 0, (n) * sizeof(int))
 #define cpy(f, g, n) memcpy(f, g, (n) * sizeof(int))
-const int _G = 3, _iG = 332748118, kM = 998244353, kN = 2e5 + 1;
+const int _G = 3, _iG = 332748118, kM = 998244353, kN = 3e5 + 1;
 LL Pow(LL b, LL e = kM - 2) {
   LL s = 1;
   for (; e; e >>= 1, b = b * b % kM) (e & 1) && (s = s * b % kM);
@@ -74,21 +74,24 @@ void invf(int *g, int m) {
   static int w[kN << 1], r[kN << 1], f[kN << 1];
   w[0] = Pow(g[0]);
   for (int l = 2; l <= n; l <<= 1) {
-    for (int i = 0; i < (l >> 1); ++i) r[i] = (w[i] << 1) % kM;
-    cpy(f, g, l), NTT(w, l << 1, 0), ptx(w, w, l << 1), NTT(f, l << 1, 0), ptx(w, f, l << 1), NTT(w, l << 1, 1), clr(w + l, l);
-    for (int i = 0; i < l; ++i) w[i] = (r[i] - w[i] + kM) % kM;
+    cpy(r, w, l >> 1), cpy(f, g, l), NTT(f, l, 0), NTT(r, l, 0), ptx(r, f, l), NTT(r, l, 1), clr(r, l >> 1), cpy(f, w, l), NTT(f, l, 0), NTT(r, l, 0), ptx(r, f, l), NTT(r, l, 1);
+    for (int i = (l >> 1); i < l; ++i) w[i] = (w[i] * 2LL - r[i] + kM) % kM;
   }
-  cpy(g, w, m), clr(f, n << 1), clr(w, n << 1), clr(r, n << 1);
+  cpy(g, w, m), clr(f, n), clr(w, n), clr(r, n);
 }
 }  // namespace Poly
 
 int n, f[Poly::kN];
 
 int main() {
-  freopen("P4238.in", "r", stdin);
-  freopen("P4238.out", "w", stdout);
+  // freopen("P4238_16.in", "r", stdin);
+  // freopen("P4238.out", "w", stdout);
   n = read();
+  // cout << n << endl;
   for (int i = 0; i < n; ++i) f[i] = read();
-  Poly::invf(f, n), Poly::invf(f, n), Poly::print(f, n);
+  // cout << n << endl;
+  Poly::invf(f, n);
+  // cout << n << endl;
+  Poly::print(f, n);
   return 0;
 }
