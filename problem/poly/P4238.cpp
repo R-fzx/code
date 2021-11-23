@@ -2,6 +2,7 @@
 #include <cmath>
 #include <cstring>
 #include <iostream>
+#include <numeric>
 
 using namespace std;
 
@@ -15,83 +16,69 @@ inline int read() {
 
 namespace Poly {
 using LL = long long;
-using uLL = unsigned long long;
-template <typename T>
-inline void print(T *f, int n) {
-  for (int i = 0; i < n; ++i) cout << f[i] << " ";
+void print(int a[], int m) {
+  for (int i = 0; i < m; ++i) cout << a[i] << " ";
   puts("");
 }
-#define clr(f, n) memset(f, 0, (n) * sizeof(int))
-#define cpy(f, g, n) memcpy(f, g, (n) * sizeof(int))
-const int _G = 3, _iG = 332748118, kM = 998244353, kN = 3e5 + 1;
-LL Pow(LL b, LL e = kM - 2) {
-  LL s = 1;
-  for (; e; e >>= 1, b = b * b % kM) (e & 1) && (s = s * b % kM);
+const int kN = 1e6 + 1, kM = 998244353, kG = 3;
+int n, ip[kN];
+#define clr(a, l, r) memset(a + (l), 0, ((r) - (l)) * sizeof(int))
+#define cpy(a, b, m) memcpy(a, b, (m) * sizeof(int)), clr(a, m, n)
+void init(int m) {
+  for (n = 1; n <= m;) n <<= 1;
+  for (int i = 0; i < n; ++i) ip[i] = (ip[i >> 1] >> 1) | ((i & 1) ? n >> 1 : 0);
+}
+int pow(int a, int e = kM - 2) {
+  int s = 1;
+  for (; e; e >>= 1, a = 1LL * a * a % kM) (e & 1) && (s = 1LL * s * a % kM);
   return s;
 }
-int r[kN], rn;
-inline void rpre(int n) {
-  if (rn == n) return;
-  rn = n;
-  for (int i = 0; i < n; ++i) r[i] = (r[i >> 1] >> 1) | ((i & 1) ? n >> 1 : 0);
+void NTT(int a[], bool o) {
+  for (int i = 0; i < n; ++i)
+    if (i < ip[i]) swap(a[i], a[ip[i]]);
+  int _l, u, w, x;
+  for (int l = 2; l <= n; l <<= 1)
+    for (int i = (_l = l >> 1, u = pow(kG, (kM - 1) / l), 0); i < n; i += l)
+      for (int j = (w = 1, i); j < i + _l; ++j) x = 1LL * w * a[j + _l] % kM, a[j + _l] = (a[j] - x + kM) % kM, a[j] = (a[j] + x) % kM, w = 1LL * w * u % kM;
+  if (o) return;
+  for (int i = (reverse(a + 1, a + n), 0), ivn = pow(n); i < n; ++i) a[i] = 1LL * a[i] * ivn % kM;
 }
-inline void ptx(int *f, int *g, int n) {
-  for (int i = 0; i < n; ++i) f[i] = 1LL * f[i] * g[i] % kM;
+void mulf(int a[], int b[], int c[], int na, int nb) {
+  static int _a[kN];
+  init(na + nb), clr(_a, 0, n), cpy(c, a, na), cpy(_a, b, nb), NTT(c, 1), NTT(_a, 1);
+  for (int i = 0; i < n; ++i) c[i] = 1LL * c[i] * _a[i] % kM;
+  NTT(c, 0);
 }
-inline int get(int x) {
-  int n = 1;
-  while (n < x) n <<= 1;
-  return n;
+void invf(int a[], int b[], int m) {
+  static int _a[kN];
+  for (int l = (init(m << 1), clr(_a, 0, n), clr(b, 0, n), b[0] = pow(a[0]), 2); l <= m << 1; NTT(b, 0), clr(b, l, n), l <<= 1)
+    for (int i = (init(l << 1), cpy(_a, a, l), NTT(_a, 1), NTT(b, 1), 0); i < n; ++i) b[i] = 1LL * (2 - 1LL * _a[i] * b[i] % kM + kM) * b[i] % kM;
 }
-void NTT(int *g, int n, bool o) {
-  rpre(n);
-  static uLL f[kN << 1], w[kN << 1] = {1};
-  for (int i = 0; i < n; ++i) f[i] = (((LL)kM << 5) + g[r[i]]) % kM;
-  for (int l = 1; l < n; l <<= 1) {
-    uLL u = Pow(o ? _iG : _G, (kM - 1) / (l << 1));
-    for (int i = 1; i < l; ++i) w[i] = w[i - 1] * u % kM;
-    for (int i = 0; i < n; i += l << 1)
-      for (int j = 0; j < l; ++j) {
-        int y = i | j, x = w[j] * f[y | l] % kM;
-        f[y | l] = f[y] + kM - x, f[y] += x;
-      }
-    if (l == 1024)
-      for (int i = 0; i < n; ++i) f[i] %= kM;
-  }
-  for (int i = 0; i < n; ++i) g[i] = f[i] % kM;
-  if (o) {
-    uLL p = Pow(n);
-    for (int i = 0; i < n; ++i) g[i] = g[i] * p % kM;
-  }
+void dvtf(int a[], int b[], int m) {
+  for (int i = (b[m - 1] = 0, 1); i < m; ++i) b[i - 1] = 1LL * a[i] * i % kM;
 }
-void muil(int *f, int *g, int m, int l) {
-  static int v[kN << 1];
-  int n = get(m << 1);
-  clr(v, n), cpy(v, g, n), NTT(f, n, 0), NTT(v, n, 0), ptx(f, v, n), NTT(f, n, 1), clr(f + l, n - l), clr(v, n);
+int iv[kN] = {1}, ivn = 1;
+void ivpre(int m) {
+  for (int i = ivn + 1; i <= m; ++i) iv[i] = 1LL * (kM - kM / i) * iv[kM % i] % kM;
+  ivn = max(ivn, m);
 }
-void invf(int *g, int m) {
-  int n = get(m);
-  static int w[kN << 1], r[kN << 1], f[kN << 1];
-  w[0] = Pow(g[0]);
-  for (int l = 2; l <= n; l <<= 1) {
-    cpy(r, w, l >> 1), cpy(f, g, l), NTT(f, l, 0), NTT(r, l, 0), ptx(r, f, l), NTT(r, l, 1), clr(r, l >> 1), cpy(f, w, l), NTT(f, l, 0), NTT(r, l, 0), ptx(r, f, l), NTT(r, l, 1);
-    for (int i = (l >> 1); i < l; ++i) w[i] = (w[i] * 2LL - r[i] + kM) % kM;
-  }
-  cpy(g, w, m), clr(f, n), clr(w, n), clr(r, n);
+void itgf(int a[], int b[], int m) {
+  for (int i = (b[0] = 0, ivpre(m - 1), 1); i < m; ++i) b[i] = 1LL * a[i - 1] * iv[i] % kM;
+}
+void lnf(int a[], int b[], int m) {
+  static int _a[kN], _b[kN];
+  init(m), clr(_a, 0, n), clr(_b, 0, n), invf(a, _a, m), dvtf(a, b, m), mulf(_a, b, _b, m, m), itgf(_b, b, m);
 }
 }  // namespace Poly
 
-int n, f[Poly::kN];
+int n, a[Poly::kN], b[Poly::kN];
 
 int main() {
-  // freopen("P4238_16.in", "r", stdin);
+  // freopen("P4238.in", "r", stdin);
   // freopen("P4238.out", "w", stdout);
   n = read();
-  // cout << n << endl;
-  for (int i = 0; i < n; ++i) f[i] = read();
-  // cout << n << endl;
-  Poly::invf(f, n);
-  // cout << n << endl;
-  Poly::print(f, n);
+  for (int i = 0; i < n; ++i) a[i] = read();
+  Poly::invf(a, b, n);
+  Poly::print(b, n);
   return 0;
 }

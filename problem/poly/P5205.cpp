@@ -16,102 +16,80 @@ inline int read() {
 
 namespace Poly {
 using LL = long long;
-using uLL = unsigned long long;
-template <typename T>
-inline void print(T *f, int n) {
-  for (int i = 0; i < n; ++i) cout << f[i] << " ";
+void print(int a[], int m) {
+  for (int i = 0; i < m; ++i) cout << a[i] << " ";
   puts("");
 }
-#define clr(f, n) memset(f, 0, (n) * sizeof(int))
-#define cpy(f, g, n) memcpy(f, g, (n) * sizeof(int))
-const int _G = 3, _iG = 332748118, kM = 998244353, kN = 3e5 + 1;
-LL Pow(LL b, LL e = kM - 2) {
-  LL s = 1;
-  for (; e; e >>= 1, b = b * b % kM) (e & 1) && (s = s * b % kM);
+const int kN = 3e6 + 1, kM = 998244353, kG = 3;
+int n, ip[kN];
+#define clr(a, l, r) memset(a + (l), 0, ((r) - (l)) * sizeof(int))
+#define cpy(a, b, m) memcpy(a, b, (m) * sizeof(int)), clr(a, m, n)
+void init(int m) {
+  for (n = 1; n <= m;) n <<= 1;
+  for (int i = 0; i < n; ++i) ip[i] = (ip[i >> 1] >> 1) | ((i & 1) ? n >> 1 : 0);
+}
+constexpr int pow(int a, int e = kM - 2) {
+  int s = 1;
+  for (; e; e >>= 1, a = 1LL * a * a % kM) (e & 1) && (s = 1LL * s * a % kM);
   return s;
 }
-int r[kN], rn;
-inline void rpre(int n) {
-  if (rn == n) return;
-  rn = n;
-  for (int i = 0; i < n; ++i) r[i] = (r[i >> 1] >> 1) | ((i & 1) ? n >> 1 : 0);
+void NTT(int a[], bool o) {
+  for (int i = 0; i < n; ++i)
+    if (i < ip[i]) swap(a[i], a[ip[i]]);
+  int _l, u, w, x;
+  for (int l = 2; l <= n; l <<= 1)
+    for (int i = (_l = l >> 1, u = pow(kG, (kM - 1) / l), 0); i < n; i += l)
+      for (int j = (w = 1, i); j < i + _l; ++j) x = 1LL * w * a[j + _l] % kM, a[j + _l] = (a[j] - x + kM) % kM, a[j] = (a[j] + x) % kM, w = 1LL * w * u % kM;
+  if (o) return;
+  for (int i = (reverse(a + 1, a + n), 0), ivn = pow(n); i < n; ++i) a[i] = 1LL * a[i] * ivn % kM;
 }
-inline void ptx(int *f, int *g, int n) {
-  for (int i = 0; i < n; ++i) f[i] = 1LL * f[i] * g[i] % kM;
+void mulf(int a[], int b[], int c[], int na, int nb) {
+  static int _a[kN];
+  init(na + nb), clr(c, 0, n), clr(_a, 0, n), cpy(c, a, na), cpy(_a, b, nb), NTT(c, 1), NTT(_a, 1);
+  for (int i = 0; i < n; ++i) c[i] = 1LL * c[i] * _a[i] % kM;
+  NTT(c, 0);
 }
-inline int get(int x) {
-  int n = 1;
-  while (n < x) n <<= 1;
-  return n;
+void invf(int a[], int b[], int m) {
+  static int _a[kN];
+  for (int l = (init(m << 1), clr(_a, 0, n), clr(b, 0, n), b[0] = pow(a[0]), 2); l <= m << 1; NTT(b, 0), clr(b, l, n), l <<= 1)
+    for (int i = (init(l << 1), cpy(_a, a, l), NTT(_a, 1), NTT(b, 1), 0); i < n; ++i) b[i] = 1LL * (2 - 1LL * _a[i] * b[i] % kM + kM) * b[i] % kM;
 }
-void NTT(int *g, int n, bool o) {
-  rpre(n);
-  static uLL f[kN << 1], w[kN << 1] = {1};
-  for (int i = 0; i < n; ++i) f[i] = (((LL)kM << 5) + g[r[i]]) % kM;
-  for (int l = 1; l < n; l <<= 1) {
-    uLL u = Pow(o ? _iG : _G, (kM - 1) / (l << 1));
-    for (int i = 1; i < l; ++i) w[i] = w[i - 1] * u % kM;
-    for (int i = 0; i < n; i += l << 1)
-      for (int j = 0; j < l; ++j) {
-        int y = i | j, x = w[j] * f[y | l] % kM;
-        f[y | l] = f[y] + kM - x, f[y] += x;
-      }
-    if (l == 1024)
-      for (int i = 0; i < n; ++i) f[i] %= kM;
-  }
-  for (int i = 0; i < n; ++i) g[i] = f[i] % kM;
-  if (o) {
-    uLL p = Pow(n);
-    for (int i = 0; i < n; ++i) g[i] = g[i] * p % kM;
-  }
-}
-void muil(int *f, int *g, int m, int l) {
-  static int v[kN << 1];
-  int n = get(m << 1);
-  clr(v, n), cpy(v, g, n), NTT(f, n, 0), NTT(v, n, 0), ptx(f, v, n), NTT(f, n, 1), clr(f + l, n - l), clr(v, n);
-}
-void invf(int *g, int m) {
-  int n = get(m);
-  static int w[kN << 1], r[kN << 1], f[kN << 1];
-  w[0] = Pow(g[0]);
-  for (int l = 2; l <= n; l <<= 1) {
-    cpy(r, w, l >> 1), cpy(f, g, l), NTT(f, l, 0), NTT(r, l, 0), ptx(r, f, l), NTT(r, l, 1), clr(r, l >> 1), cpy(f, w, l), NTT(f, l, 0), NTT(r, l, 0), ptx(r, f, l), NTT(r, l, 1);
-    for (int i = (l >> 1); i < l; ++i) w[i] = (w[i] * 2LL - r[i] + kM) % kM;
-  }
-  cpy(g, w, m), clr(f, n), clr(w, n), clr(r, n);
+void dvtf(int a[], int b[], int m) {
+  for (int i = (b[m - 1] = 0, 1); i < m; ++i) b[i - 1] = 1LL * a[i] * i % kM;
 }
 int iv[kN] = {0, 1}, ivn = 1;
-void init(int n) {
-  if (n <= ivn) return;
-  for (int i = ivn + 1; i <= n; ++i) iv[i] = 1LL * iv[kM % i] * (kM - kM / i) % kM;
-  ivn = n;
+void ivpre(int m) {
+  for (int i = ivn + 1; i <= m; ++i) iv[i] = 1LL * (kM - kM / i) * iv[kM % i] % kM;
+  ivn = max(ivn, m);
 }
-void divt(int *f, int n) {
-  for (int i = 1; i < n; ++i) f[i - 1] = 1LL * f[i] * i % kM;
-  f[n - 1] = 0;
+void itgf(int a[], int b[], int m) {
+  for (int i = (b[0] = 0, ivpre(m - 1), 1); i < m; ++i) b[i] = 1LL * a[i - 1] * iv[i] % kM;
 }
-void iteg(int *f, int n) {
-  for (int i = n; i; --i) f[i] = 1LL * f[i - 1] * iv[i] % kM;
-  f[0] = 0;
+void lnf(int a[], int b[], int m) {
+  static int _a[kN], _b[kN];
+  init(m), clr(b, 0, n), clr(_a, 0, n), clr(_b, 0, n), invf(a, _a, m), dvtf(a, b, m), mulf(_a, b, _b, m, m), itgf(_b, b, m);
 }
-void sqrf(int *f, int m) {
-  int n = get(m);
-  static int b[kN << 1] = {1}, d[kN << 1];
-  for (int l = 2; l <= n; l <<= 1) {
-    for (int i = 0; i < (l >> 1); ++i) d[i] = (b[i] << 1) % kM;
-    invf(d, l), NTT(b, l, 0), ptx(b, b, l), NTT(b, l, 1);
-    for (int i = 0; i < l; ++i) b[i] = (b[i] + f[i]) % kM;
-    muil(b, d, l, l);
+void expf(int a[], int b[], int m) {
+  static int _a[kN], _b[kN];
+  for (int l = (init(m << 1), clr(_a, 0, n), clr(_b, 0, n), clr(b, 0, n), b[0] = 1, 2); l <= m << 1; NTT(b, 0), clr(b, l, n), l <<= 1)
+    for (int i = (lnf(b, _a, l), init(l), clr(_a, l, n), cpy(_b, a, l), NTT(b, 1), NTT(_a, 1), NTT(_b, 1), 0); i < n; ++i) b[i] = (1LL * b[i] * (1LL - _a[i] + _b[i]) % kM + kM) % kM;
+}
+void sqrf(int a[], int b[], int m) {
+  static int _a[kN], _b[kN];
+  init(m), clr(_a, 0, n), clr(_b, 0, n), clr(b, 0, n), b[0] = 1;
+  for (int l = 2; l <= m; l <<= 1) {
+    init(l), cpy(_a, a, l), NTT(_a, 1), invf(b, _b, l >> 1), NTT(b, 1), NTT(_b, 1);
+    for (int i = 0; i < n; ++i) b[i] = 1LL * 2 * _b[i] % kM * (_a[i] + 1LL * b[i] * b[i] % kM) % kM;
+    NTT(b, 0), clr(b, l, n), clr(_a, 0, n);
   }
-  cpy(f, b, m), clr(b, n << 1), clr(d, n << 1);
 }
 }  // namespace Poly
 
-int n, f[Poly::kN];
+int n, f[Poly::kN], g[Poly::kN];
 
 int main() {
   n = read();
   for (int i = 0; i < n; ++i) f[i] = read();
-  Poly::sqrf(f, n), Poly::print(f, n);
+  Poly::sqrf(f, g, n), Poly::print(g, n);
   return 0;
 }
