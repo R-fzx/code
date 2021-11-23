@@ -1,0 +1,240 @@
+{
+	"name": "codeforcesbot-ext",
+	"displayName": "Codeforces Bot",
+	"icon": "res/img/CodeforcesBot.png",
+	"description": "Fetch, test and submit problems.",
+	"author": {
+		"name": "Avinish Kumar"
+	},
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"Codeforces",
+		"Programming",
+		"Competitive",
+		"CP",
+		"Contest",
+		"Bot"
+	],
+	"publisher": "avi01",
+	"repository": "avi-01/CodeforcesBot-Ext.git",
+	"version": "1.0.6",
+	"engines": {
+		"vscode": "^1.40.0"
+	},
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "codeforces-explorer",
+					"title": "Codeforces",
+					"icon": "res/img/mainIcon.svg"
+				}
+			]
+		},
+		"views": {
+			"codeforces-explorer": [
+				{
+					"id": "contests",
+					"name": "Contests",
+					"icon": "res/img/mainIcon.svg",
+					"contextualTitle": "Contests"
+				},
+				{
+					"id": "ratings",
+					"name": "Ratings",
+					"icon": "res/img/mainIcon.svg",
+					"contextualTitle": "Ratings",
+					"visibility": "collapsed"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "contests.refresh",
+					"when": "view == contests",
+					"group": "navigation"
+				},
+				{
+					"command": "ratings.refresh",
+					"when": "view == ratings",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "contest.createContestFolders",
+					"when": "view == contests && viewItem == PastContest",
+					"group": "inline"
+				},
+				{
+					"command": "contest.createContestFolders",
+					"when": "view == contests && viewItem == RunningContest",
+					"group": "inline"
+				},
+				{
+					"command": "contest.checkerSol",
+					"when": "view == contests && viewItem == Problem",
+					"group": "inline"
+				},
+				{
+					"command": "contest.submitSol",
+					"when": "view == contests && viewItem == Problem",
+					"group": "inline"
+				}
+			],
+			"editor/title": [
+				{
+					"when": "resourceScheme == file && resourceExtname == .cpp &&  resource =~ '/.*Codeforces.*_.*_.*_.*cpp/'",
+					"command": "contest.checkerSol",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceScheme == file && resourceExtname == .cpp &&  resource =~ '/.*Codeforces.*_.*_.*_.*cpp/'",
+					"command": "contest.submitSol",
+					"group": "navigation"
+				}
+			],
+			"commandPalette": [
+				{
+					"command": "contest.createContestFolders",
+					"when": "false"
+				},
+				{
+					"command": "contest.checkerSol",
+					"when": "false"
+				},
+				{
+					"command": "contest.submitSol",
+					"when": "false"
+				},
+				{
+					"command": "contest.openSol",
+					"when": "false"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "codeforcesbot-ext.helloWorld",
+				"title": "Hello World"
+			},
+			{
+				"command": "codeforcesbot-ext.login",
+				"title": "Login"
+			},
+			{
+				"command": "contest.createContestFolders",
+				"title": "Create Contest Folder",
+				"icon": {
+					"light": "res/img/light/createFolder.svg",
+					"dark": "res/img/dark/createFolder.svg"
+				}
+			},
+			{
+				"command": "contest.checkerSol",
+				"title": "Run solution on sample testcases",
+				"icon": {
+					"light": "res/img/light/test.svg",
+					"dark": "res/img/dark/test.svg"
+				}
+			},
+			{
+				"command": "contest.submitSol",
+				"title": "Submit the solution",
+				"icon": {
+					"light": "res/img/light/submit.svg",
+					"dark": "res/img/dark/submit.svg"
+				}
+			},
+			{
+				"command": "contest.openSol",
+				"title": "Open Solution File"
+			},
+			{
+				"command": "contests.refresh",
+				"title": "Refresh",
+				"icon": {
+					"light": "res/img/light/refresh.svg",
+					"dark": "res/img/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "ratings.refresh",
+				"title": "Refresh",
+				"icon": {
+					"light": "res/img/light/refresh.svg",
+					"dark": "res/img/dark/refresh.svg"
+				}
+			}
+		],
+		"configuration": {
+			"title": "Codeforces Bot",
+			"properties": {
+				"codeforcesBot.compile.command": {
+					"type": "string",
+					"default": "g++",
+					"description": "The command to compile the solution file",
+					"scope": "window"
+				},
+				"codeforcesBot.template.templateFile": {
+					"type": "string",
+					"description": "The template for the solution file",
+					"scope": "window"
+				},
+				"codeforcesBot.template.templateLineNumber": {
+					"type": "number",
+					"default": 162,
+					"description": "The line number of template from where you want to start coding",
+					"scope": "window"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"self-test": "tsc ./src/testing.ts; node ./src/testing.js",
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"lint": "eslint src --ext ts",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.40.0",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.0.0",
+		"@types/node": "^14.0.27",
+		"eslint": "^7.9.0",
+		"@typescript-eslint/eslint-plugin": "^4.1.1",
+		"@typescript-eslint/parser": "^4.1.1",
+		"glob": "^7.1.6",
+		"mocha": "^8.1.3",
+		"typescript": "^4.0.2",
+		"vscode-test": "^1.4.0"
+	},
+	"dependencies": {
+		"@types/cheerio": "^0.22.22",
+		"@types/shelljs": "^0.8.8",
+		"@types/table": "^6.0.0",
+		"axios": "^0.21.0",
+		"cheerio": "^1.0.0-rc.3",
+		"form-data": "^3.0.0",
+		"qs": "^6.9.4",
+		"query-string": "^6.13.6",
+		"shelljs": "^0.8.4",
+		"table": "^6.0.3"
+	},
+	"__metadata": {
+		"id": "0525ee03-4b76-4985-a9b0-99dc93cd7d3b",
+		"publisherId": "88fe204d-a637-4010-b176-e1b6b53180ed",
+		"publisherDisplayName": "Avinish Kumar",
+		"installedTimestamp": 1636726848974
+	}
+}
