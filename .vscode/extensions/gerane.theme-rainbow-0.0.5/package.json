@@ -1,0 +1,34 @@
+{
+	"name": "Theme-rainbow",
+	"displayName": "rainbow Theme",
+	"description": "rainbow Theme ported from the rainbow TextMate Theme",
+	"version": "0.0.5",
+	"publisher": "gerane",
+	"engines": {
+		"vscode": "^0.10.1"
+	},
+	"categories": [
+		"Themes"
+	],
+	"icon": "icon.png",
+	"homepage": "https://github.com/gerane/VSCodeThemes/blob/master/gerane.Theme-rainbow/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/gerane/VSCodeThemes.git"
+	},
+	"contributes": {
+		"themes": [
+			{
+				"label": "rainbow",
+				"path": "./themes/rainbow.tmTheme",
+				"uiTheme": "vs-dark"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "72407a16-df63-4641-a8be-1c730fc317a6",
+		"publisherId": "a5c25faf-bf60-4941-81b9-9a852b96c5fb",
+		"publisherDisplayName": "gerane",
+		"installedTimestamp": 1636285141010
+	}
+}

@@ -1,0 +1,20 @@
+on:
+  release:
+    types: [published]
+name: Deploy Extension
+jobs:
+  Publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Install
+      uses: actions/npm@master
+      with:
+        args: install --unsafe-perm
+    - name: Publish
+      uses: lannonbr/vsce-action@master
+      env:
+        VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+      with:
+        args: publish -p $VSCE_TOKEN
