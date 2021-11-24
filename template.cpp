@@ -48,17 +48,6 @@ inline int redi(T& x) {
   while (std::isdigit(ch)) x = x * 10 + ch - 48, ch = getc();
   return x = f ? -x : x, ch == EOF ? EOF : flag;
 }
-template <>
-inline int redi<double>(double& x) {
-  static std::streambuf* inbuf = cin.rdbuf();
-  LL y, z;
-  int _y = redi(y), _z = redi(z);
-  if (_y == EOF || _z == EOF) {
-    return EOF;
-  }
-  
-  return ;
-}
 template <typename T, typename... Args>
 inline int redi(T& a, Args&... args) { return redi(a) != EOF ? redi(args...), 0 : EOF; }
 inline int redc(char& ch) {
