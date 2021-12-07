@@ -9,18 +9,15 @@ const int kN = 1e5 + 1;
 struct V {
   double x, y;
 } a[kN];
-const V operator+(const V& a, const V& b) { return {a.x + b.x, a.y + b.y}; }
 const V operator-(const V& a, const V& b) { return {a.x - b.x, a.y - b.y}; }
-const V operator-(const V& a) { return {-a.x, -a.y}; }
-const int Dot(const V& a, const V& b) { return a.x * b.x + a.y * b.y; }
-const int Cross(const V& a, const V& b) { return a.x * b.y - a.y * b.x; }
+const double Cross(const V& a, const V& b) { return a.x * b.y - a.y * b.x; }
 const double Distance(const V& a, const V& b) { return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)); }
 
 int n, ms = 1, t, st[kN];
 double s;
 
 int main() {
-  // freopen("P2742.in", "r", stdin);
+  // freopen("P2742_8.in", "r", stdin);
   // freopen("P2742.out", "w", stdout);
   cin >> n;
   for (int i = 1; i <= n; ++i) cin >> a[i].x >> a[i].y, (a[i].x < a[ms].x || a[i].x == a[ms].x && a[i].y < a[ms].y) && (ms = i);

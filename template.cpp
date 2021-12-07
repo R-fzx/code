@@ -112,161 +112,6 @@ using OUT::put_non;
 using OUT::putc;
 using OUT::putst;
 }  // namespace IO
-struct BigUint {
-  using _Type = vector<uLL>;
-  static const uLL BASE = 100000000, WIDTH = 8;
-  _Type s;
-  int len;
-  const BigUint& clean() {
-    while (!s.back() && s.size() > 1) s.pop_back();
-    return *this;
-  }
-  BigUint(const uLL num = 0) { *this = num; }
-  BigUint(const string& s) { *this = s; }
-  BigUint(const _Type& b) { *this = b; }
-  const BigUint& operator=(uLL num) {
-    s.clear();
-    long long t = num;
-    while (t) t /= 10, len++;
-    do s.push_back(num % BASE), num /= BASE;
-    while (num > 0);
-    return *this;
-  }
-  const BigUint& operator=(const string& str) {
-    s.clear();
-    int x, l = ((len = str.length()) - 1) / WIDTH + 1;
-    for (int i = 0, end, start; i < l; i++) end = str.length() - i * WIDTH, start = max(0uLL, end - WIDTH), sscanf(str.substr(start, end - start).c_str(), "%d", &x), s.push_back(x);
-    return this->clean();
-  }
-  const BigUint& operator=(const _Type& b) { return s = b, this->clean(); }
-  const BigUint& operator+(const BigUint& b) const {
-    BigUint c;
-    c.s.clear();
-    for (int i = 0, g = 0, x; g || i < s.size() || i < b.s.size(); i++) x = g, i < s.size() && (x += s[i]), i < b.s.size() && (x += b.s[i]), c.s.push_back(x % BASE), g = x / BASE;
-    return c;
-  }
-  const BigUint& operator-(const BigUint& b) const {
-    assert(b <= *this);
-    BigUint c;
-    c.s.clear();
-    for (int i = 0, g = 0, x; g || i < s.size() || i < b.s.size(); i++) x = s[i] + g, i < b.s.size() && (x -= b.s[i]), x < 0 ? (g = -1, x += BASE) : (g = 0), c.s.push_back(x);
-    return c.clean();
-  }
-  const BigUint& operator*(const BigUint& b) const {
-    int i, j;
-    uLL g, x;
-    _Type v(s.size() + b.s.size(), 0);
-    BigUint c;
-    c.s.clear();
-    for (i = 0; i < s.size(); i++)
-      for (j = 0; j < b.s.size(); j++) v[i + j] += (uLL)(s[i]) * b.s[j];
-    for (i = 0, g = 0; g || i < v.size(); i++) x = v[i] + g, c.s.push_back(x % BASE), g = x / BASE;
-    return c.clean();
-  }
-  int bsearch(const BigUint& b, const BigUint& m) const {
-    int x;
-    for (int L = 0, R = BASE - 1; x = (L + R) >> 1, b * x > m || b * (x + 1) <= m; (b * x <= m ? L : R) = x) 1;
-    return x;
-  }
-  const BigUint& operator/(const BigUint& b) const {
-    assert(b > 0);
-    BigUint c = *this, m;
-    for (int i = s.size() - 1; i >= 0; i--) m = m * BASE + s[i], c.s[i] = bsearch(b, m), m -= b * c.s[i];
-    return c.clean();
-  }
-  const BigUint& operator%(const BigUint& b) const {
-    BigUint c = *this, m;
-    for (int i = s.size() - 1; i >= 0; i--) m = m * BASE + s[i], c.s[i] = bsearch(b, m), m -= b * c.s[i];
-    return m;
-  }
-  static const _Type& to_bit(const BigUint& b) {
-    _Type s;
-    uLL j;
-    for (BigUint x = b; x.clean(), x != (j = 0); s.push_back(j))
-      for (uLL i = x.s.size() - 1; i >= 0; --i, j = j * BASE + x.s[i], x.s[i] = j >> 1, j &= 1) 1;
-    return s;
-  }
-  static const BigUint& to_dec(const _Type& b) {
-    BigUint s;
-    uLL j;
-    for (BigUint x = b; x.clean(), x != (j = 0); s.s.push_back(j))
-      for (uLL i = x.s.size() - 1; i >= 0; --i, j = j * BASE + x.s[i], x.s[i] = j >> 1, j &= 1) 1;
-    return s.clean();
-  }
-#define GET(x) (x.size() > i ? x[i] : 0)
-  const BigUint& operator|(const BigUint& b) const {
-    _Type _x = to_bit(*this), _y = to_bit(b), s;
-    for (int i = 0; i < max(_x.size(), _y.size()); s.push_back(GET(_x) | GET(_y)), ++i) 1;
-    return to_dec(s);
-  }
-  const BigUint& operator&(const BigUint& b) const {
-    _Type _x = to_bit(*this), _y = to_bit(b), s;
-    for (int i = 0; i < max(_x.size(), _y.size()); s.push_back(GET(_x) & GET(_y)), ++i) 1;
-    return to_dec(s);
-  }
-  const BigUint& operator^(const BigUint& b) const {
-    _Type _x = to_bit(*this), _y = to_bit(b), s;
-    for (int i = 0; i < max(_x.size(), _y.size()); s.push_back(GET(_x) ^ GET(_y)), ++i) 1;
-    return to_dec(s);
-  }
-  const BigUint& operator~() const {
-    _Type _x = to_bit(*this);
-    for (int i = 0; i < _x.size(); ++i) _x[i] = !_x[i];
-    return to_dec(_x);
-  }
-  const BigUint& operator<<(const int b) const {
-    _Type _x = to_bit(*this), s = _Type(b, 0uLL);
-    for (uLL x : _x) s.push_back(x);
-    return to_dec(s);
-  }
-  const BigUint& operator>>(const int b) const {
-    _Type _x = to_bit(*this), s;
-    for (int i = b; i < _x.size(); ++i) s.push_back(_x[i]);
-    return to_dec(s);
-  }
-  const BigUint& operator+=(const BigUint& b) { return (*this) = (*this) + b; }
-  const BigUint& operator-=(const BigUint& b) { return (*this) = (*this) - b; }
-  const BigUint& operator*=(const BigUint& b) { return (*this) = (*this) * b; }
-  const BigUint& operator/=(const BigUint& b) { return (*this) = (*this) / b; }
-  const BigUint& operator%=(const BigUint& b) { return (*this) = (*this) % b; }
-  const BigUint& operator|=(const BigUint& b) { return (*this) = (*this) | b; }
-  const BigUint& operator&=(const BigUint& b) { return (*this) = (*this) & b; }
-  const BigUint& operator^=(const BigUint& b) { return (*this) = (*this) ^ b; }
-  const BigUint& operator++() { return *this += 1; }
-  const BigUint& operator++(int) {
-    const BigUint& x = *this;
-    return ++*this, x;
-  }
-  const BigUint& operator--() { return *this -= 1; }
-  const BigUint& operator--(int) {
-    const BigUint& x = *this;
-    return --*this, x;
-  }
-  const BigUint& operator<<=(const int b) { return *this = *this << b; }
-  const BigUint& operator>>=(const int b) { return *this = *this >> b; }
-  bool operator<(const BigUint& b) const {
-    if (s.size() != b.s.size()) return s.size() < b.s.size();
-    for (int i = s.size() - 1; i >= 0; i--)
-      if (s[i] != b.s[i]) return s[i] < b.s[i];
-    return false;
-  }
-  bool operator>(const BigUint& b) const { return b < *this; }
-  bool operator<=(const BigUint& b) const { return !(b < *this); }
-  bool operator>=(const BigUint& b) const { return !(*this < b); }
-  bool operator!=(const BigUint& b) const { return b < *this || *this < b; }
-  bool operator==(const BigUint& b) const { return !(b < *this) && !(b > *this); }
-  void read() {
-    string _s;
-    IO::redst(_s), *this = _s;
-  }
-  void write() {
-    clean(), IO::put_non(s.back());
-    for (int i = s.size() - 2; ~i; --i) {
-      char sc[20];
-      sprintf(sc, "%08d", s[i]), IO::putst(sc);
-    }
-  }
-};
 namespace Prime {
 const int kN = 25;
 const LL kTs[kN] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
@@ -275,7 +120,7 @@ LL pow(LL a, LL p, LL mod) {
   for (; p; p >>= 1, a = a * a % mod) (p & 1) && (s = s * a % mod);
   return s % mod;
 }
-bool is_prime(LL P) {
+bool Prime(LL P) {
   if (P == 1) return 0;
   LL t = P - 1, k = 0;
   while (!(t & 1)) k++, t >>= 1;
@@ -292,7 +137,16 @@ bool is_prime(LL P) {
   return 1;
 }
 }  // namespace Prime
-using Prime::is_prime;
+using Prime::Prime;
+namespace Geometry {
+  
+}
+
+LL Pow(LL b, LL e, LL m) {
+  LL s = 1;
+  for (; e; e >>= 1, b = b * b % m) (e & 1) && (s = s * b % m);
+  return s;
+}
 
 int main() {
 #define ONLINE_JUDGE

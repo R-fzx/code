@@ -7,6 +7,12 @@
     "type_traits": "cpp",
     "numeric": "cpp",
     "chrono": "cpp",
-    "complex": "cpp"
+    "complex": "cpp",
+    "cmath": "cpp",
+    "dsu": "cpp",
+    "*.tcc": "cpp",
+    "functional": "cpp",
+    "random": "cpp",
+    "regex": "cpp"
   }
 }

@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>[SCOI2007]最大土地面积 - 洛谷</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+        <meta name="csrf-token" content="1638772407:rouTAd8nEYbUXxXCTTYnu0lrgf2ViCZ32x0htLKkJJw=">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' luogu.com.cn *.luogu.com.cn luogu.org *.luogu.org *.cnzz.com luoguprivate.oss-cn-hangzhou.aliyuncs.com luogu.oss-cn-hangzhou.aliyuncs.com wss: blob:; img-src * data:; font-src * data:; frame-src https://player.bilibili.com https://www.bilibili.com">
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" media="screen"/>
+    <link rel="stylesheet" href="https://cdn.luogu.com.cn/fe/loader.css?ver=20211201">
+    <script>window._feInjection = JSON.parse(decodeURIComponent("%7B%22code%22%3A200%2C%22currentTemplate%22%3A%22ProblemShow%22%2C%22currentData%22%3A%7B%22problem%22%3A%7B%22background%22%3A%22%22%2C%22description%22%3A%22%5Cu5728%5Cu67d0%5Cu5757%5Cu5e73%5Cu9762%5Cu571f%5Cu5730%5Cu4e0a%5Cu6709N%5Cu4e2a%5Cu70b9%5Cuff0c%5Cu4f60%5Cu53ef%5Cu4ee5%5Cu9009%5Cu62e9%5Cu5176%5Cu4e2d%5Cu7684%5Cu4efb%5Cu610f%5Cu56db%5Cu4e2a%5Cu70b9%5Cuff0c%5Cu5c06%5Cu8fd9%5Cu7247%5Cu571f%5Cu5730%5Cu56f4%5Cu8d77%5Cu6765%5Cuff0c%5Cu5f53%5Cu7136%5Cuff0c%5Cu4f60%5Cu5e0c%5Cu671b%5Cu8fd9%5Cu56db%5Cu4e2a%5Cu70b9%5Cu56f4%5Cu6210%5Cu7684%5Cu591a%5Cu8fb9%5Cu5f62%5Cu9762%5Cu79ef%5Cu6700%5Cu5927%5Cu3002%5Cn%22%2C%22inputFormat%22%3A%22%5Cu7b2c1%5Cu884c%5Cu4e00%5Cu4e2a%5Cu6b63%5Cu6574%5Cu6570N%5Cuff0c%5Cu63a5%5Cu4e0b%5Cu6765N%5Cu884c%5Cuff0c%5Cu6bcf%5Cu884c2%5Cu4e2a%5Cu6570x%2Cy%5Cuff0c%5Cu8868%5Cu793a%5Cu8be5%5Cu70b9%5Cu7684%5Cu6a2a%5Cu5750%5Cu6807%5Cu548c%5Cu7eb5%5Cu5750%5Cu6807%5Cu3002%5Cn%22%2C%22outputFormat%22%3A%22%5Cu6700%5Cu5927%5Cu7684%5Cu591a%5Cu8fb9%5Cu5f62%5Cu9762%5Cu79ef%5Cuff0c%5Cu7b54%5Cu6848%5Cu7cbe%5Cu786e%5Cu5230%5Cu5c0f%5Cu6570%5Cu70b9%5Cu540e3%5Cu4f4d%5Cu3002%5Cn%22%2C%22samples%22%3A%5B%5B%225%5Cn0%200%5Cn1%200%5Cn1%201%5Cn0%201%5Cn0.5%200.5%22%2C%221.000%22%5D%5D%2C%22hint%22%3A%22%5Cu6570%5Cu636e%5Cu8303%5Cu56f4%20n%3C%3D2000%2C%20%7Cx%7C%2C%7Cy%7C%3C%3D100000%5Cn%22%2C%22provider%22%3A%7B%22uid%22%3A3296%2C%22name%22%3A%22noip%22%2C%22slogan%22%3A%22%5Cu5bf9%5Cu4f60%5Cu8bf4%5Cu518d%5Cu89c1%22%2C%22badge%22%3A%22%5Cu6bd2%5Cu7624%22%2C%22isAdmin%22%3Atrue%2C%22isBanned%22%3Afalse%2C%22color%22%3A%22Purple%22%2C%22ccfLevel%22%3A0%7D%2C%22attachments%22%3A%5B%5D%2C%22canEdit%22%3Afalse%2C%22limits%22%3A%7B%22time%22%3A%5B1000%2C1000%2C1000%2C1000%2C1000%2C1000%2C1000%2C1000%2C1000%2C1000%5D%2C%22memory%22%3A%5B128000%2C128000%2C128000%2C128000%2C128000%2C128000%2C128000%2C128000%2C128000%2C128000%5D%7D%2C%22showScore%22%3Atrue%2C%22score%22%3Anull%2C%22stdCode%22%3A%22%22%2C%22tags%22%3A%5B24%2C39%2C48%2C111%2C286%2C291%2C292%5D%2C%22wantsTranslation%22%3Afalse%2C%22totalSubmit%22%3A2539%2C%22totalAccepted%22%3A771%2C%22flag%22%3A5%2C%22pid%22%3A%22P4166%22%2C%22title%22%3A%22%5BSCOI2007%5D%5Cu6700%5Cu5927%5Cu571f%5Cu5730%5Cu9762%5Cu79ef%22%2C%22difficulty%22%3A6%2C%22fullScore%22%3A100%2C%22type%22%3A%22P%22%2C%22accepted%22%3Afalse%2C%22submitted%22%3Afalse%7D%2C%22contest%22%3Anull%2C%22discussions%22%3A%5B%7B%22id%22%3A304748%2C%22title%22%3A%22%5Cu6c42%5Cu52a9%5Cuff01%5Cuff01%5Cuff01%5Cuff01%5Cuff01%22%2C%22forum%22%3A%7B%22id%22%3A12745%2C%22name%22%3A%22P4166%20%5BSCOI2007%5D%5Cu6700%5Cu5927%5Cu571f%5Cu5730%5Cu9762%5Cu79ef%22%2C%22slug%22%3A%22P4166%22%7D%7D%2C%7B%22id%22%3A232119%2C%22title%22%3A%22%5Cu6c42%5Cu52a9%5Cuff01%22%2C%22forum%22%3A%7B%22id%22%3A12745%2C%22name%22%3A%22P4166%20%5BSCOI2007%5D%5Cu6700%5Cu5927%5Cu571f%5Cu5730%5Cu9762%5Cu79ef%22%2C%22slug%22%3A%22P4166%22%7D%7D%2C%7B%22id%22%3A132000%2C%22title%22%3A%22%5Cu611f%5Cu89c9%5Cu53d1%5Cu73b0%5Cu4e86%5Cu4e00%5Cu4e2a%5Cu95ee%5Cu9898......%22%2C%22forum%22%3A%7B%22id%22%3A12745%2C%22name%22%3A%22P4166%20%5BSCOI2007%5D%5Cu6700%5Cu5927%5Cu571f%5Cu5730%5Cu9762%5Cu79ef%22%2C%22slug%22%3A%22P4166%22%7D%7D%2C%7B%22id%22%3A122989%2C%22title%22%3A%22%5Cu5e73%5Cu51e0%5Cu6c42%5Cu52a9%5Cuff1a%5Cu65cb%5Cu8f6c%5Cu5361%5Cu58f3%5Cu4e3a%5Cu4ec0%5Cu4e48WA50QAQ%22%2C%22forum%22%3A%7B%22id%22%3A12745%2C%22name%22%3A%22P4166%20%5BSCOI2007%5D%5Cu6700%5Cu5927%5Cu571f%5Cu5730%5Cu9762%5Cu79ef%22%2C%22slug%22%3A%22P4166%22%7D%7D%2C%7B%22id%22%3A98570%2C%22title%22%3A%22%5Cu4e00%5Cu65e6%5Cu8bc1%5Cu660e%5Cu4e86%5Cu51b3%5Cu7b56%5Cu5355%5Cu8c03%5Cu6027%5Cuff0c%5Cu54ea%5Cu7528%5Cu5f97%5Cu7740%5Cu4e09%5Cu5206%5Cuff1fn%5E2%5Cu5c31%5Cu53ef%5Cu4ee5%22%2C%22forum%22%3A%7B%22id%22%3A12745%2C%22name%22%3A%22P4166%20%5BSCOI2007%5D%5Cu6700%5Cu5927%5Cu571f%5Cu5730%5Cu9762%5Cu79ef%22%2C%22slug%22%3A%22P4166%22%7D%7D%2C%7B%22id%22%3A96357%2C%22title%22%3A%22%5Cuff1f%5Cuff1f%5Cuff1f%5Cu6c42%5Cu89e3%22%2C%22forum%22%3A%7B%22id%22%3A12745%2C%22name%22%3A%22P4166%20%5BSCOI2007%5D%5Cu6700%5Cu5927%5Cu571f%5Cu5730%5Cu9762%5Cu79ef%22%2C%22slug%22%3A%22P4166%22%7D%7D%5D%2C%22bookmarked%22%3Afalse%2C%22vjudgeUsername%22%3Anull%2C%22recommendations%22%3A%5B%7B%22pid%22%3A%22P1742%22%2C%22title%22%3A%22%5Cu6700%5Cu5c0f%5Cu5706%5Cu8986%5Cu76d6%22%2C%22difficulty%22%3A6%2C%22fullScore%22%3A100%2C%22type%22%3A%22P%22%2C%22accepted%22%3Afalse%2C%22submitted%22%3Afalse%7D%2C%7B%22pid%22%3A%22P2533%22%2C%22title%22%3A%22%5BAHOI2012%5D%5Cu4fe1%5Cu53f7%5Cu5854%22%2C%22difficulty%22%3A6%2C%22fullScore%22%3A100%2C%22type%22%3A%22P%22%2C%22accepted%22%3Afalse%2C%22submitted%22%3Afalse%7D%2C%7B%22pid%22%3A%22P2600%22%2C%22title%22%3A%22%5BZJOI2008%5D%5Cu77ad%5Cu671b%5Cu5854%22%2C%22difficulty%22%3A6%2C%22fullScore%22%3A100%2C%22type%22%3A%22P%22%2C%22accepted%22%3Afalse%2C%22submitted%22%3Afalse%7D%2C%7B%22pid%22%3A%22P3187%22%2C%22title%22%3A%22%5BHNOI2007%5D%5Cu6700%5Cu5c0f%5Cu77e9%5Cu5f62%5Cu8986%5Cu76d6%22%2C%22difficulty%22%3A6%2C%22fullScore%22%3A100%2C%22type%22%3A%22P%22%2C%22accepted%22%3Afalse%2C%22submitted%22%3Afalse%7D%2C%7B%22pid%22%3A%22P4196%22%2C%22title%22%3A%22%5BCQOI2006%5D%5Cu51f8%5Cu591a%5Cu8fb9%5Cu5f62%20%5C%2F%5Cu3010%5Cu6a21%5Cu677f%5Cu3011%5Cu534a%5Cu5e73%5Cu9762%5Cu4ea4%22%2C%22difficulty%22%3A6%2C%22fullScore%22%3A100%2C%22type%22%3A%22P%22%2C%22accepted%22%3Afalse%2C%22submitted%22%3Afalse%7D%5D%2C%22lastLanguage%22%3A4%2C%22lastCode%22%3A%22%22%2C%22privilegedTeams%22%3A%5B%7B%22id%22%3A34659%2C%22name%22%3A%22%5Cu5e08%5Cu5927%5Cu9644%5Cu4e2d%5Cu6821%5Cu53cb%5Cu56e2%22%2C%22isPremium%22%3Afalse%7D%2C%7B%22id%22%3A35302%2C%22name%22%3A%22FLOI%20%5Cu8ba8%5Cu8bba%26%5Cu51fa%5Cu9898%5Cu56e2%22%2C%22isPremium%22%3Afalse%7D%2C%7B%22id%22%3A36897%2C%22name%22%3A%22OIercity%5Cu6708%5Cu8d5b%5Cu5b98%5Cu65b9%5Cu51fa%5Cu9898%26%5Cu540c%5Cu6b65%5Cu8d5b%5Cu56e2%5Cu961f%22%2C%22isPremium%22%3Afalse%7D%5D%2C%22userTranslation%22%3Anull%7D%2C%22currentTitle%22%3A%22%5BSCOI2007%5D%5Cu6700%5Cu5927%5Cu571f%5Cu5730%5Cu9762%5Cu79ef%22%2C%22currentTheme%22%3A%7B%22id%22%3A4%2C%22header%22%3A%7B%22imagePath%22%3A%22https%3A%5C%2F%5C%2Fcdn.luogu.com.cn%5C%2Fimages%5C%2Fbg%5C%2Ffe%5C%2FLishui_StarTrails.jpg%22%2C%22color%22%3A%5B%5B41%2C42%2C43%2C1%5D%5D%2C%22blur%22%3A0%2C%22brightness%22%3A0%2C%22degree%22%3A0%2C%22repeat%22%3A0%2C%22position%22%3A%5B0%2C20%5D%2C%22size%22%3A%5B-1%2C-1%5D%2C%22type%22%3A1%2C%22__CLASS_NAME%22%3A%22Luogu%5C%5CDataClass%5C%5CUser%5C%5CThemeConfig%5C%5CHeaderFooterConfig%22%7D%2C%22sideNav%22%3A%7B%22logoBackgroundColor%22%3A%5B41%2C41%2C41%2C1%5D%2C%22color%22%3A%5B31%2C31%2C31%2C1%5D%2C%22invertColor%22%3Atrue%2C%22__CLASS_NAME%22%3A%22Luogu%5C%5CDataClass%5C%5CUser%5C%5CThemeConfig%5C%5CSideNavConfig%22%7D%2C%22footer%22%3A%7B%22imagePath%22%3A%22https%3A%5C%2F%5C%2Fcdn.luogu.com.cn%5C%2Fimages%5C%2Fbg%5C%2Ffe%5C%2FLishui_StarTrails.jpg%22%2C%22color%22%3A%5B%5B41%2C41%2C41%2C1%5D%5D%2C%22blur%22%3A0%2C%22brightness%22%3A-30%2C%22degree%22%3A0%2C%22repeat%22%3A0%2C%22position%22%3A%5B50%2C100%5D%2C%22size%22%3A%5B-1%2C-1%5D%2C%22type%22%3A1%2C%22__CLASS_NAME%22%3A%22Luogu%5C%5CDataClass%5C%5CUser%5C%5CThemeConfig%5C%5CHeaderFooterConfig%22%7D%7D%2C%22currentUser%22%3A%7B%22blogAddress%22%3A%22https%3A%5C%2F%5C%2Fwsfxk.blog.luogu.org%5C%2F%22%2C%22followingCount%22%3A157%2C%22followerCount%22%3A237%2C%22ranking%22%3A1708%2C%22unreadMessageCount%22%3A0%2C%22unreadNoticeCount%22%3A0%2C%22uid%22%3A376161%2C%22name%22%3A%22wsfxk%22%2C%22slogan%22%3A%22%5Cu201c%5Cu6211%5Cu4eec%5Cu5c5e%5Cu4e8e%5Cu5927%5Cu5730%5Cuff0c%5Cu800c%5Cu4f60%5Cu4eec%5Cu5c5e%5Cu4e8e%5Cu661f%5Cu7a7a%5Cu201d%22%2C%22badge%22%3Anull%2C%22isAdmin%22%3Afalse%2C%22isBanned%22%3Afalse%2C%22color%22%3A%22Orange%22%2C%22ccfLevel%22%3A5%2C%22verified%22%3Atrue%2C%22email%22%3A%22%22%2C%22phone%22%3A%2218073129972%22%7D%7D"));window._feConfigVersion=1638328721;window._tagVersion=1638682207;</script>
+    <script src="https://cdn.luogu.com.cn/fe/loader.js?ver=20211201" charset="utf-8" defer></script>
+</head>
+<body>
+<div id="app">
+    <div class="lg-container">
+        <!-- SEO -->
+<article>
+    <h1>[SCOI2007]最大土地面积</h1>
+
+    
+    
+    <h2>题目描述</h2>
+    <div>在某块平面土地上有N个点，你可以选择其中的任意四个点，将这片土地围起来，当然，你希望这四个点围成的多边形面积最大。
+</div>
+
+    <h2>输入输出格式</h2>
+    <h3>输入格式</h3>
+    <br />
+    <div>第1行一个正整数N，接下来N行，每行2个数x,y，表示该点的横坐标和纵坐标。
+</div>
+    <h3>输出格式</h3>
+    <br />
+    <div>最大的多边形面积，答案精确到小数点后3位。
+</div>
+
+    <h2>输入输出样例</h2>
+                        <h3>输入样例 #1</h3>
+            <pre><code>5
+0 0
+1 0
+1 1
+0 1
+0.5 0.5</code></pre>
+            <h3>输出样例 #1</h3>
+            <pre><code>1.000</code></pre>
+            
+            <h2>说明</h2>
+        <div>数据范围 n&lt;=2000, |x|,|y|&lt;=100000
+</div>
+    </article>
+    </div>
+</div>
+<!-- <script src="//www.recaptcha.net/recaptcha/api.js?hl=zh-CN&render=explicit&onload=renderCaptcha" async defer></script> -->
+</body>
+</html>
