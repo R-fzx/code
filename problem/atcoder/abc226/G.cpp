@@ -1,24 +1,19 @@
 #include <iostream>
-#include <map>
-#include <vector>
 
 using namespace std;
 using LL = long long;
 
-const LL kM = 998244353;
-const int kN = 1e6 + 1;
-
-LL n, k, m[kN];
-map<LL, int> f;
-vector<LL> l;
+int t;
+LL a[6], b[6];
 
 int main() {
-  cin >> n >> k;
-  for (int i = 2; i < kN; ++i) {
-    if (!m[i]) {
-      for (int j = i; j < kN; j += i) m[j] = i;
-      
-    }
+  // freopen("G.in", "r", stdin);
+  // freopen("G.out", "w", stdout);
+  cin >> t;
+  while (t--) {
+    for (int i = 1; i <= 5; ++i) cin >> b[i];
+    for (int i = 1; i <= 5; ++i) cin >> a[i], a[i] -= b[i];
+    cout << (!(a[5] < 0 || -a[4] > a[5] || (a[4] < 0 && (a[1] -= a[4], a[5] += a[4], a[4] = 0), a[3] += a[5], a[2] += a[5], -a[3] > a[4])) && (a[3] < 0 && (a[1] -= a[3], a[4] += a[3], a[3] = 0), a[2] += a[4] << 1, a[1] += a[3], a[2] += a[3], a[2] >= 0 && a[1] + a[2] * 2 >= 0) ? "Yes" : "No") << endl;
   }
   return 0;
 }

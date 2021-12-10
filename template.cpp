@@ -48,18 +48,9 @@ inline int redi(T& x) {
   while (std::isdigit(ch)) x = x * 10 + ch - 48, ch = getc();
   return x = f ? -x : x, ch == EOF ? EOF : flag;
 }
-template <typename T, typename... Args>
-inline int redi(T& a, Args&... args) { return redi(a) != EOF ? redi(args...), 0 : EOF; }
 inline int redc(char& ch) {
   static std::streambuf* inbuf = cin.rdbuf();
   return (ch = getc()) == EOF ? EOF : 0;
-}
-inline int redst(char* st) {
-  if (redc(*st) != EOF && (*st))
-    while (redc(*(++st)) != EOF) 1;
-  else
-    return EOF;
-  return 0;
 }
 inline int redst(string& s) {
   s = "";
@@ -86,28 +77,15 @@ inline void put_non(T x) {
   while (x) stack[++top] = x % 10 + '0', x /= 10;
   while (top) putc(stack[top]), --top;
 }
-template <typename T>
-inline void put(const char ch, T x) { put_non(x), putc(ch); }
-template <typename T>
-inline void put(T x) { put('\n', x); }
 inline void putst(const char* st) {
   do putc(*(st++));
   while (*st);
 }
 inline void putst(string st) { putst(st.c_str()); }
-template <typename T>
-inline void put(const char* st, T x) { put_non(x), putst(st); }
-template <typename T, typename... Args>
-inline void put(T a, Args... args) { put(a), put(args...); }
-template <typename T, typename... Args>
-inline void put(const char ch, T a, Args... args) { put(ch, a), put(ch, args...); }
-template <typename T, typename... Args>
-inline void put(const char* st, T a, Args... args) { put(st, a), put(st, args...); }
 }  // namespace OUT
 using IN::redc;
 using IN::redi;
 using IN::redst;
-using OUT::put;
 using OUT::put_non;
 using OUT::putc;
 using OUT::putst;
@@ -120,15 +98,15 @@ LL pow(LL a, LL p, LL mod) {
   for (; p; p >>= 1, a = a * a % mod) (p & 1) && (s = s * a % mod);
   return s % mod;
 }
-bool Prime(LL P) {
+bool IsPrime(LL P) {
   if (P == 1) return 0;
   LL t = P - 1, k = 0;
-  while (!(t & 1)) k++, t >>= 1;
+  while (!(t & 1)) ++k, t >>= 1;
   for (LL i = 0; i < kN; i++) {
     if (P == kTs[i]) return 1;
     LL a = pow(kTs[i], t, P), nxt = a;
     for (LL j = 1; j <= k; j++) {
-      nxt = (a * a) % P;
+      nxt = a * a % P;
       if (nxt == 1 && a != 1 && a != P - 1) return 0;
       a = nxt;
     }
@@ -137,16 +115,25 @@ bool Prime(LL P) {
   return 1;
 }
 }  // namespace Prime
-using Prime::Prime;
-namespace Geometry {
-  
-}
+using Prime::IsPrime;
 
 LL Pow(LL b, LL e, LL m) {
   LL s = 1;
   for (; e; e >>= 1, b = b * b % m) (e & 1) && (s = s * b % m);
   return s;
 }
+template <typename T>
+T Cmin(T& x, T y) { return x = min(x, y); }
+template <typename T>
+T Cmax(T& x, T y) { return x = max(x, y); }
+template <typename T>
+T Max(T x) { return x; }
+template <typename T>
+T Min(T x) { return x; }
+template <typename T, typename... _T>
+T Max(T x, _T... y) { return max(x, Max(y...)); }
+template <typename T, typename... _T>
+T Min(T x, _T... y) { return min(x, Min(y...)); }
 
 int main() {
 #define ONLINE_JUDGE
@@ -156,7 +143,7 @@ int main() {
 #endif
   ios_base::sync_with_stdio(0);
   cin.tie(0), cout.tie(0);
-
+  
 #ifdef TIME
   double t = 1.0 * clock() / CLOCKS_PER_SEC;
   cerr << "\n\nTIME: " << t << "s\n";
