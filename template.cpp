@@ -1,152 +1,93 @@
-// #define TIME
-// #define DEBUG_
-#include <algorithm>
-#include <cassert>
-#include <cctype>
-#include <cmath>
+/**
+ * @author wsfxk
+ */
 #include <cstdio>
 #include <cstring>
-#include <ctime>
-#include <iomanip>
+#include <algorithm>
+#include <cmath>
+#include <cctype>
+#include <string>
 #include <iostream>
-#include <limits>
-#include <map>
-#include <random>
-#include <set>
-#include <unordered_map>
+#include <numeric>
 #include <vector>
-
-#ifdef DEBUG_
-#define debug(format, ...) printf(format, ##__VA_ARGS__)
-#else
-#define debug(...)
-#endif
+#include <map>
+#include <set>
+#include <queue>
+#include <deque>
+#include <functional>
+#include <bitset>
+#include <ctime>
+// #define TIME
+#define DEBUG
 
 using namespace std;
 using LL = long long;
-using uLL = unsigned long long;
-using uI = unsigned int;
 using Pll = pair<LL, LL>;
+using Pdd = pair<double, double>;
+using Vl = vector<LL>;
+using Mll = map<LL, LL>;
 
-random_device rd;
-mt19937 rnd(rd());
-mt19937_64 rnd_64(rd());
+#define FREAD_OPTION
+#ifdef FREAD_OPTION
+  #define MAXBUFFERSIZE 1000000
+  inline char fgetc(){static char buf[MAXBUFFERSIZE+5],*p1=buf,*p2=buf;return p1==p2&&(p2=(p1=buf)+fread(buf,1,MAXBUFFERSIZE,stdin),p1==p2)?EOF:*p1++;}
+  #undef MAXBUFFERSIZE
+  #define getchar fgetc
+#endif 
+#define gc getchar
+struct IOReader{
+  template<typename T>
+  inline IOReader& operator >> (T& a){a=0;bool flg=false;char ch=gc();while(ch<'0' || ch>'9'){if(ch=='-')  flg^=1;ch=gc();}while(ch>='0' && ch<='9'){a=(a<<3)+(a<<1)+(ch^'0');ch=gc();}if(flg)  a=-a;return *this;}
+  inline IOReader& operator >> (string& a){a.clear();char ch=gc();while(isspace(ch) && ch!=EOF)  ch=gc();while(!isspace(ch) && ch!=EOF)  a+=ch,ch=gc();return *this;}
+  inline IOReader& operator >> (char* a){
+    #ifdef FREAD_OPTION
+      char ch=gc();while(isspace(ch) && ch!=EOF)  ch=gc();while(!isspace(ch) && ch!=EOF)  *(a++)=ch,ch=gc();*a='\0';
+    #else
+      scanf(" %s",a);
+    #endif
+    return *this;
+  }
+  inline IOReader& operator >> (char &a){a=gc();while(isspace(a))  a=gc();return *this;}
+  inline IOReader& operator >> (double& a){a=0;bool flg=false;char ch=gc();while((ch<'0' || ch>'9') && ch!='.'){if(ch=='-')flg^=1;ch=gc();}while(ch>='0' && ch<='9'){a=a*10+(ch^'0');ch=gc();}if(ch=='.'){ch=gc();double p=0.1;while(ch>='0' && ch<='9'){a+=p*(ch^'0');ch=gc();p*=0.1;}}if(flg)  a=-a;return *this;}
+  inline IOReader& operator >> (long double& a){a=0;bool flg=false;char ch=gc();while((ch<'0' || ch>'9') && ch!='.'){if(ch=='-')flg^=1;ch=gc();}while(ch>='0' && ch<='9'){a=a*10+(ch^'0');ch=gc();}if(ch=='.'){ch=gc();long double p=0.1;while(ch>='0' && ch<='9'){a+=p*(ch^'0');ch=gc();p*=0.1;}}if(flg)  a=-a;return *this;}
+  #undef importRealReader
+}iocin;
+#define cin iocin
+#define readI(l,r,A) for(int wsfxk=(l);wsfxk<=(r);wsfxk++) iocin >> A[wsfxk]
+#define outA(l,r,A,sp)  for(int wsfxk=(l);wsfxk<=(r);wsfxk++) printf(sp,A[wsfxk])
+#define outV(A,sp) for(auto wsfxk:A) printf(sp,wsfxk)
+inline void yOn(bool x, string str){printf("%s%s", (x) ? "Yes" : "No", str.c_str());}
+inline void YON(bool x, string str){printf("%s%s", (x) ? "YES" : "NO", str.c_str());}
+#define rep(i, l, r) for(auto i = (l); i <= (r); i ++)
+#define per(i, r, l) for(auto i = (r); i >= (l); i --)
+#define openFile(f) freopen(f".in","r",stdin),freopen(f".out","w",stdout)
+#define ALL(x) std::begin(x), std::end(x)
+#define multiCase int totCases; iocin >> totCases; for(int currCase = 1; currCase <= totCases; currCase++)
+#define cmin(x, y) (x) = min((x), (y))
+#define cmax(x, y) (x) = max((x), (y))
+#ifdef DEBUG
+#define debug(...) printf(__VA_GARS__)
+#else
+#define debug
+#endif
+#undef gc
 
-namespace IO {
-namespace IN {
-#define getc() (p1 == p2 && (p2 = (p1 = buf) + inbuf->sgetn(buf, MAX_INPUT), p1 == p2) ? EOF : *p1++)
-const int MAX_INPUT = 1000000;
-char buf[MAX_INPUT], *p1, *p2;
-template <typename T>
-inline int redi(T& x) {
-  static std::streambuf* inbuf = cin.rdbuf();
-  bool f = x = 0, flag = 1;
-  char ch = getc();
-  if (ch == EOF) return EOF;
-  while (!std::isdigit(ch)) f |= ch == '-', ch = getc();
-  if (std::isdigit(ch)) x = x * 10 + ch - '0', ch = getc(), flag = 0;
-  while (std::isdigit(ch)) x = x * 10 + ch - 48, ch = getc();
-  return x = f ? -x : x, ch == EOF ? EOF : flag;
-}
-inline int redc(char& ch) {
-  static std::streambuf* inbuf = cin.rdbuf();
-  return (ch = getc()) == EOF ? EOF : 0;
-}
-inline int redst(string& s) {
-  s = "";
-  char c;
-  for (; redc(c) != EOF && !isspace(c); s.push_back(c)) 1;
-  return c == EOF ? EOF : 0;
-}
-#undef getc
-}  // namespace IN
-namespace OUT {
-inline void putc(const char ch) {
-  static std::streambuf* outbuf = cout.rdbuf();
-  outbuf->sputc(ch);
-}
-template <typename T>
-inline void put_non(T x) {
-  static char stack[21];
-  static int top = 0;
-  if (x < 0) putc('-'), x = -x;
-  if (!x) {
-    putc('0');
-    return;
-  }
-  while (x) stack[++top] = x % 10 + '0', x /= 10;
-  while (top) putc(stack[top]), --top;
-}
-inline void putst(const char* st) {
-  do putc(*(st++));
-  while (*st);
-}
-inline void putst(string st) { putst(st.c_str()); }
-}  // namespace OUT
-using IN::redc;
-using IN::redi;
-using IN::redst;
-using OUT::put_non;
-using OUT::putc;
-using OUT::putst;
-}  // namespace IO
-namespace Prime {
-const int kN = 25;
-const LL kTs[kN] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
-LL pow(LL a, LL p, LL mod) {
-  LL s = 1;
-  for (; p; p >>= 1, a = a * a % mod) (p & 1) && (s = s * a % mod);
-  return s % mod;
-}
-bool IsPrime(LL P) {
-  if (P == 1) return 0;
-  LL t = P - 1, k = 0;
-  while (!(t & 1)) ++k, t >>= 1;
-  for (LL i = 0; i < kN; i++) {
-    if (P == kTs[i]) return 1;
-    LL a = pow(kTs[i], t, P), nxt = a;
-    for (LL j = 1; j <= k; j++) {
-      nxt = a * a % P;
-      if (nxt == 1 && a != 1 && a != P - 1) return 0;
-      a = nxt;
-    }
-    if (a != 1) return 0;
-  }
-  return 1;
-}
-}  // namespace Prime
-using Prime::IsPrime;
+const LL kM1 = 998244353, kM2 = 1e9 + 7;
 
 LL Pow(LL b, LL e, LL m) {
   LL s = 1;
   for (; e; e >>= 1, b = b * b % m) (e & 1) && (s = s * b % m);
   return s;
 }
-template <typename T>
-T Cmin(T& x, T y) { return x = min(x, y); }
-template <typename T>
-T Cmax(T& x, T y) { return x = max(x, y); }
-template <typename T>
-T Max(T x) { return x; }
-template <typename T>
-T Min(T x) { return x; }
-template <typename T, typename... _T>
-T Max(T x, _T... y) { return max(x, Max(y...)); }
-template <typename T, typename... _T>
-T Min(T x, _T... y) { return min(x, Min(y...)); }
 
-int main() {
+int main(){
 #define ONLINE_JUDGE
 #ifndef ONLINE_JUDGE
-  freopen(".in", "r", stdin);
-  freopen(".out", "w", stdout);
+  openFile("");
 #endif
-  ios_base::sync_with_stdio(0);
-  cin.tie(0), cout.tie(0);
   
 #ifdef TIME
-  double t = 1.0 * clock() / CLOCKS_PER_SEC;
-  cerr << "\n\nTIME: " << t << "s\n";
+  fprintf(stderr, "\nTIME: %dms", clock());
 #endif
   return 0;
 }
