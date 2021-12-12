@@ -25,8 +25,7 @@ struct FibHeap {
   FibHeap() {}
   ~FibHeap() {}
 
-  void Insert(T v) {
-  }
+  void Insert(T v) { Insert(new FibNode<T>(v)); }
   void DeleteMin() {
     if (m == nullptr) return;
     Node c = nullptr, _m = m;
@@ -35,7 +34,7 @@ struct FibHeap {
       _m->c = (c->r == c ? nullptr : c->r);
       AddNode(c, m), c->p = nullptr;
     }
-    RemoveMin();
+    DeleteNode(_m);
     if (_m->r == _m) {
       m = nullptr;
     } else {
@@ -55,16 +54,17 @@ struct FibHeap {
     }
     free(o->cons), delete o;
   }
-  bool Min(T *v) {
-  }
+  T Min() { return m->v; }
   void Update(T x, T y) {
+    Node o = Find(x);
+    if (o != nullptr) Update(o, y);
   }
   void Delete(T v) {
+    if (m == nullptr) return;
+    Node o = Find(v);
+    if (o != nullptr) Delete(o);
   }
-  bool Contains(T v) {
-  }
-  void Destroy() {
-  }
+  bool Contains(T v) { return Find(v) != nullptr; }
   void DeleteNode(Node o) { o->l->r = o->r, o->r->l = o->l; }
   void AddNode(Node o, Node r) { o->l = r->l, r->l->r = o, o->r = r, r->l = o; }
   void MergeList(Node x, Node y) {
@@ -132,11 +132,7 @@ struct FibHeap {
     o->d = d;
     if (o->p != nullptr) UpdateDegree(o->p, d);
   }
-  void Cut(Node o, Node p) {
-    DeleteNode(o), UpdateDegree(p, o->d);
-    p->c = (o == o->r ? nullptr : o->r);
-    o->p = nullptr, o->l = o->r = o, o->m = 0, AddNode(o, m);
-  }
+  void Cut(Node o, Node p) { DeleteNode(o), UpdateDegree(p, o->d), p->c = (o == o->r ? nullptr : o->r), o->p = nullptr, o->l = o->r = o, o->m = 0, AddNode(o, m); }
   void CascadingCut(Node o) {
     Node p = o->p;
     if (p != nullptr) {
@@ -148,27 +144,64 @@ struct FibHeap {
     }
   }
   void DecreaseTo(Node o, T v) {
-    Node p;
-    if (m == nullptr || o == nullptr) return;
-    o->v = v, p = o->p;
+    if (m == nullptr || o == nullptr || o->v == v) return;
+    Node p = o->p;
+    o->v = v;
     if (p != nullptr && o->v < p->v) Cut(o, p), CascadingCut(p);
     if (o->v < m->v) m = o;
   }
   void IncreaseTo(Node o, T v) {
+    if (m == nullptr || o == nullptr || o->v == v) return;
+    while (o->c != nullptr) {
+      Node c = o->c;
+      DeleteNode(c), o->c = (c->r == c ? nullptr : c->r), AddNode(c, m), c->p = nullptr;
+    }
+    o->d = 0, o->v = v;
+    Node p = o->p;
+    if (p != nullptr) {
+      Cut(o, p), CascadingCut(p);
+    } else if (m == o) {
+      Node r = o->r;
+      while (r != o) {
+        if (o->v > r->v) m = r;
+        r = r->r;
+      }
+    }
   }
-  void Update(Node o, T v) {
+  void Update(Node o, T v) { v < o.v ? (DecreaseTo(o, v), 0) : (IncreaseTo(o, v), 0); }
+  Node Find(Node o, T v) {
+    if (o == nullptr) return nullptr;
+    Node r = o;
+    do {
+      if (r->v == v) {
+        return r;
+      } else {
+        Node p = Find(r->c, v);
+        if (p != nullptr) return p;
+      }
+      r = r->r;
+    } while (r != o);
+    return nullptr;
   }
-  Node Find(Node r, T v) {
-  }
-  Node Find(T v) {
-  }
-  void Delete(Node o) {
-  }
-  void DestoryNode(Node o) {
-  }
+  Node Find(T v) { return m == nullptr ? nullptr : Find(m, v); }
+  void Delete(Node o) { DecreaseTo(o, m->v - 2), DeleteMin(); }
 };
 
+FibHeap<int> h;
+int q, o, x;
+
 int main() {
-  less<int>()(1, 2);
+  cin >> q;
+  while (q--) {
+    cin >> o;
+    if (o == 1) {
+      cin >> x;
+      h.Insert(x);
+    } else if (o == 2) {
+      cout << h.Min() << endl;
+    } else {
+      h.DeleteMin();
+    }
+  }
   return 0;
 }
