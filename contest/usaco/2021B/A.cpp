@@ -21,31 +21,40 @@ using Pdd = pair<double, double>;
 using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 
-const int kN = 61;
+const int kN = 5e5 + 2;
 
 int n;
-LL x, a[kN], ans;
+LL c, a[kN], b[kN];
+string s;
+Mll p[2];
 
 int main() {
-  // freopen("E.in", "r", stdin);
-  // freopen("E.out", "w", stdout);
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n >> x;
+  cin >> n >> s;
+  s = "#" + s;
   for (int i = 1; i <= n; ++i) {
-    cin >> a[i];
+    a[i] = a[i - 1] + (s[i] == 'G'), b[i] = i - a[i];
   }
-  for (int i = n; i; --i) {
-    LL v = x % a[i];
-    bool f = v <= a[i] - v || (v - a[i] + v) < a[i - 1];
-    ans += x / a[i] + !f, x = (f ? v : a[i] - v);
+  for (int i = 3; i <= n; ++i) {
+    ++p[0][a[i - 3] + 1], ++p[1][b[i - 3] + 1];
+    c += p[0][a[i]] + p[1][b[i]];
   }
-  cout << ans;
+  cout << c;
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif
   return 0;
 }
 /*
-87
-
+i j
+a[j] == a[i - 1] + 1
+b[j] == b[i - 1] + 1
+5
+GHGHG
+11223
+01122
+p[0]
+00100
+p[1]
+01000
 */
