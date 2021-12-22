@@ -1,64 +1,104 @@
 #include <algorithm>
+#include <bitset>
 #include <cmath>
+#include <cstdio>
+#include <ctime>
+#include <deque>
+#include <functional>
+#include <iomanip>
 #include <iostream>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <set>
+#include <string>
 #include <vector>
+// #define TIME
 
 using namespace std;
+using LL = long long;
+using LD = long double;
+using Pll = pair<LL, LL>;
+using Pdd = pair<LD, LD>;
+using Vl = vector<LL>;
+using Mll = map<LL, LL>;
 
-const int kN = 400001, kQ = 1e5 + 1, kL = 32;
+const int kN = 40001, kL = 16, kM = 100001;
 
-int n, m, b, a[kN], r[kN], c[kN], _c[kN], d[kN], f[kN][kL], p[kN][2], _p[kN << 1], pc, ans[kQ], s;
-vector<int> e[kN];
+struct E {
+  int v, f[kL], _f, _l, d;
+  Vl n;
+} e[kN];
+int n, m, b, ans[kM], a[kN << 1], c;
 struct Q {
-#define id(x) (x / b)
-  int l, r, i, t;
+  int i, l, r;
   bool operator<(const Q &o) const {
-    return (id(l) ^ id(o.l)) ? l < o.l : ((id(l) & 1) ? r < o.r : r > o.r);
+    return l / b != o.l / b ? l < o.l : r < o.r;
   }
-} q[kQ];
+} q[kM];
 
-void _D(int x, int _f) {
-  d[x] = d[_f] + 1, f[x][0] = _f, p[x][0] = ++pc, _p[pc] = x;
-  for (int i = 1; i < kL; ++i) f[x][i] = f[f[x][i - 1]][i - 1];
-  for (int i : e[x]) (i ^ _f) && (_D(i, x), 0);
-  p[x][1] = ++pc, _p[pc] = x;
+void D(int x, int f) {
+  e[x].d = e[e[x].f[0] = f].d + 1, a[e[x]._f = ++c] = x;
+  for (int i = 1; i < kL; ++i) {
+    e[x].f[i] = e[e[x].f[i - 1]].f[i - 1];
+  }
+  for (int i : e[x].n) {
+    if (i != f) {
+      D(i, x);
+    }
+  }
+  a[e[x]._l = ++c] = x;
 }
-void A(int x) { s += !_c[a[x]]++; }
-void D(int x) { s -= !--_c[a[x]]; }
-void U(int x) { c[x] ? D(x) : A(x), c[x] ^= 1; }
+int Lca(int x, int y) {
+  if (e[x].d < e[y].d) {
+    swap(x, y);
+  }
+  for (int i = 0; i < kL; ++i) {
+    if (e[x].d - e[y].d >> i & 1) {
+      x = e[x].f[i];
+    }
+  }
+  for (int i = kL - 1; i >= 0; --i) {
+    if (e[x].f[i] != e[y].f[i]) {
+      x = e[x].f[i], y = e[y].f[i];
+    }
+  }
+  return x == y ? x : e[x].f[0];
+}
 
 int main() {
-  // freopen("SP10707.in", "r", stdin);
-  // freopen("SP10707.out", "w", stdout);
+  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   cin >> n >> m;
-  for (int i = 1; i <= n; ++i) cin >> a[i];
-  copy_n(a + 1, n, r + 1), sort(r + 1, r + n + 1);
-  int l = unique(r + 1, r + n + 1) - r;
-  for (int i = 1; i <= n; ++i) a[i] = lower_bound(r + 1, r + l, a[i]) - r;
+  b = sqrt(n);
+  for (int i = 1; i <= n; ++i) {
+    cin >> e[i].v;
+  }
   for (int i = 1, x, y; i < n; ++i) {
     cin >> x >> y;
-    e[x].push_back(y), e[y].push_back(x);
+    e[x].n.push_back(y), e[y].n.push_back(x);
   }
-  _D(1, 0);
+  D(1, 0);
   for (int i = 1, x, y; i <= m; ++i) {
     cin >> x >> y;
-    if (d[x] > d[y]) swap(x, y);
-    int _x = x, _y = y;
-    for (int i = 0; i < kL; ++i) (d[_y] - d[_x] >> i & 1) && (_y = f[_y][i]);
-    for (int i = kL - 1; ~i; --i) (f[_x][i] ^ f[_y][i]) && (_x = f[_x][i], _y = f[_y][i]);
-    (_x ^ _y) && (_x = f[_x][0]);
-    bool _f = x ^ _x;
-    _f && (p[x][1] > p[y][0]) && (swap(x, y), 0), q[i] = {p[x][_f], p[y][0], i, _f};
+    int f = Lca(x, y);
+    if (f == x) {
+      swap(x, y);
+    }
+    if (f == y) {
+      q[i] = {i, e[y]._f, e[x]._f};
+    } else {
+      if (e[y]._l > e[x]._f) {
+        swap(x, y);
+      }
+      q[i] = {i, e[y]._l, e[x]._f};
+    }
   }
-  b = sqrt(n <<= 1);
   sort(q + 1, q + m + 1);
   for (int i = 1, l = 1, r = 0; i <= m; ++i) {
-    while (l > q[i].l) U(_p[--l]);
-    while (r < q[i].r) U(_p[++r]);
-    while (l < q[i].l) U(_p[l++]);
-    while (r > q[i].r) U(_p[r--]);
-    ans[q[i].i] = s + (q[i].t && !_c[a[1]]);
+
   }
-  for (int i = 1; i <= m; ++i) cout << ans[i] << endl;
+#ifdef TIME
+  fprintf(stderr, "\nTIME: %dms", clock());
+#endif
   return 0;
 }

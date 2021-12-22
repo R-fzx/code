@@ -1,0 +1,5 @@
+digraph test {
+  node[shape=box]
+  a->b;
+  b->c;
+}

@@ -26,8 +26,8 @@ qq: $ 3493508856 $
 
 - 更新于2021.11.3
   
-  $$
-  \def{\cW}{ffffff} \def{\cB}{000000}
+$$
+\def{\cW}{ffffff} \def{\cB}{000000}
 \def{\A}{\fcolorbox{#000000}{#52C41A}{\color{\cW}\texttt{A}}\ }
 \def{\W}{\fcolorbox{#000000}{#E74C3C}{\color{\cW}\texttt{W}}\ }
 \def{\N}{\fcolorbox{#000000}{#7F7F7F}{\color{\cW}\texttt{N}}\ }
@@ -108,7 +108,7 @@ qq: $ 3493508856 $
 \N\f{一般图最大权匹配}&\N\f{常系数齐次线性递推}&\N\f{k短路}\\\hline
 \N\f{常系数非齐次线性递推}&\N\f{莫队二次离线}&\\\hline
 \end{array}
-  $$
+$$
 
 - 来自[离散小波变换°
   ](/user/68344)

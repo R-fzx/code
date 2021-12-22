@@ -5,6 +5,7 @@
 #include <ctime>
 #include <deque>
 #include <functional>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -12,37 +13,30 @@
 #include <set>
 #include <string>
 #include <vector>
-#include <iomanip>
 // #define TIME
 
 using namespace std;
 using LL = long long;
+using LD = long double;
 using Pll = pair<LL, LL>;
-using Pdd = pair<double, double>;
+using Pdd = pair<LD, LD>;
 using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 
 const int kN = 301;
-const double kEps = 1e-11, kInf = 1e18;
+const LD kEps = 1e-11, kInf = 1e10;
 
 int n;
 Pdd a[kN];
-double ans = kInf, l, r;
+LD ans = kInf;
+vector<Pdd> l = {{kInf, kInf}, {-kInf, kInf}, {-kInf, -kInf}, {kInf, -kInf}};
 
-double Cross(Pdd o, Pdd x, Pdd y) {
+LD Cross(Pdd o, Pdd x, Pdd y) {
   return (x.first - o.first) * (y.second - o.second) - (x.second - o.second) * (y.first - o.first);
 }
 Pdd P(Pdd x, Pdd y, Pdd i, Pdd j) {
-  double _d = Cross(x, i, y), d = _d / (_d + Cross(x, y, j));
+  LD _d = Cross(x, i, y), d = _d / (_d + Cross(x, y, j));
   return {i.first + (j.first - i.first) * d, i.second + (j.second - i.second) * d};
-}
-double C(Pdd x) {
-  double m = -kInf;
-  for (int i = 1; i < n; ++i) {
-    m = max(m, P(a[i], a[i + 1], {x.first, -kInf}, {x.first, kInf}).second);
-  }
-  ans = min(ans, m - x.second);
-  return m - x.second;
 }
 
 int main() {
@@ -54,13 +48,34 @@ int main() {
   for (int i = 1; i <= n; ++i) {
     cin >> a[i].second;
   }
-  for (int i = 1; i < n; ++i) {
-    double l = a[i].first, r = a[i + 1].first;
-    for (int _ = 1; _ <= 100; ++_) {
-      double m0 = l + (r - l) / 3, m1 = r - (r - l) / 3;
-      C(P(a[i], a[i + 1], {m0, -kInf}, {m0, kInf})) < C(P(a[i], a[i + 1], {m1, -kInf}, {m1, kInf})) ? (r = m1) : (l = m0);
+  for (int i = 2; i <= n; ++i) {
+    vector<Pdd> _l;
+    l.push_back(l[0]);
+    for (int j = 1; j < l.size(); ++j) {
+      LD v0 = Cross(a[i - 1], a[i], l[j - 1]);
+      if (v0 >= 0) {
+        _l.push_back(l[j - 1]);
+      }
+      if (v0 * Cross(a[i - 1], a[i], l[j]) < 0) {
+        _l.push_back(P(a[i - 1], a[i], l[j - 1], l[j]));
+      }
     }
-    C(P(a[i], a[i + 1], {(l + r) / 2, -kInf}, {(l + r) / 2, kInf}));
+    l = _l;
+  }
+  l.push_back(l[0]);
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j < l.size(); ++j) {
+      if (l[j - 1].first <= a[i].first && a[i].first <= l[j].first) {
+        ans = min(ans, l[j - 1].second + (l[j].second - l[j - 1].second) / (l[j].first - l[j - 1].first) * (a[i].first - l[j - 1].first) - a[i].second);
+      }
+    }
+  }
+  for (int i = 0; i < l.size(); ++i) {
+    for (int j = 2; j <= n; ++j) {
+      if (a[j - 1].first <= l[i].first && l[i].first <= a[j].first) {
+        ans = min(ans, l[i].second - (a[j].second - a[j - 1].second) / (a[j].first - a[j - 1].first) * (l[i].first - a[j - 1].first) - a[j - 1].second);
+      }
+    }
   }
   cout << fixed << setprecision(3) << ans;
 #ifdef TIME
