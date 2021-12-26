@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <regex>
 // #define TIME
 
 using namespace std;
@@ -23,16 +24,11 @@ using Pdd = pair<LD, LD>;
 using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 
-Vl S() {
-  cout << "Solve" << endl;
-  return {1, 2, 3, 4, 5};
-}
+regex m;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  for (auto i : S()) {
-    cout << i << endl;
-  }
+
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif

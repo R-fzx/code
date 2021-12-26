@@ -22,6 +22,8 @@
     "istream": "cpp",
     "streambuf": "cpp",
     "string": "cpp",
-    "iomanip": "cpp"
+    "iomanip": "cpp",
+    "vector": "cpp",
+    "bit": "cpp"
   }
 }

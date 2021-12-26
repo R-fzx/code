@@ -1,5 +1,23 @@
 digraph test {
   node[shape=box]
-  a->b;
-  b->c;
+  ios->ios_base;
+  streambuf->ios;
+  istream->ios;
+  ostream->ios;
+  iostream->istream;
+  iostream->ostream;
+  ifstream->istream;
+  ofstream->ostream;
+  fstream->iostream;
+  istringstream->istream;
+  ostringstream->ostream;
+  stringstream->iostream;
+  stringbuf->streambuf;
+  stringbuf->istringstream;
+  stringbuf->ostringstream;
+  stringbuf->stringstream;
+  filebuf->streambuf;
+  filebuf->ifstream;
+  filebuf->ofstream;
+  filebuf->fstream;
 }
