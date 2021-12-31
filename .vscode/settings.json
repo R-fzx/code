@@ -24,6 +24,7 @@
     "string": "cpp",
     "iomanip": "cpp",
     "vector": "cpp",
-    "bit": "cpp"
+    "bit": "cpp",
+    "ostream": "cpp"
   }
 }
