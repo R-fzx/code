@@ -1,29 +1,7 @@
-#include <algorithm>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <ctime>
-#include <deque>
-#include <fstream>
-#include <functional>
-#include <iomanip>
 #include <iostream>
-#include <map>
-#include <numeric>
-#include <queue>
-#include <set>
-#include <string>
-#include <vector>
-// #define TIME
 
 using namespace std;
 using LL = long long;
-using LD = double;
-using Pll = pair<LL, LL>;
-using Pdd = pair<LD, LD>;
-using Vl = vector<LL>;
-using Mll = map<LL, LL>;
-using Vec = pair<Pdd, Pdd>;
 
 const LL kN = 1e6 + 1, kM = 998244353;
 
@@ -55,17 +33,7 @@ int main() {
   for (int i = 1; i < kN; ++i) {
     vf[i] = P(f[i] = f[i - 1] * i % kM, kM - 2);
   }
-  for (int _ = 1; _ <= 20; ++_) {
-    ifstream in("data/" + to_string(_) + ".in");
-    ofstream out("data/" + to_string(_) + ".out");
-    in >> x >> y;
-    out << F(x, y);
-  }
-#ifdef TIME
-  fprintf(stderr, "\nTIME: %dms", clock());
-#endif
+  cin >> x >> y;
+  cout << F(x, y) << endl;
   return 0;
 }
-/*
-F_0(x,y)=
-*/

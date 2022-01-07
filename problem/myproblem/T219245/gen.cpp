@@ -33,11 +33,14 @@ int rand(int l, int r) {
   return uniform_int_distribution<int>(l, r)(rnd);
 }
 
+const int kV = 1e6;
+
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   for (int i = 1; i <= 20; ++i) {
     ofstream data("data/" + to_string(i) + ".in");
-    data << rand(1, 1000000000) << " " << rand(1, 1000000) << endl;
+    int y = rand(1, kV);
+    data << y + rand(0, kV - y) << " " << y << endl;
   }
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
