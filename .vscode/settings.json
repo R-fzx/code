@@ -25,6 +25,10 @@
     "iomanip": "cpp",
     "vector": "cpp",
     "bit": "cpp",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "future": "cpp",
+    "stdexcept": "cpp",
+    "typeinfo": "cpp",
+    "variant": "cpp"
   }
 }

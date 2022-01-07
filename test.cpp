@@ -5,7 +5,6 @@
 #include <ctime>
 #include <deque>
 #include <functional>
-#include <iomanip>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -25,10 +24,6 @@ using Mll = map<LL, LL>;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  int x = 10;
-  while (0 <-- x) {
-    cout << x << " ";
-  }
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif
