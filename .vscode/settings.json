@@ -30,5 +30,6 @@
     "stdexcept": "cpp",
     "typeinfo": "cpp",
     "variant": "cpp"
-  }
+  },
+  "git.ignoreLimitWarning": true
 }
