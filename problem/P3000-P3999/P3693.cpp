@@ -1,11 +1,11 @@
 #include <iostream>
 #define ASSERT(cond, msg) \
-  do {                    \
+  ({                    \
     if (cond) {           \
       printf(msg);        \
       return;             \
     }                     \
-  } while (0)
+  })
 
 using namespace std;
 
@@ -23,34 +23,33 @@ string op;
 
 void IceBarrage(int r, int c, int d, int s) {
   int k = 0;
-  for (int i = 0; i <= s; ++i) {
-    int dr = r + i * kD[d][0], dc = c + i * kD[d][1];
-    if (min(dr, dc) < 0 || max(dr, dc) >= n || f[dr][dc][0]) break;
-    if (a[dr][dc] < 4) ++a[dr][dc], ++k;
+  for (int i = 0; i <= s && (r += kD[d][0], c += kD[d][1], min(r, c) >= 0 && max(r, c) < n && !f[r][c][0]); k += a[r][c] < 4, a[r][c] = min(a[r][c] + 1, 4), ++i) {
   }
   printf("CIRNO FREEZED %d BLOCK(S)", k);
 }
-
 void MakeIceBlock() {
   int s = 0;
-  for (int i = 0; i < n; ++i)
-    for (int j = 0; j < n; ++j)
-      if (a[i][j] == 4) ++s, a[i][j] = 0;
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < n; ++j) {
+      s += a[i][j] == 4, a[i][j] %= 4;
+    }
+  }
   printf("CIRNO MADE %d ICE BLOCK(S),NOW SHE HAS %d ICE BLOCK(S)", s, cnt += s);
 }
-
-bool InPlace(int r, int c, int h) { return r >= 0 && r < n && c >= 0 && c < n && h >= 0 && h <= hm; }
-
+bool InPlace(int r, int c, int h) {
+  return r >= 0 && r < n && c >= 0 && c < n && h >= 0 && h <= hm;
+}
 bool CanPutIceBlock(int r, int c, int h) {
   bool _f = !h;
-  for (int i = 0; i < 6; ++i)
-    if (InPlace(r + kL[i][0], c + kL[i][1], h + kL[i][2])) _f |= f[r + kL[i][0]][c + kL[i][1]][h + kL[i][2]];
+  for (int i = 0; i < 6; ++i) {
+    if (InPlace(r + kL[i][0], c + kL[i][1], h + kL[i][2])) {
+      _f |= f[r + kL[i][0]][c + kL[i][1]][h + kL[i][2]];
+    }
+  }
   return _f;
 }
-
 void PutIceBlock(int r, int c, int h) {
-  ASSERT(!cnt, "CIRNO HAS NO ICE_BLOCK");
-  ASSERT(f[r][c][h] || !CanPutIceBlock(r, c, h), "BAKA CIRNO,CAN'T PUT HERE");
+  ASSERT(!cnt, "CIRNO HAS NO ICE_BLOCK"), ASSERT(f[r][c][h] || !CanPutIceBlock(r, c, h), "BAKA CIRNO,CAN'T PUT HERE");
   --cnt, f[r][c][h] = 1;
   if (!h) a[r][c] = 0;
   if (r < hr || r > hr + hx - 1 || c < hc || c > hc + hy - 1)

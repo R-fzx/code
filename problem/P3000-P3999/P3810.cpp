@@ -13,8 +13,6 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-#include <fstream>
-#include <random>
 // #define TIME
 
 using namespace std;
@@ -26,22 +24,31 @@ using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 using Vec = pair<Pdd, Pdd>;
 
-random_device rd;
-mt19937 rnd(rd());
+const int kN = 1e5 + 1;
 
-int rand(int l, int r) {
-  return uniform_int_distribution<int>(l, r)(rnd);
-}
+struct E {
+  int a, b, c, &s;
+  bool operator<(const E &o) const {
+    return a < o.a || a == o.a && (b < o.b || b == o.b && c < o.c);
+  }
+} a[kN];
+int n, k, s[kN], d[kN];
 
-const int kY = 1e6, kX = 1e9;
+namespace D1 {
+  void S(int l, int r) {
+    
+  }
+};
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  for (int i = 1; i <= 20; ++i) {
-    ofstream data("data/" + to_string(i) + ".in");
-    int y = rand(1, kY);
-    data << y + rand(0, kX - y) << " " << y << endl;
+  cin >> n >> k;
+  for (int i = 1; i <= n; ++i) {
+    cin >> a[i].a >> a[i].b >> a[i].c;
+    a[i].s = s[i];
   }
+  sort(a + 1, a + n + 1);
+
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif
