@@ -27,19 +27,19 @@ using Mll = map<LL, LL>;
 using Vec = pair<Pdd, Pdd>;
 
 random_device rd;
-mt19937 rnd(rd());
+mt19937_64 rnd(rd());
 
-int rand(int l, int r) {
-  return uniform_int_distribution<int>(l, r)(rnd);
+LL rand(LL l, LL r) {
+  return uniform_int_distribution<LL>(l, r)(rnd);
 }
 
-const int kY = 1e6, kX = 1e9;
+const LL kY = 1e6, kX = 1e10;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  for (int i = 1; i <= 20; ++i) {
+  for (int i = 36; i <= 55; ++i) {
     ofstream data("data/" + to_string(i) + ".in");
-    int y = rand(1, kY);
+    LL y = rand(1, kY);
     data << y + rand(0, kX - y) << " " << y << endl;
   }
 #ifdef TIME
