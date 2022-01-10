@@ -5,6 +5,7 @@
 #include <ctime>
 #include <deque>
 #include <functional>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -12,9 +13,6 @@
 #include <set>
 #include <string>
 #include <vector>
-#include <iomanip>
-#include <fstream>
-#include <random>
 // #define TIME
 
 using namespace std;
@@ -26,30 +24,30 @@ using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 using Vec = pair<Pdd, Pdd>;
 
-random_device rd;
-mt19937_64 rnd(rd());
+const int kN = 1e5 + 1;
 
-LL rand(LL l, LL r) {
-  return uniform_int_distribution<LL>(l, r)(rnd);
+Mll lg;
+void Init(int n) {
+  for (LL i = 0, s = 1; s <= n; lg[s] = i++, s <<= 1) {
+  }
 }
+struct vEB {
+  int u, p, mi, mx, su;
+  vector<int> l;
+} e[kN];
+int Where(int o, int x) { return x / e[o].su; }
+int Pos(int o, int x) { return x % e[o].su; }
+int Index(int o, int w, int p) { return w * e[o].su + p; }
+bool Contains(int o, int x) { return x == e[o].mi || x == e[o].mx || (e[o].u > 2 && Contains(e[o].l[Where(o, x)], Pos(o, x))); }
+int Min(int o) { return e[o].mi; }
+int Max(int o) { return e[o].mx; }
 
-const LL kY = 1e6, kX = 1e9;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  for (int i = 36; i <= 55; ++i) {
-    ofstream data("data/" + to_string(i) + ".in");
-    LL y = rand(1, kY);
-    data << y + rand(0, kX - y) << " " << y << endl;
-  }
+
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif
   return 0;
 }
-/*
-[1, 10]
-(10, 25]
-(25, 35]
-(35, 55]
-*/

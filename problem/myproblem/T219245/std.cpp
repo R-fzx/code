@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <cmath>
 #include <cstring>
+#include <fstream>
 #include <iostream>
 #include <unordered_map>
-#include <fstream>
 
 using namespace std;
 using LL = long long;
@@ -163,26 +163,21 @@ LL S(LL x, LL y) {
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   I(150000);
-  for (int _ = 1; _ <= 55; ++_) {
-    ifstream in("data/" + to_string(_) + ".in");
-    ofstream out("data/" + to_string(_) + ".out");
-    f.clear();
-    in >> x >> y;
-    if (x < y) {
-      out << 0;
-      return 0;
-    }
-    if (x == y) {
-      out << y;
-      return 0;
-    }
-    for (LL i = 0, s = 1; i <= y - 2; s = s * ++i % kM) {
-      f[i] = s;
-    }
-    for (LL i = x - y - 1, s = F(x - y - 1); i <= x - 3; s = s * ++i % kM) {
-      f[i] = s;
-    }
-    out << S(x, y) << endl;
+  cin >> x >> y;
+  if (x < y) {
+    cout << 0;
+    return 0;
   }
+  if (x == y) {
+    cout << y;
+    return 0;
+  }
+  for (LL i = 0, s = 1; i <= y - 2; s = s * ++i % kM) {
+    f[i] = s;
+  }
+  for (LL i = x - y - 1, s = F(x - y - 1); i <= x - 3; s = s * ++i % kM) {
+    f[i] = s;
+  }
+  cout << S(x, y) << endl;
   return 0;
 }
