@@ -33,7 +33,7 @@ LL rand(LL l, LL r) {
   return uniform_int_distribution<LL>(l, r)(rnd);
 }
 
-const LL kY = 1e6, kX = 1e10;
+const LL kY = 1e6, kX = 1e9;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);

@@ -3,6 +3,7 @@
 #include <cstring>
 #include <iostream>
 #include <unordered_map>
+#include <fstream>
 
 using namespace std;
 using LL = long long;
@@ -45,6 +46,29 @@ void NTT(int *f, int type, int lim) {
   x = kM - (kM - 1) / lim;
   for (int i = 0; i != lim; ++i) {
     f[i] = (LL)f[i] * x % kM;
+  }
+}
+void I(int n) {
+  int w, lim = 1;
+  while (lim <= n) {
+    lim <<= 1, ++siz;
+  }
+  for (int i = 1; i != lim; ++i) {
+    rev[i] = (rev[i >> 1] >> 1) | ((i & 1) << (siz - 1));
+  }
+  w = P(3, (kM - 1) >> siz), fac[0] = fac[1] = ifac[0] = ifac[1] = rt[lim >> 1] = 1;
+  for (int i = lim >> 1 | 1; i != lim; ++i) {
+    rt[i] = (LL)rt[i - 1] * w % kM;
+  }
+  for (int i = (lim >> 1) - 1; i; --i) {
+    rt[i] = rt[i << 1];
+  }
+  for (int i = 2; i <= n; ++i) {
+    ifac[i] = fac[i] = (LL)fac[i - 1] * i % kM;
+  }
+  ifac[n] = P(fac[n], kM - 2);
+  for (int i = n - 1; i; --i) {
+    ifac[i] = (LL)ifac[i + 1] * (i + 1) % kM;
   }
 }
 void L(const int *F, int n, int m, int *R) {
@@ -138,45 +162,27 @@ LL S(LL x, LL y) {
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  int w, lim = 1;
-  while (lim <= 150000) {
-    lim <<= 1, ++siz;
+  I(150000);
+  for (int _ = 1; _ <= 55; ++_) {
+    ifstream in("data/" + to_string(_) + ".in");
+    ofstream out("data/" + to_string(_) + ".out");
+    f.clear();
+    in >> x >> y;
+    if (x < y) {
+      out << 0;
+      return 0;
+    }
+    if (x == y) {
+      out << y;
+      return 0;
+    }
+    for (LL i = 0, s = 1; i <= y - 2; s = s * ++i % kM) {
+      f[i] = s;
+    }
+    for (LL i = x - y - 1, s = F(x - y - 1); i <= x - 3; s = s * ++i % kM) {
+      f[i] = s;
+    }
+    out << S(x, y) << endl;
   }
-  for (int i = 1; i != lim; ++i) {
-    rev[i] = (rev[i >> 1] >> 1) | ((i & 1) << (siz - 1));
-  }
-  w = P(3, (kM - 1) >> siz), fac[0] = fac[1] = ifac[0] = ifac[1] = rt[lim >> 1] = 1;
-  for (int i = lim >> 1 | 1; i != lim; ++i) {
-    rt[i] = (LL)rt[i - 1] * w % kM;
-  }
-  for (int i = (lim >> 1) - 1; i; --i) {
-    rt[i] = rt[i << 1];
-  }
-  for (int i = 2; i <= 150000; ++i) {
-    ifac[i] = fac[i] = (LL)fac[i - 1] * i % kM;
-  }
-  ifac[150000] = P(fac[150000], kM - 2);
-  for (int i = 150000 - 1; i; --i) {
-    ifac[i] = (LL)ifac[i + 1] * (i + 1) % kM;
-  }
-  for (int i = 1; i <= 55; ++i) {
-    
-  }
-  cin >> x >> y;
-  if (x < y) {
-    cout << 0;
-    return 0;
-  }
-  if (x == y) {
-    cout << y;
-    return 0;
-  }
-  for (LL i = 0, s = 1; i <= y - 2; s = s * ++i % kM) {
-    f[i] = s;
-  }
-  for (LL i = x - y - 1, s = F(x - y - 1); i <= x - 3; s = s * ++i % kM) {
-    f[i] = s;
-  }
-  cout << S(x, y) << endl;
   return 0;
 }
