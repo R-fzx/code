@@ -1,0 +1,1 @@
+{"name":"Local: vEB","url":"d:\\wsfxk\\code\\struct\\vEB.cpp","tests":[{"id":1641907612758,"input":"10 11\n1 1\n1 2\n1 3\n7 1\n7 4\n2 1\n3\n2 3\n4\n5 3\n6 2","output":"1\n-1\n2\n2\n2\n-1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\wsfxk\\code\\struct\\vEB.cpp","group":"local","local":true}
