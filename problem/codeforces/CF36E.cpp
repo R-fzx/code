@@ -39,7 +39,7 @@ void D(int x, int y, int o) {
     }
     if (t[x] == e[x].size()) {
       break;
-  }
+    }
     b = 1, l[e[x][t[x]].second] = 0, D(e[x][t[x]].first, e[x][t[x]].second, o);
   }
   if (!b && ct++) {
