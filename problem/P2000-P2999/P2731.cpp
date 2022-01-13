@@ -28,19 +28,19 @@ using Vec = pair<Pdd, Pdd>;
 const int kN = 501, kM = 1026;
 
 int n, m, c[kN], t[kN];
-Vl e[kN], ans;
+vector<Pll> e[kN], ans;
 map<Pll, int> l;
 
-void D(int x) {
+void D(int x, int y) {
   while (t[x] < e[x].size()) {
-    for (; t[x] < e[x].size() && !l[{x, e[x][t[x]]}]; ++t[x]) {
+    for (; t[x] < e[x].size() && !l[{x, e[x][t[x]].first}]; ++t[x]) {
     }
     if (t[x] == e[x].size()) {
       break;
     }
-    --l[{x, e[x][t[x]]}], --l[{e[x][t[x]], x}], D(e[x][t[x]]);
+    --l[{x, e[x][t[x]].first}], --l[{e[x][t[x]].first, x}], D(e[x][t[x]].first, e[x][t[x]].second);
   }
-  ans.push_back(x);
+  ans.emplace_back(x, y);
 }
 
 int main() {
@@ -48,7 +48,7 @@ int main() {
   cin >> m;
   for (int i = 1, x, y; i <= m; ++i) {
     cin >> x >> y;
-    e[x].push_back(y), e[y].push_back(x);
+    e[x].emplace_back(y, i), e[y].emplace_back(x, i);
     ++l[{x, y}], ++l[{y, x}], ++c[x], ++c[y], n = max({n, x, y});
   }
   for (int i = 1; i <= n; ++i) {
@@ -61,9 +61,9 @@ int main() {
       break;
     }
   }
-  D(s);
+  D(s, 0);
   for (auto i = ans.rbegin(); i != ans.rend(); ++i) {
-    cout << *i << endl;
+    cout << i->first << " " << i->second << endl;
   }
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
