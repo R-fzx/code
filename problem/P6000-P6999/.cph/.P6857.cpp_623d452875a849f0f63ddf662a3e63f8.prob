@@ -1,0 +1,1 @@
+{"name":"Local: P6857","url":"d:\\wsfxk\\code\\problem\\P6000-P6999\\P6857.cpp","tests":[{"id":1641970620438,"input":"1\n3","output":"3"},{"id":1641970751983,"input":"10\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10","output":"0\n1\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\wsfxk\\code\\problem\\P6000-P6999\\P6857.cpp","group":"local","local":true}

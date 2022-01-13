@@ -5,7 +5,6 @@
 #include <ctime>
 #include <deque>
 #include <functional>
-#include <iomanip>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -13,44 +12,41 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <iomanip>
 // #define TIME
 
 using namespace std;
 using LL = long long;
-using LD = double;
+using LD = long double;
 using Pll = pair<LL, LL>;
 using Pdd = pair<LD, LD>;
 using Vl = vector<LL>;
 using Mll = map<LL, LL>;
-using Vec = pair<Pdd, Pdd>;
 
-const int kN = 1e5 + 1;
+const int kN = 101;
 
-enum Color {
-  kR,
-  kB
-};
-struct RBT_Node {
-  int v, l[2], f;
-  Color c;
-} e[kN];
-int rt;
-int Where(int x) { return x == e[e[x].f].l[1]; }
-void Connect(int x, int y, int d) { y && (e[y].f = x), (x ? e[x].l[d] : rt) = y; }
-void Rotate(int x, int d /* 0 left  1 right */) {
-  int y = e[x].l[d ^ 1];
-  Connect(x, e[y].l[d], d ^ 1), Connect(e[x].f, y, Where(x)), Connect(y, x, d);
-}
-void _Insert(int x, RBT_Node v) {
-
-}
-void Insert(int x, int v) {
-  
-}
+int t, n, l, a[kN];
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-
+  cin >> t;
+  while (t--) {
+    cin >> n >> l;
+    for (int i = 1; i <= n; ++i) {
+      cin >> a[i];
+    }
+    int ans = 0;
+    for (int i = 0; i < l; ++i) {
+      int c = 0;
+      for (int j = 1; j <= n; ++j) {
+        c += a[j] >> i & 1;
+      }
+      // cout << c << " ";
+      ans |= (c > n - c) << i;
+    }
+    // cout << endl;
+    cout << ans << endl;
+  }
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif
