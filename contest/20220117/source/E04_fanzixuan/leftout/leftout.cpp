@@ -71,7 +71,7 @@ int main() {
   }
   if (c == 1) {
     cout << _i << " " << _j;
-  } else if (c == n && (ie || je)) {
+  } else if (c == n - 1 && (ie || je)) {
     cout << (ie ? _i : 1) << " " << (je ? _j : 1);
   } else if (c == (n - 1) * (n - 1)) {
     cout << 1 << " " << 1;
