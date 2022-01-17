@@ -1,0 +1,1 @@
+{"name":"Local: P5057","url":"d:\\wsfxk\\code\\problem\\P5000-P5999\\P5057.cpp","tests":[{"id":1642302798671,"input":"20 10\n1 1 10\n2 6\n2 12\n1 5 12\n2 6\n2 15\n1 6 16\n1 11 17\n2 12\n2 6","output":"1\n0\n0\n0\n1\n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\wsfxk\\code\\problem\\P5000-P5999\\P5057.cpp","group":"local","local":true}

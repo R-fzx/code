@@ -1,130 +1,374 @@
 #include <algorithm>
-#include <cmath>
 #include <cstdio>
-#include <cstring>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
-#define N 262147
-#define ll long long
-#define reg register
-#define p 998244353
 using namespace std;
+string ty[5] = {"", "红桃", "黑桃", "方片", "梅花"};
+string winning[3] = {"铜牌胜利！", "银牌胜利！", "金牌胜利！"};
+const int PL = 8;  // PL ->pack limit
+int tbs, tp, td, tb, jokers = 2, gameover, atk, def, isbd;
+struct card {
+  string typ;
+  int num;  // 11->J, 15->Q, 20->K
 
-inline int power(int a, int t) {
-  int res = 1;
-  while (t) {
-    if (t & 1) res = (ll)res * a % p;
-    a = (ll)a * a % p;
-    t >>= 1;
+  void setype(int t, int n) {
+    typ = ty[t];
+    num = n;
+  };
+
+  void out() {
+    cout << typ;
+    if (num == 11)
+      printf("J");
+    else if (num == 15)
+      cout << 'Q';
+    else if (num == 20)
+      cout << 'K';
+    else if (num == 1)
+      cout << 'A';
+    else
+      cout << num;
+    cout << ' ';
   }
-  return res;
+};
+card bosses[13], pack[9], deads[100], bar[100], now;
+bool cmt(card a, card b) {
+  return a.num < b.num;
+}
+void draw() {
+  pack[++tp] = bar[tb--];
+}
+void csh() {
+  bosses[1].setype(1, 11), bosses[2].setype(2, 11), bosses[3].setype(3, 11), bosses[4].setype(4, 11);
+  bosses[5].setype(1, 15), bosses[6].setype(2, 15), bosses[7].setype(3, 15), bosses[8].setype(4, 15);
+  bosses[9].setype(1, 20), bosses[10].setype(2, 20), bosses[11].setype(3, 20), bosses[12].setype(4, 20);
+  srand((unsigned int)(time(NULL)));
+  for (int i = 1; i <= 12; i++) {
+    int swaper = rand() % 4 + 1;
+    if (i >= 5 && i <= 8)
+      swaper += 4;
+    else if (i >= 9)
+      swaper += 8;
+    card tmp = bosses[i];
+    bosses[i] = bosses[swaper];
+    bosses[swaper] = tmp;
+  }
+  tbs = 1;
+  now = bosses[tbs++];
+  atk = 10;
+  def = 20;
+  srand((unsigned int)(time(NULL)));
+  for (int i = 0; i < 40; i++) {
+    int ttt = i / 10 + 1;
+    int nnn = i % 10 + 1;
+    bar[i + 1].setype(ttt, nnn);
+  }
+  tb = 40;
+  for (int i = 1; i <= 40; i++) {
+    int swaper = rand() % 40 + 1;
+    card tmp = bar[i];
+    bar[i] = bar[swaper];
+    bar[swaper] = tmp;
+  }
+  for (int i = 1; i <= PL; i++)
+    draw();
 }
 
-int fac[N], ifac[N], rt[N], rev[N], facm[N];
-int siz;
+void deal(int dmg, int iH, int iD, int iC, int iS) {
+  if (iH && now.typ != "红桃") {
+    for (int i = 1; i <= td; i++) {
+      int swaper = rand() % td + 1;
+      card tmp = deads[i];
+      deads[i] = deads[swaper];
+      deads[swaper] = tmp;
+    }
 
-void init(int n) {
-  int w, lim = 1;
-  while (lim <= n) lim <<= 1, ++siz;
-  for (reg int i = 1; i != lim; ++i) rev[i] = (rev[i >> 1] >> 1) | ((i & 1) << (siz - 1));
-  w = power(3, (p - 1) >> siz);
-  fac[0] = fac[1] = ifac[0] = ifac[1] = rt[lim >> 1] = 1;
-  for (reg int i = lim >> 1 | 1; i != lim; ++i) rt[i] = (ll)rt[i - 1] * w % p;
-  for (reg int i = (lim >> 1) - 1; i; --i) rt[i] = rt[i << 1];
-  for (reg int i = 2; i <= n; ++i) ifac[i] = fac[i] = (ll)fac[i - 1] * i % p;
-  ifac[n] = power(fac[n], p - 2);
-  for (reg int i = n - 1; i; --i) ifac[i] = (ll)ifac[i + 1] * (i + 1) % p;
+    card rev[100];
+    int tr = 0;
+
+    for (int i = 1; i <= dmg && td > 0; i++)
+      rev[++tr] = deads[td--];
+
+    for (int i = 1; i <= tb; i++)
+      rev[++tr] = bar[i];
+
+    tb = tr;
+
+    for (int i = 1; i <= tr; i++)
+      bar[i] = rev[i];
+    cout << "复生了" << dmg << "张牌" << endl;
+  }
+  if (iD && now.typ != "方片") {
+    int ds = 0;
+    for (int i = 1; i <= dmg && tp < PL; i++)
+      draw(), ds++;
+    cout << "摸了" << ds << "张牌" << endl;
+  }
+  if (iS && now.typ != "黑桃") {
+    atk -= dmg;
+    if (atk < 0)
+      atk = 0;
+    cout << "现在BOSS的攻击力被降为了" << atk << endl;
+  }
+  if (iC && now.typ != "梅花")
+    dmg *= 2;
+  def -= dmg;
+  cout << "造成了" << dmg << "点伤害" << endl;
+  if (def == 0) {
+    isbd = 1;
+    cout << "BOSS被感化了！" << endl;
+
+    bar[++tb] = now;
+
+    if (tbs == 13) {
+      cout << "你赢了！" << endl;
+      cout << winning[jokers] << endl;
+      exit(0);
+    }
+    now = bosses[tbs++];
+    if (tbs - 1 >= 1 && tbs - 1 <= 4) {
+      atk = 10;
+      def = 20;
+    } else if (tbs - 1 >= 5 && tbs - 1 <= 8) {
+      atk = 15;
+      def = 30;
+    } else if (tbs - 1 >= 9 && tbs - 1 <= 12) {
+      atk = 20;
+      def = 40;
+    }
+  } else if (def < 0) {
+    isbd = 1;
+    cout << "BOSS被杀死了！" << endl;
+    deads[++td] = now;
+    if (tbs == 13) {
+      cout << "你赢了！" << endl;
+      cout << winning[jokers] << endl;
+      exit(0);
+    }
+    now = bosses[tbs++];
+    if (tbs - 1 >= 1 && tbs - 1 <= 4) {
+      atk = 10;
+      def = 20;
+    } else if (tbs - 1 >= 5 && tbs - 1 <= 8) {
+      atk = 15;
+      def = 30;
+    } else if (tbs - 1 >= 9 && tbs - 1 <= 12) {
+      atk = 20;
+      def = 40;
+    }
+  }
 }
 
-inline void NTT(int *f, int type, int lim) {
-  if (type == -1) reverse(f + 1, f + lim);
-  static unsigned long long a[N];
-  reg int x, shift = siz - __builtin_ctz(lim);
-  for (reg int i = 0; i != lim; ++i) a[rev[i] >> shift] = f[i];
-  for (reg int mid = 1; mid != lim; mid <<= 1)
-    for (reg int j = 0; j != lim; j += (mid << 1))
-      for (reg int k = 0; k != mid; ++k) {
-        x = a[j | k | mid] * rt[mid | k] % p;
-        a[j | k | mid] = a[j | k] + p - x;
-        a[j | k] += x;
+bool check(card checker[], int top) {
+  int pet = 0, digit = -1, petail = -1, dm = 0;
+  for (int i = 1; i <= top; i++) {
+    dm += checker[i].num;
+    if (checker[i].num == 1)
+      pet = 1;
+    else {
+      if (checker[i - 1].num == 1)
+        petail = i - 1;
+      if (checker[i].num != digit && digit != -1)
+        return false;
+      if (checker[i].num != digit && digit == -1)
+        digit = checker[i].num;
+      if (checker[i].num == checker[i - 1].num && checker[i].num != 1) {
+        if (pet)
+          return false;
+        if (dm > 10)
+          return false;
       }
-  for (reg int i = 0; i != lim; ++i) f[i] = a[i] % p;
-  if (type == 1) return;
-  x = p - (p - 1) / lim;
-  for (reg int i = 0; i != lim; ++i) f[i] = (ll)f[i] * x % p;
+    }
+  }
+  return true;
 }
 
-void lagrange(const int *F, int n, int m, int *R) {  // calculate f(m),f(m+1) ... f(m+n) with f(0),f(1) ... f(n)
-  static int f[N], G[N], pre[N], suf[N], inv[N];
-  memcpy(f, F, (n + 1) << 2);
-  int tmp, k = n << 1 | 1, mul, lim = 1 << (32 - __builtin_clz(n * 3));
-  if (m <= n)
-    tmp = n - m + 1, m = n + 1;
-  else
-    tmp = 0;
-  facm[0] = 1;
-  for (reg int i = 0; i <= n; ++i) facm[0] = (ll)facm[0] * (m - n + i) % p;
-  pre[0] = suf[k + 1] = 1;
-  for (reg int i = 1; i <= k; ++i) pre[i] = (ll)pre[i - 1] * (m - n + i - 1) % p;
-  for (reg int i = k; i; --i) suf[i] = (ll)suf[i + 1] * (m - n + i - 1) % p;
-  mul = power(pre[k], p - 2);
-  for (reg int i = 1; i <= k; ++i) inv[i] = (ll)mul * pre[i - 1] % p * suf[i + 1] % p;
-  for (reg int i = 1; i <= n; ++i) facm[i] = (ll)facm[i - 1] * (m + i) % p * inv[i] % p;
-  for (reg int i = 0; i <= n; ++i) {
-    f[i] = (ll)f[i] * ifac[i] % p * ifac[n - i] % p;
-    if ((n - i) & 1) f[i] = p - f[i];
+void chupai() {
+A:
+  if (tp == 0) {
+    cout << "你输了！";
+    exit(0);
   }
-  for (reg int i = 0; i != k; ++i) G[i] = inv[i + 1];
-  memset(f + n + 1, 0, (lim - n) << 2);
-  memset(G + k, 0, (lim - k + 1) << 2);
-  NTT(f, 1, lim), NTT(G, 1, lim);
-  for (reg int i = 0; i != lim; ++i) f[i] = (ll)f[i] * G[i] % p;
-  NTT(f, -1, lim);
-  memcpy(R, F + n - tmp + 1, tmp << 2);
-  for (reg int i = tmp; i <= n; ++i) R[i] = (ll)f[i + n - tmp] * facm[i - tmp] % p;
+  cout << "请出牌（输入你所出的手牌的数量，并依次输入要出的手牌的序号，使用Joker请输入100）：";
+  int nn;
+  cin >> nn;
+  if (nn == 100)
+    if (jokers) {
+      jokers--;
+      while (tp > 0)
+        deads[++td] = pack[tp--];
+      for (int i = 1; i <= 8 && tb > 0; i++)
+        draw();
+      cout << "使用了Joker，你的手牌：";
+      for (int i = 1; i <= tp; i++) {
+        cout << '(' << i << ").";
+        pack[i].out();
+      }
+      cout << endl;
+      goto A;
+    } else {
+      cout << "你没有Joker了！" << endl;
+      goto A;
+    }
+  else {
+    int c, numm = 0, H = 0, D = 0, C = 0, S = 0, book[10] = {0}, to = 0, deals[10], tds = 0;
+    card isok[10];
+    for (int i = 1; i <= nn; i++) {
+      cin >> c;
+      book[c] = 1;
+      if (pack[c].typ == "红桃")
+        H = 1;
+      if (pack[c].typ == "方片")
+        D = 1;
+      if (pack[c].typ == "梅花")
+        C = 1;
+      if (pack[c].typ == "黑桃")
+        S = 1;
+      if (pack[c].num == 11)
+        numm += 10;
+      else
+        numm += pack[c].num;
+      deals[++tds] = c;
+      isok[++to] = pack[c];
+      //          if(c == tp)
+      //              while(book[tp] && tp > 0)
+      //                  tp--;
+    }
+    sort(isok + 1, isok + to + 1, cmt);
+    if (check(isok, to)) {
+      for (int i = 1; i <= tds; i++)
+        deads[++td] = pack[deals[i]];
+      while (book[tp] && tp > 0)
+        tp--;
+      for (int i = 1; i <= tp; i++) {
+        if (book[i]) {
+          card tmp = pack[i];
+          pack[i] = pack[tp];
+          pack[tp] = tmp;
+          book[i] = 0;
+          do {
+            tp--;
+          } while (book[tp] && tp > 0);
+        }
+      }
+      deal(numm, H, D, C, S);
+    } else {
+      cout << "出牌不合法！" << endl
+           << endl;
+      goto A;
+    }
+  }
 }
 
-int solve(int n) {
-  static int f[N], fd[N], st[30];
-  memset(f, 0, sizeof(f));
-  int top = 0, s = n;
-  while (n) {
-    st[++top] = n;
-    n >>= 1;
+void damage() {
+  int sum = 0;
+  for (int i = 1; i <= tp; i++) {
+    if (pack[i].num == 11)
+      sum += 10;
+    else
+      sum += pack[i].num;
   }
-  n = st[top--];
-  f[0] = 1, f[1] = s + 1;
-  while (top--) {
-    lagrange(f, n, n + 1, f + n + 1);
-    f[n << 1 | 1] = 0;
-    int tmp = (ll)n * power(s, p - 2) % p;
-    lagrange(f, n << 1, tmp, fd);
-    for (reg int i = 0; i <= (n << 1); ++i) f[i] = (ll)f[i] * fd[i] % p;
-    n <<= 1;
-    if (!(st[top + 1] & 1)) continue;
-    for (reg int i = 0; i <= n; ++i) f[i] = (ll)f[i] * (s * i + n + 1) % p;
-    f[n + 1] = 1;
-    for (reg int i = 1; i <= n + 1; ++i) f[n + 1] = (ll)f[n + 1] * (s * (n + 1) + i) % p;
-    ++n;
+  if (sum < atk) {
+    cout << "你输了！" << endl;
+    exit(0);
   }
-  int res = f[0];
-  for (reg int i = 1; i != s; ++i) res = (ll)res * f[i] % p;
-  return res;
+C:
+  cout << "你受到" << atk << "点伤害！请弃牌！" << endl;
+  for (int i = 1; i <= tp; i++) {
+    cout << '(' << i << ").";
+    pack[i].out();
+  }
+  cout << endl;
+  int nn;
+  cout << "请输入你要弃掉的牌的数量，并依次输入这些牌的序号（使用Joker请输入100）：";
+  cin >> nn;
+  if (nn == 100)
+    if (jokers) {
+      jokers--;
+      while (tp > 0)
+        deads[++td] = pack[tp--];
+      for (int i = 1; i <= 8 && tb > 0; i++)
+        draw();
+      cout << "使用了Joker，你的手牌：";
+      for (int i = 1; i <= tp; i++) {
+        cout << '(' << i << ").";
+        pack[i].out();
+      }
+      cout << endl;
+      goto C;
+    } else {
+      cout << "你没有Joker了！" << endl;
+      goto C;
+    }
+  else {
+    int c, book[10] = {0}, bloods = 0, deals[10], tds = 0;
+    for (int i = 1; i <= nn; i++) {
+      cin >> c;
+      if (c <= 0 || c > tp || book[c] == 1) {
+        cout << "弃牌错误！" << endl;
+        goto C;
+      }
+      book[c] = 1;
+      if (pack[c].num == 11)
+        bloods += 10;
+      else
+        bloods += pack[c].num;
+      deals[++tds] = c;
+    }
+    if (bloods < atk) {
+      cout << "弃牌不足以抵挡伤害！" << endl;
+      goto C;
+    }
+    for (int i = 1; i <= tds; i++)
+      deads[++td] = pack[deals[i]];
+    for (int i = 1; i <= tp; i++) {
+      while (book[tp] && tp > 0)
+        tp--;
+      for (int i = 1; i <= tp; i++) {
+        if (book[i]) {
+          card tmp = pack[i];
+          pack[i] = pack[tp];
+          pack[tp] = tmp;
+          book[i] = 0;
+          do {
+            tp--;
+          } while (book[tp] && tp > 0);
+        }
+      }
+    }
+  }
 }
 
-inline int factorial(int n) {
-  int k = sqrt(n), res;
-  res = solve(k);
-  for (reg int i = k * k + 1; i <= n; ++i) res = (ll)res * i % p;
-  return res;
+void game() {
+  while (!gameover) {
+    //      cout << endl;
+    //      for(int i = 1; i <= td; i++)
+    //          deads[i].out();
+    //      cout << endl;
+    cout << endl
+         << endl
+         << "当前Boss: ";
+    now.out();
+    cout << "攻击" << atk << ", 体力" << def << "  城堡内Boss数：" << 12 - tbs + 1 << endl;
+    cout << "你的手牌：";
+    for (int i = 1; i <= tp; i++) {
+      cout << '(' << i << ").";
+      pack[i].out();
+    }
+    cout << endl
+         << "Joker剩余：" << jokers << endl;
+    cout << "弃牌堆牌数:" << td << ", 酒吧牌数:" << tb << endl;
+    chupai();
+    if (!isbd && atk)
+      damage();
+    if (isbd)
+      isbd = 0;
+  }
 }
 
 int main() {
-  init(150000);
-  int T, n;
-  scanf("%d", &T);
-  while (T--) {
-    scanf("%d", &n);
-    printf("%d\n", factorial(n));
-  }
+  csh();
+  game();
   return 0;
 }
