@@ -1,72 +1,47 @@
 $$
-\Large{我的简历}
-$$
-## 基本信息
-- 姓名：范梓轩
-- 性别：男
-- 年龄：11 岁
-- 所读学校：博才洋湖小学
-- 出生日期：2021.5.17
-- 民族：汉族
-## 兴趣爱好及特长
-- 阅读（四大名著、科幻小说、《哈利波特》等）
-- 编程（C++/C/Python/Java/Javascript）
-- 拼魔方（二阶魔方、三阶魔方、四阶魔方、五阶魔方、镜面魔方、金字塔魔方、粽子魔方、五魔方、SQL 魔方等）
-- 游泳
-## 学习成绩
-$$
-\begin{array}{|c|c|c|c|c|}
-  \hline\\
-  年级 & 语文 & 数学 & 英语 & 排名\\\hline
-  三年级上学期 & 98 & 100 & 100 & 班级第1\\\hline
-  三年级下学期 & 98.5 & 100 & 100 & 班级第1\\\hline
-  四年级上学期 & 96.5 & 100 & 100 & 班级第1\\\hline
-  四年级下学期 & 99 & 100 & 100 & 班级第1\\\hline
-  五年级上学期 & 95.5 & 100 & 100 & 班级第2\\\hline
-  五年级下学期 & 97 & 100 & 100 & 班级第1\\\hline
-\end{array}
-$$
-## 报告书
-$$
-\begin{array}{|c|c|c|c|}
-  \hline\\
-  年级 & 语文 & 数学 & 英语\\\hline
-  一年级上学期 & 优 & 优 & 优 \\\hline
-  一年级下学期 & 优 & 优 & 优 \\\hline
-  二年级上学期 & 优 & 优 & 优 \\\hline
-  二年级下学期 & 优 & 优 & 优 \\\hline
-  三年级上学期 & 优 & 优 & 优 \\\hline
-  三年级下学期 & 优 & 优 & 优 \\\hline
-  四年级上学期 & 优 & 优 & 优 \\\hline
-  四年级下学期 & 优 & 优 & 优 \\\hline
-  五年级上学期 & 优 & 优 & 优 \\\hline
-  五年级下学期 & 优 & 优 & 优 \\\hline
-\end{array}
-$$
-## 奖项
-- 2017.1.X：在 2016 年下学期中被评为**发言之星**
-- 2017.1.X：在 2016 年下学期中被评为**学习之星**
-- 2017.5.X：在 2017 年上学期中被评为**乐学之星**
-- 2017.12.30：在 ”计算小达人“ 比赛中荣获**一等奖**
-- 2018.1.X：在 2017 年下学期中被评为**乐学之星**
-- 2018.3.5：在寒假实践活动中**表现优秀**
-- 2019.1.6：在 2018 年秋五年级奥数培训班中荣获**一等奖**
-- 2019.5.31：在 2019 年上学期中被评为**才艺之星**
-- 2019.6.30：在 2019 年春五年级奥数培训班中荣获**一等奖**
-- 2019.7.X：在 ”计算小达人“ 比赛中荣获**一等奖**
-- 2019.11.8：在综合实践活动中被评为**最佳质疑者**
-- 2019.12.29：在 2019 年秋六年级奥数培训班中荣获**二等奖**
-- 2020.5.29：在 2020 年上学期中被评为**乐学之星**
-- 2020.9.16：在 “计算小达人” 比赛中被评为**数学小明星**
-- 2020 年 CSP-J 荣获**二等奖**
-- 2021.1.X：在 2020 年下学期中被评为**学习之星**
-- 2021.1.X：在期末总复习积累运用与课文理解测试中荣获**三等奖**
-- 2021.5.10：在 2021 年上学期 “笔尖上的智慧”  数学期中学习活动中被评为**数学满分之星**
-- 2021.5.X：在 2021 年上学期中被评为**学习之星**
-- 2021.7.9：在 “笔尖上的智慧” 数学期末学习活动中被评为**满分奖**
-- 2021 年 CSP-J 荣获**一等奖**
-- 2021 年 CSP-S 荣获**二等奖**
+\renewcommand{\tab}[1]{\hskip{#1 em}\hskip{#1 em}} 
 
-## 自我介绍
+\renewcommand{\func}{\text}
 
-我是一个活泼开朗、自信善良、阳光大方的男孩。我勤奋好学、认真努力、思维敏捷、尊敬老师，在班级各方面表现出色，学习成绩稳定，在班上始终名列前茅，热爱数学、热爱编程，经常帮助同学解答数学难题同时帮助老师批改试卷，有较强的人际关系以及沟通能力，与同学相处融洽。
+\renewcommand{\if}{\textbf{If} ~~}
+\renewcommand{\then}{\textbf{Then} ~~}
+\renewcommand{\for}{\textbf{For} ~~}
+\renewcommand{\while}{\textbf{While} ~~}
+\renewcommand{\return}{\textbf{Return} ~~}
+\renewcommand{\assert}{\textbf{Assert} ~~}
+\renewcommand{\to}{~~ \textbf{To} ~~}
+\renewcommand{\not}{\textbf{Not} ~}
+\renewcommand{\and}{~ \textbf{And} ~}
+\renewcommand{\or}{~ \textbf{Or} ~}
+\renewcommand{\bnot}{\textbf{Bitwise-Not} ~}
+\renewcommand{\band}{~ \textbf{Bitwise-And} ~}
+\renewcommand{\bor}{~ \textbf{Bitwise-Or} ~}
+\renewcommand{\xor}{~ \textbf{Bitwise-Xor} ~}
+\renewcommand{\shr}{~ \textbf{Right-Shift} ~}
+\renewcommand{\shl}{~ \textbf{Left-Shift} ~}
+
+\renewcommand{\type}[1]{\textbf {#1} ~}
+
+\begin{aligned}
+& \tab{0} \func{Matrix-Multiple}(\type{Matrix} A, \type{Matrix} B) \\
+& \tab{1} \assert \func{column}(A) = \func{row}(B) \\
+& \tab{1} C \leftarrow \type{Zero-Matrix}(\func{row}(A), \func{column}(B)) \\
+& \tab{1} \for i \leftarrow 1 \to \func{row}(A) \\
+& \tab{2} \for j \leftarrow 1 \to \func{column}(B) \\
+& \tab{3} \for k \leftarrow 1 \to \func{column}(A) \\
+& \tab{4} C(i, j) \leftarrow C(i, j) + A(i, k) \times B(k, j) \\
+& \tab{1} \return C
+
+\\ \\
+
+& \tab{0} \func{Matrix-Power}(\type{Matrix} M, \type{Integer} n) \\
+& \tab{1} \assert \func{row}(M) = \func{column}(M) \\
+& \tab{1} C \leftarrow \type{Unit-Matrix}(\func{row}(M), \func{column}(M)) \\
+& \tab{1} \while n \neq 0 \\
+& \tab{2} \if n \band 1 = 1 \\
+& \tab{3} C \leftarrow \func{Matrix-Multiple}(C, M) \\
+& \tab{2} M \leftarrow \func{Matrix-Multiple}(M, M) \\
+& \tab{2} n \leftarrow n \shr 1 \\
+& \tab{1} \return C
+\end{aligned}
+$$
