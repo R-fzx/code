@@ -3,7 +3,7 @@ import re
 from multiprocessing import Pool
 headers = {
     'Referer': 'https://music.163.com/',
-    "User-Agent": "Chrome/97.0.4692.99 "
+    "User-Agent": "Chrome/97.0.1072.62 "
 }
 
 def get_page(url):
@@ -15,7 +15,7 @@ def get_page(url):
 
 def get_songs(data):
     # playlist_url = "https://music.163.com/playlist?id=%s" % data[1]
-    playlist_url = "https://music.163.com/playlist?id=943659078"
+    playlist_url = "https://music.163.com/playlist?id=6647277920"
     res = requests.get(playlist_url, headers=headers)
     for i in re.findall(r'<a href="/song\?id=(\d+)">(.*?)</a>', res.text):
         download_url = "http://music.163.com/song/media/outer/url?id=%s" % i[0]

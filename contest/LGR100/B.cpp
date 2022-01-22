@@ -25,13 +25,16 @@ using Mll = map<LL, LL>;
 using Vec = pair<Pdd, Pdd>;
 
 const int kN = 5e5 + 1;
+const LL kM = 1e9 + 7;
 
 int n, q, b[kN], l, r;
 LL x;
 
-LL highbit(LL x) { 
-  for (LL i = 62; ~i; --i) {
+LL highbit(LL x) {
+  int i = 62;
+  for (; i >= 0 && !(x >> i & 1); --i) {
   }
+  return 1LL << i;
 }
 LL lowbit(LL x) { return x & -x; }
 
@@ -46,8 +49,13 @@ int main() {
   while (q--) {
     cin >> l >> r >> x;
     for (int i = l; i <= r; ++i) {
-
+      if (b[i]) {
+        x += highbit(x);
+      } else {
+        x += lowbit(x);
+      }
     }
+    cout << x % kM << endl;
   }
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
