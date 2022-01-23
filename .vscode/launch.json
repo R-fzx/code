@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch Main",
+      "request": "launch",
+      "mainClass": "Main",
+      "projectName": "VirusBroadcast"
+    },
+    {
+      "name": "C++ debug (global)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+      "cwd": "${fileDirname}",
+      "preLaunchTask": "C++ compile"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"name":"Local: P4726","url":"d:\\wsfxk\\code\\problem\\poly\\P4726.cpp","tests":[{"id":1642922047505,"input":"6\n0 927384623 817976920 427326948 149643566 610586717","output":"1 927384623 878326372 3882 273455637 998233543"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\wsfxk\\code\\problem\\poly\\P4726.cpp","group":"local","local":true}

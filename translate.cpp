@@ -2,7 +2,8 @@
 using namespace std;
 int main(int argc, char *argv[]) {
   freopen(argv[1], "r", stdin);
-  cout << "{\n  \"Code template\": {\n    \"scope\": \"cpp\",\n    \"prefix\": \"code\",\n    \"body\": [\n";
+  freopen("translate.out", "w", stdout);
+  // cout << "{\n  \"\": {\n    \"scope\": \"cpp\",\n    \"prefix\": \"code\",\n    \"body\": [\n";
   string s;
   while (getline(cin, s)) {
     cout << "      \"";
@@ -17,9 +18,9 @@ int main(int argc, char *argv[]) {
     }
     cout << "\",\n";
   }
-  cout << "    ],\n"
-      "    \"description\": \"Code template\"\n"
-      "  }\n"
-      "}\n";
+  // cout << "    ],\n"
+  //     "    \"description\": \"Code template\"\n"
+  //     "  }\n"
+  //     "}\n";
   return 0;
 }

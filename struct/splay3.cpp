@@ -54,19 +54,11 @@ void PushDown(int x) {
   }
 }
 int Build(int l, int r, int f, int _ = 0) {
-  // for (int i = 1; i <= _; ++i) {
-  //   fprintf(stderr, " ");
-  // }
-  // fprintf(stderr, "Build(%d, %d, %d) Start.\n", l, r, f);
   if (l > r) {
     return 0;
   }
   int m = l + r >> 1, x = Create(a[m]);
   e[x].f = f, e[x].l[0] = Build(l, m - 1, x, _ + 1), e[x].l[1] = Build(m + 1, r, x, _ + 1), PushUp(x);
-  // for (int i = 1; i <= _; ++i) {
-  //   fprintf(stderr, " ");
-  // }
-  // fprintf(stderr, "Build(%d, %d, %d) End.\n", l, r, f);
   return x;
 }
 int Find(int r) {
@@ -82,15 +74,9 @@ int Find(int r) {
   }
 }
 void Reverse(int l, int r) {
-  // fprintf(stderr, "Reverse %d and %d Start.\n", l, r);
   Splay(l = Find(l - 1), 0), Splay(r = Find(r + 1), l), e[e[r].l[0]].r ^= 1;
-  // fprintf(stderr, "Reverse %d and %d End.\n", l, r);
 }
 void Print(int x, int t = 0) {
-  // for (int i = 1; i <= t; ++i) {
-  //   fprintf(stderr, " ");
-  // }
-  // fprintf(stderr, "Print(%d) Start. e[%d] = {%d, %d, %d, {%d, %d}, %d, %d}\n", x, x, e[x].v, e[x].s, e[x].c, e[x].l[0], e[x].l[1], e[x].f, e[x].v);
   if (x) {
     PushDown(x);
     Print(e[x].l[0], t + 1);
@@ -99,16 +85,9 @@ void Print(int x, int t = 0) {
     }
     Print(e[x].l[1], t + 1);
   }
-  // for (int i = 1; i <= t; ++i) {
-  //   fprintf(stderr, " ");
-  // }
-  // fprintf(stderr, "Print(%d) End. e[%d] = {%d, %d, %d, {%d, %d}, %d, %d}\n", x, x, e[x].v, e[x].s, e[x].c, e[x].l[0], e[x].l[1], e[x].f, e[x].v);
 }
 
 int main() {
-  // freopen("splay.in", "r", stdin);
-  // freopen("splay.out", "w", stdout);
-  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   cin >> n >> q;
   iota(a + 1, a + n + 3, 0), rt = Build(1, n + 2, 0);
   while (q--) {
@@ -116,8 +95,5 @@ int main() {
     Reverse(l + 1, r + 1);
   }
   Print(rt);
-#ifdef TIME
-  fprintf(stderr, "\nTIME: %dms", clock());
-#endif
   return 0;
 }

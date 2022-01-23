@@ -68,7 +68,7 @@ void Init_r(int n) {
 }
 void FFT(Complex f[], int n, int t) {
   for (int i = 0; i < n; ++i) {
-    if (i > r[i]) {
+    if (r[i] > i) {
       swap(f[i], f[r[i]]);
     }
   }
@@ -88,10 +88,9 @@ void FFT(Complex f[], int n, int t) {
     }
   }
 }
-const int kC = 23;
+const int kC = 21;
 vector<int> w[kC + 1];
 void Init_w() {
-  // 1 << kC;
   for (int i = 1; i <= kC; ++i) {
     w[i].resize(1 << i - 1);
   }
@@ -108,7 +107,7 @@ void Init_w() {
 }
 void NTT(Poly &f, int n, int t) {
   for (int i = 0; i < n; ++i) {
-    if (i > r[i]) {
+    if (r[i] > i) {
       swap(f[i], f[r[i]]);
     }
   }
@@ -155,19 +154,19 @@ Poly Inv(Poly f, int n) {
     for (int i = 0; i < l; ++i) {
       Muli(a[i], Sub(2, Mul(a[i], b[i])));
     }
-    NTT(b, l, -1), b.resize(l >> 1);
+    NTT(a, l, -1), a.resize(l >> 1);
   }
-  return b.resize(n), b;
+  return a.resize(n), a;
 }
 Poly Sqrt(Poly f, int n) {
-  Poly a(1, 1), b, c;
+  Poly a(1, 1), b;
   for (int l = 4, i2 = Pow(2, kM - 2); l < (n << 2); l <<= 1) {
-    b = f, b.resize(l >> 1), Init_r(l), c = Inv(a, l >> 1), b = b * c, b.resize(l);
+    b = f, b.resize(l >> 1), Init_r(l), b = b * Inv(a, l >> 1), a.resize(l);
     for (int i = 0; i < l; ++i) {
       a[i] = Mul(i2, Add(a[i], b[i]));
     }
   }
-  return b.resize(n), b;
+  return a.resize(n), a;
 }
 Poly operator/(Poly x, Poly y) {
   int l = 1, n = x.size() - y.size() + 1;
@@ -206,32 +205,29 @@ Poly Integ(Poly x) {
 Poly Ln(Poly f, int n) { return f = Integ(Deriv(f) * Inv(f, n)), f.resize(n), f; }
 Poly Exp(Poly f, int n) {
   Poly a(1, 1), b;
+  int m = f.size();
   for (int l = 2; l < (n << 1); l <<= 1) {
     b = Ln(a, l);
     for (int i = 0; i < l; ++i) {
-      b[i] = Sub(i < f.size() ? f[i] : 0, b[i]);
+      b[i] = Sub(i < m ? f[i] : 0, b[i]);
     }
     Add(b[0], 1), a = a * b, a.resize(l);
   }
   return a.resize(n), a;
 }
 
-int n, m;
-Poly a, b;
+int n;
+Poly a;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   Init_w();
-  cin >> n >> m;
-  a.resize(++n), b.resize(++m);
-  for (auto &i : a) {
+  cin >> n;
+  a.resize(n);
+  for (int &i : a) {
     cin >> i;
   }
-  for (auto &i : b) {
-    cin >> i;
-  }
-  a = a * b;
-  for (auto &i : a) {
+  for (int i : Exp(a, n)) {
     cout << i << " ";
   }
 #ifdef TIME

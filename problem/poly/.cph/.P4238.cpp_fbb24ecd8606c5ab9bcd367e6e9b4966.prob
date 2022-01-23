@@ -1,0 +1,1 @@
+{"name":"Local: P4238","url":"d:\\wsfxk\\code\\problem\\poly\\P4238.cpp","tests":[{"id":1642920426363,"input":"5\n1 6 3 4 9","output":"1 998244347 33 998244169 1020"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\wsfxk\\code\\problem\\poly\\P4238.cpp","group":"local","local":true}
