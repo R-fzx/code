@@ -29,7 +29,22 @@
     "future": "cpp",
     "stdexcept": "cpp",
     "typeinfo": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "memory": "cpp",
+    "any": "cpp",
+    "cstdlib": "cpp",
+    "exception": "cpp",
+    "memory_resource": "cpp",
+    "rope": "cpp",
+    "fstream": "cpp",
+    "mutex": "cpp",
+    "new": "cpp",
+    "ratio": "cpp",
+    "shared_mutex": "cpp",
+    "sstream": "cpp",
+    "string_view": "cpp",
+    "tuple": "cpp",
+    "utility": "cpp"
   },
   "git.ignoreLimitWarning": true
 }

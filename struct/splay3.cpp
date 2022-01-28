@@ -1,28 +1,7 @@
-#include <algorithm>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <ctime>
-#include <deque>
-#include <functional>
-#include <iomanip>
 #include <iostream>
-#include <map>
 #include <numeric>
-#include <queue>
-#include <set>
-#include <string>
-#include <vector>
-// #define TIME
 
 using namespace std;
-using LL = long long;
-using LD = double;
-using Pll = pair<LL, LL>;
-using Pdd = pair<LD, LD>;
-using Vl = vector<LL>;
-using Mll = map<LL, LL>;
-using Vec = pair<Pdd, Pdd>;
 
 const int kN = 1e5 + 3;
 
@@ -39,7 +18,7 @@ void Connect(int x, int y, int w) { e[x].l[w] = y, e[y].f = x; }
 void Rotate(int x) {
   int y = e[x].f, z = e[y].f, w = Where(x);
   Connect(z, x, Where(y)), Connect(y, e[x].l[w ^ 1], w), Connect(x, y, w ^ 1), PushUp(y), PushUp(x);
-}
+} 
 void Splay(int x, int t) {
   for (; e[x].f != t; Rotate(x)) {
     if (e[e[x].f].f != t) {
@@ -73,9 +52,6 @@ int Find(int r) {
     }
   }
 }
-void Reverse(int l, int r) {
-  Splay(l = Find(l - 1), 0), Splay(r = Find(r + 1), l), e[e[r].l[0]].r ^= 1;
-}
 void Print(int x, int t = 0) {
   if (x) {
     PushDown(x);
@@ -92,7 +68,7 @@ int main() {
   iota(a + 1, a + n + 3, 0), rt = Build(1, n + 2, 0);
   while (q--) {
     cin >> l >> r;
-    Reverse(l + 1, r + 1);
+    Splay(l = Find(l), 0), Splay(r = Find(r + 2), l), e[e[r].l[0]].r ^= 1;
   }
   Print(rt);
   return 0;

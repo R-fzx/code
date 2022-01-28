@@ -47,45 +47,11 @@ const Poly operator*(Poly x, int y) {
 }
 const Poly operator/(Poly x, int y) { return x * Pow(y, kM - 2); }
 
-const double kPi = acos(-1);
-
-struct Complex {
-  double r, i;
-
-  Complex(double _r = 0, double _i = 0) : r(_r), i(_i) {}
-  Complex operator+(const Complex &o) const { return {r + o.r, i + o.i}; }
-  Complex operator-(const Complex &o) const { return {r - o.r, i - o.i}; }
-  Complex operator*(const Complex &o) const { return {r * o.r - i * o.i, r * o.i + i * o.r}; }
-  Complex operator/(const double &o) const { return {r / o, i / o}; }
-};
-
 vector<int> r;
 void Init_r(int n) {
   r.clear(), r.push_back(0);
   for (int i = 1; i < n; ++i) {
     r.push_back((r[i >> 1] >> 1) | ((i & 1) * (n >> 1)));
-  }
-}
-void FFT(Complex f[], int n, int t) {
-  for (int i = 0; i < n; ++i) {
-    if (r[i] > i) {
-      swap(f[i], f[r[i]]);
-    }
-  }
-  for (int l = 1; l < n; l <<= 1) {
-    Complex w(cos(kPi / l), t * sin(kPi / l));
-    for (int i = 0; i < n; i += l << 1) {
-      Complex u(1, 0);
-      for (int j = 0; j < l; ++j, u = u * w) {
-        Complex x = f[i + j], y = u * f[i + j + l];
-        f[i + j] = x + y, f[i + j + l] = x - y;
-      }
-    }
-  }
-  if (t == -1) {
-    for (int i = 0; i < n; ++i) {
-      f[i] = f[i] / n;
-    }
   }
 }
 const int kC = 21;
