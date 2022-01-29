@@ -1,0 +1,1 @@
+{"name":"Local: C","url":"d:\\wsfxk\\code\\contest\\usaco\\2022-1-30 B\\C.cpp","tests":[{"id":1643454906303,"input":"5\n3\n8 10 5\n6\n4 6 4 4 6 4\n3\n0 1 0\n2\n1 2\n3\n10 9 9","output":"14\n16\n-1\n-1\n-1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\wsfxk\\code\\contest\\usaco\\2022-1-30 B\\C.cpp","group":"local","local":true}
