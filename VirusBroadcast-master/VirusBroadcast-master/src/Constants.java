@@ -8,11 +8,11 @@
  */
 public class Constants {
 
-    public static int ORIGINAL_COUNT = 10;//初始感染数量
-    public static float BROAD_RATE = 0.5f;//传播率
-    public static float SHADOW_TIME = 140;//潜伏时间，14天为140
+    public static int ORIGINAL_COUNT = 1;//初始感染数量
+    public static float BROAD_RATE = 1.0f;//传播率
+    public static float SHADOW_TIME = 0;//潜伏时间，14天为140
     public static int HOSPITAL_RECEIVE_TIME = 1;//医院收治响应时间
-    public static int BED_COUNT = 2000;//医院床位
+    public static int BED_COUNT = 0;//医院床位
     public static float HEALTH = 0.9f;//医院床位
     /**
      * 流动意向平均值，建议调整范围：[-0.99,0.99]

@@ -1,8 +1,3 @@
-/*
-ID: wsfxk.e1
-LANG: C++
-TASK: gift1
-*/
 #include <algorithm>
 #include <bitset>
 #include <cmath>
@@ -10,7 +5,6 @@ TASK: gift1
 #include <ctime>
 #include <deque>
 #include <functional>
-#include <iomanip>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -18,6 +12,7 @@ TASK: gift1
 #include <set>
 #include <string>
 #include <vector>
+#include <iomanip>
 // #define TIME
 
 using namespace std;
@@ -29,34 +24,34 @@ using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 using Vec = pair<Pdd, Pdd>;
 
-const int kN = 11;
+const int kN = 4e6 + 1;
 
-int n, a[kN];
-string s[kN], _s;
+int n, a[kN], f[kN], p[kN];
 
-int &G() { return a[find(s + 1, s + n + 1, _s) - s]; }
+int S() {
+  int l = INT32_MAX, r = INT32_MIN, s = INT32_MAX;
+  for (int i = 1; i <= n; ++i) {
+    l = min(l, p[i]), r = max(r, p[i]);
+    if (f[r - l + 1] < i + 1) {
+      s = min(s, r - l + 1);
+    }
+  }
+  return s == INT32_MAX ? 0 : s;
+}
 
 int main() {
-  freopen("gift1.in", "r", stdin);
-  freopen("gift1.out", "w", stdout);
+  freopen("B.in", "r", stdin);
+  freopen("B.out", "w", stdout);
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   cin >> n;
   for (int i = 1; i <= n; ++i) {
-    cin >> s[i];
-  }
-  for (int i = 1, c, l; i <= n; ++i) {
-    cin >> _s >> c >> l;
-    if (l) {
-      G() -= c / l * l;
-      for (int j = 1; j <= l; ++j) {
-        cin >> _s;
-        G() += c / l;
-      }
-    }
+    cin >> a[i];
+    p[a[i]] = i;
   }
   for (int i = 1; i <= n; ++i) {
-    cout << s[i] << " " << a[i] << endl;
+    cin >> f[i];
   }
+  cout << S();
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif

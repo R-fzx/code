@@ -1,7 +1,7 @@
 /*
 ID: wsfxk.e1
 LANG: C++
-TASK: gift1
+TASK: friday
 */
 #include <algorithm>
 #include <bitset>
@@ -29,34 +29,22 @@ using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 using Vec = pair<Pdd, Pdd>;
 
-const int kN = 11;
+int n, c[7], y = 1900, m = 1, d = 1, o = 2;
 
-int n, a[kN];
-string s[kN], _s;
-
-int &G() { return a[find(s + 1, s + n + 1, _s) - s]; }
+int M() { return m == 2 ? 28 + (!(y % 4) && (y % 100) || !(y % 400)) : 30 + ((m > 7) ^ (m & 1)); }
 
 int main() {
-  freopen("gift1.in", "r", stdin);
-  freopen("gift1.out", "w", stdout);
+  freopen("friday.in", "r", stdin);
+  freopen("friday.out", "w", stdout);
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n;
-  for (int i = 1; i <= n; ++i) {
-    cin >> s[i];
+  for (cin >> n; y < 1900 + n; o = (o + 1) % 7) {
+    // cout << y << " " << m << " " << d << " " << o << endl;
+    c[o] += d == 13, ++d > M() && (++m > 12 && (++y, m = 1), d = 1);
   }
-  for (int i = 1, c, l; i <= n; ++i) {
-    cin >> _s >> c >> l;
-    if (l) {
-      G() -= c / l * l;
-      for (int j = 1; j <= l; ++j) {
-        cin >> _s;
-        G() += c / l;
-      }
-    }
+  for (int i = 0; i < 7; ++i) {
+    cout << (i ? " " : "") << c[i];
   }
-  for (int i = 1; i <= n; ++i) {
-    cout << s[i] << " " << a[i] << endl;
-  }
+  cout << endl;
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif

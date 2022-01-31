@@ -1,7 +1,7 @@
 /*
 ID: wsfxk.e1
 LANG: C++
-TASK: gift1
+TASK: beads
 */
 #include <algorithm>
 #include <bitset>
@@ -29,34 +29,35 @@ using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 using Vec = pair<Pdd, Pdd>;
 
-const int kN = 11;
+const int kN = 351;
 
-int n, a[kN];
-string s[kN], _s;
+int n, a[kN], ans;
 
-int &G() { return a[find(s + 1, s + n + 1, _s) - s]; }
+int G(int s, int d, int l, int c) {
+  int i = s;
+  for (; i >= 1 && i <= n && i != l && (a[i] == c || a[i] == 2); i += d) {
+  }
+  return i;
+}
+int C(int s, int d, int l) {
+  return a[s] == 2 ? max(G(s, d, l, 0), G(s, d, l, 1)) : G(s, d, l, a[s]);
+}
 
 int main() {
-  freopen("gift1.in", "r", stdin);
-  freopen("gift1.out", "w", stdout);
+  freopen("beads.in", "r", stdin);
+  freopen("beads.out", "w", stdout);
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   cin >> n;
   for (int i = 1; i <= n; ++i) {
-    cin >> s[i];
+    char ch;
+    cin >> ch;
+    a[i] = (ch == 'w' ? 2 : ch == 'b');
   }
-  for (int i = 1, c, l; i <= n; ++i) {
-    cin >> _s >> c >> l;
-    if (l) {
-      G() -= c / l * l;
-      for (int j = 1; j <= l; ++j) {
-        cin >> _s;
-        G() += c / l;
-      }
-    }
+  for (int _ = 1; _ <= n; ++_) {
+    int x = C(1, 1, -1) - 1;
+    ans = max(ans, x + n - C(n, -1, x)), rotate(a + 1, a + 2, a + n + 1);
   }
-  for (int i = 1; i <= n; ++i) {
-    cout << s[i] << " " << a[i] << endl;
-  }
+  cout << ans << endl;
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif

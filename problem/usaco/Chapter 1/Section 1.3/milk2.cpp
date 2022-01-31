@@ -1,7 +1,7 @@
 /*
 ID: wsfxk.e1
 LANG: C++
-TASK: gift1
+TASK: milk2
 */
 #include <algorithm>
 #include <bitset>
@@ -29,34 +29,32 @@ using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 using Vec = pair<Pdd, Pdd>;
 
-const int kN = 11;
+const int kN = 1e6 + 1;
 
-int n, a[kN];
-string s[kN], _s;
-
-int &G() { return a[find(s + 1, s + n + 1, _s) - s]; }
+int n, l, r, a[kN], ans[2], mi[2] = {INT32_MAX};
 
 int main() {
-  freopen("gift1.in", "r", stdin);
-  freopen("gift1.out", "w", stdout);
+  freopen("milk2.in", "r", stdin);
+  freopen("milk2.out", "w", stdout);
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   cin >> n;
-  for (int i = 1; i <= n; ++i) {
-    cin >> s[i];
+  // cout << mi[0] << " " << mi[1] << endl;
+  while (n--) {
+    cin >> l >> r;  // (l,r]
+    mi[0] = min(mi[0], l + 1), mi[1] = max(mi[1], r);
+    ++a[l + 1], --a[r + 1];
   }
-  for (int i = 1, c, l; i <= n; ++i) {
-    cin >> _s >> c >> l;
-    if (l) {
-      G() -= c / l * l;
-      for (int j = 1; j <= l; ++j) {
-        cin >> _s;
-        G() += c / l;
-      }
+  // cout << mi[0] << " " << mi[1] << endl;
+  int p = mi[0], o = 0;
+  for (int i = mi[0]; i <= mi[1]; ++i) {
+    a[i] += a[i - 1];
+    if (!a[i] ^ !o) {
+      // cout << p << " " << i << endl;
+      ans[o] = max(ans[o], i - p), p = i, o ^= 1;
     }
   }
-  for (int i = 1; i <= n; ++i) {
-    cout << s[i] << " " << a[i] << endl;
-  }
+  ans[o] = max(ans[o], mi[1] + 1 - p);
+  cout << ans[1] << " " << ans[0] << endl;
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif
