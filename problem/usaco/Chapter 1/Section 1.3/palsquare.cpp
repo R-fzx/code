@@ -1,3 +1,8 @@
+/*
+ID: wsfxk.e1
+LANG: C++
+TASK: palsquare
+*/
 #include <algorithm>
 #include <bitset>
 #include <cmath>
@@ -13,6 +18,7 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <fstream>
 // #define TIME
 
 using namespace std;
@@ -24,25 +30,31 @@ using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 using Vec = pair<Pdd, Pdd>;
 
-const int kN = 5001;
+int b;
 
-int n, a[kN];
+string T(int x) {
+  string s;
+  for (; x; x /= b) {
+    s.push_back(x % b >= 10 ? x % b - 10 + 'A' : x % b + '0'); 
+  }
+  reverse(s.begin(), s.end());
+  return s;
+}
+bool P(string s) {
+  string _ = s;
+  reverse(_.begin(), _.end());
+  return _ == s;
+}
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n;
-  for (int i = 1; i <= n; ++i) {
-    cin >> a[i];
-  }
-  for (int i = 1; i <= n; ++i) {
-    for (int j = 1; j <= n; ++j) {
-      if (a[i] < a[j]) {
-        swap(a[i], a[j]);
-      }
+  ifstream fin("palsquare.in");
+  ofstream fout("palsquare.out");
+  fin >> b;
+  for (int i = 1; i <= 300; ++i) {
+    if (P(T(i * i))) {
+      fout << T(i) << " " << T(i * i) << endl;
     }
-  }
-  for (int i = 1; i <= n; ++i) {
-    cout << a[i] << " ";
   }
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());

@@ -1,10 +1,17 @@
+/*
+ID: wsfxk.e1
+LANG: C++
+TASK: dualpal
+*/
 #include <algorithm>
 #include <bitset>
 #include <cmath>
 #include <cstdio>
 #include <ctime>
 #include <deque>
+#include <fstream>
 #include <functional>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -12,7 +19,6 @@
 #include <set>
 #include <string>
 #include <vector>
-#include <iomanip>
 // #define TIME
 
 using namespace std;
@@ -24,25 +30,35 @@ using Vl = vector<LL>;
 using Mll = map<LL, LL>;
 using Vec = pair<Pdd, Pdd>;
 
-const int kN = 5001;
+int n, s, c;
 
-int n, a[kN];
+string T(int x, int b) {
+  string s;
+  for (; x; x /= b) {
+    s.push_back(x % b + '0');
+  }
+  return s;
+}
+bool P(string x) {
+  string y = x;
+  reverse(y.begin(), y.end());
+  return x == y;
+}
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n;
-  for (int i = 1; i <= n; ++i) {
-    cin >> a[i];
-  }
-  for (int i = 1; i <= n; ++i) {
-    for (int j = 1; j <= n; ++j) {
-      if (a[i] < a[j]) {
-        swap(a[i], a[j]);
-      }
+  ifstream fin("dualpal.in");
+  ofstream fout("dualpal.out");
+  fin >> n >> s;
+  while (++s, n) {
+    c = 0;
+    for (int i = 2; i <= 10; ++i) {
+      c += P(T(s, i));
     }
-  }
-  for (int i = 1; i <= n; ++i) {
-    cout << a[i] << " ";
+    if (c > 1) {
+      fout << s << endl;
+      --n;
+    }
   }
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());

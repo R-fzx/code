@@ -1,3 +1,8 @@
+/*
+ID: wsfxk.e1
+LANG: C++
+TASK: sort3
+*/
 #include <algorithm>
 #include <bitset>
 #include <cmath>
@@ -13,37 +18,20 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <fstream>
 // #define TIME
 
 using namespace std;
 using LL = long long;
-using LD = double;
-using Pll = pair<LL, LL>;
-using Pdd = pair<LD, LD>;
-using Vl = vector<LL>;
-using Mll = map<LL, LL>;
-using Vec = pair<Pdd, Pdd>;
+using ULL = unsigned long long;
+using Pii = pair<int, int>;
 
-const int kN = 5001;
-
-int n, a[kN];
+ifstream fin("sort3.in");
+ofstream fout("sort3.out");
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n;
-  for (int i = 1; i <= n; ++i) {
-    cin >> a[i];
-  }
-  for (int i = 1; i <= n; ++i) {
-    for (int j = 1; j <= n; ++j) {
-      if (a[i] < a[j]) {
-        swap(a[i], a[j]);
-      }
-    }
-  }
-  for (int i = 1; i <= n; ++i) {
-    cout << a[i] << " ";
-  }
+
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif
