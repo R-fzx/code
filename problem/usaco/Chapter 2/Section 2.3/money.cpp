@@ -1,7 +1,7 @@
 /*
 ID: wsfxk.e1
 LANG: C++
-TASK: sort3
+TASK: money
 */
 #include <algorithm>
 #include <bitset>
@@ -9,7 +9,9 @@ TASK: sort3
 #include <cstdio>
 #include <ctime>
 #include <deque>
+#include <fstream>
 #include <functional>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -17,8 +19,6 @@ TASK: sort3
 #include <set>
 #include <string>
 #include <vector>
-#include <iomanip>
-#include <fstream>
 // #define TIME
 
 using namespace std;
@@ -28,28 +28,40 @@ using Pii = pair<int, int>;
 
 #define FILE_READ
 #ifdef FILE_READ
-ifstream fin("sort3.in");
-ofstream fout("sort3.out");
+ifstream fin("money.in");
+ofstream fout("money.out");
 #else
 #define fin cin
 #define fout cout
 #endif
 
-const int kN = 1001;
+const int kN = 10001, kV = 26;
 
-int n, a[kN], b[kN], ans[3];
+int v, n;
+LL f[kN][kV], a[kV];
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  fin >> n;
-  for (int i = 1; i <= n; ++i) {
+  fin >> v >> n;
+  for (int i = 1; i <= v; ++i) {
     fin >> a[i];
   }
-  copy(a + 1, a + n + 1, b + 1), sort(b + 1, b + n + 1);
+  sort(a + 1, a + v + 1);
+  f[0][0] = 1;
   for (int i = 1; i <= n; ++i) {
-    ans[0] += a[i] != b[i] && b[i] != 3, ans[1] += a[i] == 1 && b[i] == 2, ans[2] += a[i] == 2 && b[i] == 1;
+    for (int j = 1; j <= v; ++j) {
+      if (a[j] <= i) {
+        for (int k = 0; k <= j; ++k) {
+          f[i][j] += f[i - a[j]][k];
+        }
+      }
+    }
   }
-  fout << ans[0] - min(ans[1], ans[2]) << endl;
+  LL s = 0;
+  for (int i = 1; i <= v; ++i) {
+    s += f[n][i];
+  }
+  fout << s << endl;
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif

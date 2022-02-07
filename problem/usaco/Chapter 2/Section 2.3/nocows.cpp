@@ -1,7 +1,7 @@
 /*
 ID: wsfxk.e1
 LANG: C++
-TASK: sort3
+TASK: nocows
 */
 #include <algorithm>
 #include <bitset>
@@ -28,28 +28,31 @@ using Pii = pair<int, int>;
 
 #define FILE_READ
 #ifdef FILE_READ
-ifstream fin("sort3.in");
-ofstream fout("sort3.out");
+ifstream fin("nocows.in");
+ofstream fout("nocows.out");
 #else
 #define fin cin
 #define fout cout
 #endif
 
-const int kN = 1001;
+const int kN = 200, kK = 100, kM = 9901;
 
-int n, a[kN], b[kN], ans[3];
+int n, k, f[kN][kK];
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  fin >> n;
-  for (int i = 1; i <= n; ++i) {
-    fin >> a[i];
+  fin >> n >> k;
+  for (int i = 1; i <= k; ++i) {
+    f[1][i] = 1;
   }
-  copy(a + 1, a + n + 1, b + 1), sort(b + 1, b + n + 1);
-  for (int i = 1; i <= n; ++i) {
-    ans[0] += a[i] != b[i] && b[i] != 3, ans[1] += a[i] == 1 && b[i] == 2, ans[2] += a[i] == 2 && b[i] == 1;
+  for (int h = 1; h <= k; ++h) {
+    for (int i = 3; i <= n; i += 2) {
+      for (int j = 1; j <= i - 2; j += 2) {
+        f[i][h] = (f[i][h] + f[j][h - 1] * f[i - j - 1][h - 1] % kM) % kM;
+      }
+    }
   }
-  fout << ans[0] - min(ans[1], ans[2]) << endl;
+  fout << (f[n][k] - f[n][k - 1] + kM) % kM << endl;
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif

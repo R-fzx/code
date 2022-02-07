@@ -1,7 +1,7 @@
 /*
 ID: wsfxk.e1
 LANG: C++
-TASK: sort3
+TASK: prefix
 */
 #include <algorithm>
 #include <bitset>
@@ -28,28 +28,38 @@ using Pii = pair<int, int>;
 
 #define FILE_READ
 #ifdef FILE_READ
-ifstream fin("sort3.in");
-ofstream fout("sort3.out");
+ifstream fin("prefix.in");
+ofstream fout("prefix.out");
 #else
 #define fin cin
 #define fout cout
 #endif
 
-const int kN = 1001;
+const int kN = 2e5 + 1;
 
-int n, a[kN], b[kN], ans[3];
+vector<string> a;
+string s;
+bitset<kN> f;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  fin >> n;
-  for (int i = 1; i <= n; ++i) {
-    fin >> a[i];
+  for (string _; (fin >> _) && _ != "."; a.push_back(_)) {
   }
-  copy(a + 1, a + n + 1, b + 1), sort(b + 1, b + n + 1);
-  for (int i = 1; i <= n; ++i) {
-    ans[0] += a[i] != b[i] && b[i] != 3, ans[1] += a[i] == 1 && b[i] == 2, ans[2] += a[i] == 2 && b[i] == 1;
+  for (string _; fin >> _; s += _) {
   }
-  fout << ans[0] - min(ans[1], ans[2]) << endl;
+  f[0] = 1;
+  for (int i = 1; i <= s.size(); ++i) {
+    for (string &j : a) {
+      if (j.size() <= i && s.substr(i - j.size(), j.size()) == j && f[i - j.size()]) {
+        f[i] = 1;
+        break;
+      }
+    }
+  }
+  int i = s.size();
+  for (; !f[i]; --i) {
+  }
+  fout << i << endl;
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif

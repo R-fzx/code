@@ -1,0 +1,1 @@
+{"name":"Local: P5030","url":"d:\\wsfxk\\code\\problem\\P5000-P5999\\P5030.cpp","tests":[{"id":1644204674401,"input":"2 2 1\n1 1","output":"3"},{"id":1644204681061,"input":"8 7 5\n1 1\n5 4\n2 3\n4 7\n8 3","output":"28"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\wsfxk\\code\\problem\\P5000-P5999\\P5030.cpp","group":"local","local":true}

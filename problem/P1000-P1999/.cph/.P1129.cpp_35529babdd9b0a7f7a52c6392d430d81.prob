@@ -1,0 +1,1 @@
+{"name":"Local: P1129","url":"d:\\wsfxk\\code\\problem\\P1000-P1999\\P1129.cpp","tests":[{"id":1644199287082,"input":"2\n2\n0 0\n0 1\n3\n0 0 1\n0 1 0\n1 0 0","output":"No\nYes"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\wsfxk\\code\\problem\\P1000-P1999\\P1129.cpp","group":"local","local":true}

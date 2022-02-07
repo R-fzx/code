@@ -1,7 +1,7 @@
 /*
 ID: wsfxk.e1
 LANG: C++
-TASK: sort3
+TASK: runround
 */
 #include <algorithm>
 #include <bitset>
@@ -9,7 +9,9 @@ TASK: sort3
 #include <cstdio>
 #include <ctime>
 #include <deque>
+#include <fstream>
 #include <functional>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -17,8 +19,6 @@ TASK: sort3
 #include <set>
 #include <string>
 #include <vector>
-#include <iomanip>
-#include <fstream>
 // #define TIME
 
 using namespace std;
@@ -28,28 +28,38 @@ using Pii = pair<int, int>;
 
 #define FILE_READ
 #ifdef FILE_READ
-ifstream fin("sort3.in");
-ofstream fout("sort3.out");
+ifstream fin("runround.in");
+ofstream fout("runround.out");
 #else
 #define fin cin
 #define fout cout
 #endif
 
-const int kN = 1001;
+LL m;
 
-int n, a[kN], b[kN], ans[3];
+bool C(LL x) {
+  vector<Pii> v;
+  for (; x; x /= 10) {
+    v.emplace_back(x % 10, 0);
+  }
+  bitset<10> b;
+  for (auto &i : v) {
+    if (b[i.first] || !i.first) return 0;
+    b[i.first] = 1;
+  }
+  reverse(v.begin(), v.end());
+  int i = 0, j = 0;
+  do {
+    v[i].second = 1, i = (i + v[i].first) % v.size(), ++j;
+  } while (!v[i].second);
+  return !i && j == v.size();
+}
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  fin >> n;
-  for (int i = 1; i <= n; ++i) {
-    fin >> a[i];
+  for (fin >> m; !C(++m);) {
   }
-  copy(a + 1, a + n + 1, b + 1), sort(b + 1, b + n + 1);
-  for (int i = 1; i <= n; ++i) {
-    ans[0] += a[i] != b[i] && b[i] != 3, ans[1] += a[i] == 1 && b[i] == 2, ans[2] += a[i] == 2 && b[i] == 1;
-  }
-  fout << ans[0] - min(ans[1], ans[2]) << endl;
+  fout << m << endl;
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif

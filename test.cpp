@@ -1,51 +1,68 @@
 #include <algorithm>
-#include <bitset>
-#include <cmath>
 #include <cstdio>
-#include <ctime>
-#include <deque>
-#include <functional>
-#include <iostream>
-#include <map>
-#include <numeric>
+#include <cstring>
 #include <queue>
-#include <set>
-#include <string>
-#include <vector>
-#include <iomanip>
-// #define TIME
 
 using namespace std;
-using LL = long long;
-using LD = double;
-using Pll = pair<LL, LL>;
-using Pdd = pair<LD, LD>;
-using Vl = vector<LL>;
-using Mll = map<LL, LL>;
-using Vec = pair<Pdd, Pdd>;
 
-const int kN = 5001;
+const int kmax = 310, kmaxM = 12010;
 
-int n, a[kN];
+bool vis[kmax];
+int n, m, cnt, ans, h[kmax], match[kmax];
 
-int main() {
-  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n;
-  for (int i = 1; i <= n; ++i) {
-    cin >> a[i];
-  }
-  for (int i = 1; i <= n; ++i) {
-    for (int j = 1; j <= n; ++j) {
-      if (a[i] < a[j]) {
-        swap(a[i], a[j]);
+struct edge {
+  int p, to;
+} e[kmaxM];
+
+void AddEdge(int x, int y) {
+  e[++cnt] = {h[x], y};
+  h[x] = cnt;
+}
+
+bool DFS(int x) {
+  for (int i = h[x], t; i; i = e[i].p) {
+    if (!vis[t = e[i].to]) {
+      vis[t] = 1;
+      if (!match[t] || DFS(match[t])) {
+        match[x] = t, match[t] = x;
+        return 1;
       }
     }
   }
+  return 0;
+}
+
+void Hungary() {
   for (int i = 1; i <= n; ++i) {
-    cout << a[i] << " ";
+    if (!match[i]) {
+      memset(vis, 0, sizeof vis);
+      ans -= DFS(i);
+    }
   }
-#ifdef TIME
-  fprintf(stderr, "\nTIME: %dms", clock());
-#endif
+}
+
+void Print(int x) {
+  x += n;
+  do {
+    printf("%d ", x = x - n);
+  } while (vis[x] = 1, x = match[x]);
+  printf("\n");
+}
+
+int main() {
+  scanf("%d %d", &n, &m);
+  ans = n;
+  for (int i = 1, x, y; i <= m; ++i) {
+    scanf("%d %d", &x, &y);
+    AddEdge(x, y + n);
+  }
+  Hungary();
+  memset(vis, 0, sizeof vis);
+  for (int i = 1; i <= n; ++i) {
+    if (!vis[i]) {
+      Print(i);
+    }
+  }
+  printf("%d\n", ans);
   return 0;
 }
