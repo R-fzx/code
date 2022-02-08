@@ -1,0 +1,1 @@
+{"name":"Local: P1894","url":"d:\\wsfxk\\code\\problem\\P1000-P1999\\P1894.cpp","tests":[{"id":1644234967687,"input":"5 5\n2 2 5\n3 2 3 4\n2 1 5\n3 1 2 5\n1 2","output":"4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\wsfxk\\code\\problem\\P1000-P1999\\P1894.cpp","group":"local","local":true}

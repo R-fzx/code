@@ -1,37 +1,16 @@
-#include <algorithm>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <ctime>
-#include <deque>
-#include <functional>
-#include <iomanip>
 #include <iostream>
-#include <map>
-#include <numeric>
-#include <queue>
-#include <set>
-#include <string>
-#include <vector>
-// #define TIME
+#include <algorithm>
 
 using namespace std;
-using LL = long long;
-using LD = double;
-using Pll = pair<LL, LL>;
-using Pdd = pair<LD, LD>;
-using Vl = vector<LL>;
-using Mll = map<LL, LL>;
-using Vec = pair<Pdd, Pdd>;
+using uLL = unsigned long long;
 
-unsigned long long x;
+uLL x;
 bool f = 0;
 
-string ten2hex(unsigned long long x) {
+string ten2hex(uLL x) {
   string res;
-  while (x) {
+  for (; x; x /= 16) {
     res += (x % 16 < 10 ? x % 16 + '0' : x % 16 - 10 + 'A');
-    x /= 16;
   }
   reverse(res.begin(), res.end());
   return res;
@@ -56,8 +35,5 @@ int main() {
       x = x * 10 + ch - '0', f = 1;
     }
   }
-#ifdef TIME
-  fprintf(stderr, "\nTIME: %dms", clock());
-#endif
   return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: P1525","url":"d:\\wsfxk\\code\\problem\\P1000-P1999\\P1525.cpp","tests":[{"id":1644234069098,"input":"4 6\n1 4 2534\n2 3 3512\n1 2 28351\n1 3 6618\n2 4 1805\n3 4 12884","output":"3512"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\wsfxk\\code\\problem\\P1000-P1999\\P1525.cpp","group":"local","local":true}
