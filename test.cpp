@@ -1,17 +1,12 @@
-#include <concepts>
-#include <iostream>
+#define macroexpand(x) #x
+#define expand(x) macroexpand(x)
+#define expand_andprint(x) printf("%s\n",macroexpand(x))
+#include <cstdio>
 
-using namespace std;
-
-template <class T>
-concept myConcept = integral<T> && !same_as<T, bool>;
-
-template <myConcept T>
-constexpr void func(T x) {
-  // somethingdafds
-}
+#define add(x, y) x + y
+#define sub(p, q) p - q
 
 int main() {
-  cout << "Hello!";
+  expand_andprint(add(sub(3, 4),2));
   return 0;
 }

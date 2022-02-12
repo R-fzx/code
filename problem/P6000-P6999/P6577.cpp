@@ -20,46 +20,86 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-const int kN = 1001;
+const int kN = 1001, kInf = 1e8;
 
-int n, m, v[kN], t, p[kN], _[kN * kN];
-LL d[kN], s[kN];
+int n, m, p[kN], t, v[kN], f[kN];
+LL a[kN], d[kN], ans;
 vector<Pii> e[kN];
 
-bool F(int x) {
-  if (v[x] ^ t) {
+int F(int x) {
+  // if (v[x] ^ t) {
     v[x] = t;
-    for (Pii &i : e[x]) {
-      if (s[x] + s[i.first] == i.second) {
-        if (!p[i.first] || F(p[i.first])) {
-          return p[i.first] = x, p[x] = i.first;
+    for (auto &i : e[x]) {
+      if (v[i.first] ^ t) {
+        if (a[x] + a[i.first] == i.second) {
+          v[i.first] = t, f[i.first] = x;
+          if (!p[i.first]) {
+            return i.first;
+          }
+          f[p[i.first]] = i.first;
+          int r = F(p[i.first]);
+          if (r) {
+            return r;
+          }
+        } else {
+          d[x] = min(d[x], a[x] + a[i.first] - i.second);
         }
-      } else {
-        d[i.first] = min(d[i.first], s[x] + s[i.first] - i.second);
       }
     }
-  }
+  // }
   return 0;
 }
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  iota(_, _ + kN * kN, 0), cin >> n >> m;
-  for_each_n(_ + 1, m, [](int i) {
-    int x, y, h;
-    cin >> x >> y >> h, e[x].push_back({y + n, h}), e[y + n].push_back({x, h});
-  }), for_each_n(_ + 1, n, [](int i) { s[i] = max_element(e[i].begin(), e[i].end(), [](Pii x, Pii y) { return x.second < y.second; })->second; }), for_each_n(_ + 1, n, [](int i) {
-    for (++t;; ++t) {
-      fill_n(d + n + 1, n, 1 << 30);
-      if (F(i)) {
+  cin >> n >> m;
+  fill_n(a + 1, n, -kInf);
+  for (int i = 1, x, y, v; i <= m; ++i) {
+    cin >> x >> y >> v;
+    e[x].emplace_back(y + n, v), e[y + n].emplace_back(x, v), a[x] = max(a[x], (LL)v);
+  }
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j <= n; ++j) {
+      d[j] = kInf, f[j] = f[j + n] = 0;
+    }
+    ++t;
+    for (int l = F(i);;) {
+      if (l) {
+        for (; l; p[l] = f[l], p[f[l]] = l, l = f[f[l]]) {
+        }
         break;
       }
-      LL x = *min_element(d + n + 1, d + n + n + 1);
-      for_each_n(_ + 1, n, [x](int j) { s[j] -= (v[j] == t) * x, s[j + n] += (v[j + n] == t) * x; });
+      LL z = kInf;
+      for (int j = 1; j <= n; ++j) {
+        if (v[j] == t) {
+          z = min(z, d[j]);
+        }
+      }
+      for (int j = 1; j <= n; ++j) {
+        if (v[j] == t) {
+          a[j] -= z, d[j] -= z;
+        }
+        if (v[j + n] == t) {
+          a[j + n] += z;
+        }
+      }
+      for (int j = 1; j <= n; ++j) {
+        if (!d[j]) {
+          d[j] = kInf, l = F(j);
+          if (l) {
+            break;
+          }
+        }
+      }
     }
-  });
-  cout << accumulate(s + 1, s + n + n + 1, 0) << endl;
-  for_each_n(_ + 1, n, [](int i) { cout << p[i + n] << ' '; });
+  }
+  for (int i = 1; i <= n + n; ++i) {
+    ans += a[i];
+  }
+  cout << ans << endl;
+  for (int i = 1; i <= n; ++i) {
+    cout << p[i + n] << " ";
+  }
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif
