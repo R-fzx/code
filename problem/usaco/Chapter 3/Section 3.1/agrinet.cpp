@@ -1,3 +1,8 @@
+/*
+ID: wsfxk.e1
+LANG: C++
+TASK: agrinet
+*/
 #include <algorithm>
 #include <bitset>
 #include <cmath>
@@ -13,16 +18,24 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <fstream>
 // #define TIME
 
 using namespace std;
 using LL = long long;
+using ULL = unsigned long long;
 using Pii = pair<int, int>;
-using Pll = pair<LL, LL>;
+
+// #define FILE_READ
+#ifdef FILE_READ
+ifstream fin("agrinet.in");
+ofstream fout("agrinet.out");
+#else
+#define fin cin
+#define fout cout
+#endif
 
 int main() {
-  freopen(".in", "r", stdin);
-  freopen(".out", "w", stdout);
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 
 #ifdef TIME
