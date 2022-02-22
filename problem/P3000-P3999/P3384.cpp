@@ -6,91 +6,57 @@ using LL = long long;
 
 const int kN = 1e5 + 1;
 
-int n, q, r, f[kN], d[kN], t[kN], c, s[kN], h[kN], l[kN], o, x, y, _d[kN];
+int n, q, r, f[kN], d[kN], t[kN], c, s[kN], h[kN], o, x, y, _d[kN];
 LL p, a[kN], b[2][kN], v;
 vector<int> e[kN];
 
 void A(int o, int x, LL v) {
-  v %= p;
-  for (; x <= n; x += x & -x) {
-    b[o][x] = (b[o][x] + v) % p;
+  for (v %= p; x <= n; b[o][x] = (b[o][x] + v) % p, x += x & -x) {
   }
 }
 LL S(int o, int x) {
   LL _s = 0;
-  for (; x; x -= x & -x) {
-    _s = (_s + b[o][x]) % p;
+  for (; x; _s = (_s + b[o][x]) % p, x -= x & -x) {
   }
   return _s;
 }
-LL Do(int l, int r, LL v = 0) {
-  v %= p;
-  A(0, l, v), A(1, l, v * (l - 1)), A(0, r + 1, p - v), A(1, r + 1, (p - v) * r);
-  return ((r * S(0, r) % p - S(1, r) + p) % p - (l - 1) * S(0, l - 1) % p + S(1, l - 1) + p) % p;
-}
+LL Do(int l, int r, LL v = 0) { return v %= p, A(0, l, v), A(1, l, v * (l - 1)), A(0, r + 1, p - v), A(1, r + 1, (p - v) * r), ((r * S(0, r) % p - S(1, r) + p) % p - (l - 1) * S(0, l - 1) % p + S(1, l - 1) + p) % p; }
 void D(int x, int _f) {
   s[x] = 1, f[x] = _f, d[x] = d[_f] + 1;
   for (int i : e[x]) {
-    if (i != _f) {
-      D(i, x), s[x] += s[i], (s[i] > s[h[x]]) && (h[x] = i);
-    }
+    i != _f && (D(i, x), s[x] += s[i], s[i] > s[h[x]] && (h[x] = i));
   }
 }
 void H(int x, int _t) {
   if (x) {
-    l[_d[x] = ++c] = x, t[x] = _t, H(h[x], _t);
+    _d[x] = ++c, t[x] = _t, H(h[x], _t);
     for (int i : e[x]) {
-      if (i != f[x] && i != h[x]) {
-        H(i, i);
-      }
+      i != f[x] && i != h[x] && (H(i, i), 0);
     }
   }
 }
+LL P(int x, int y, LL v = 0) {
+  LL s = 0;
+  for (; t[x] ^ t[y]; d[t[x]] < d[t[y]] && (swap(x, y), 0), s = (s + Do(_d[t[x]], _d[x], v)) % p, x = f[t[x]]) {
+  }
+  return d[x] > d[y] && (swap(x, y), 0), (s + Do(_d[x], _d[y], v)) % p;
+}
 
 int main() {
-  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n >> q >> r >> p;
-  for (int i = 1; i <= n; ++i) {
-    cin >> a[i];
+  for (int i = (cin >> n >> q >> r >> p, 1); i <= n; cin >> a[i++]) {
   }
-  for (int i = 1, x, y; i < n; ++i) {
-    cin >> x >> y;
-    e[x].push_back(y), e[y].push_back(x);
+  for (int i = 1, x, y; i < n; cin >> x >> y, e[x].push_back(y), e[y].push_back(x), ++i) {
   }
-  D(r, 0), H(r, r);
-  for (int i = 1; i <= n; ++i) {
-    Do(i, i, a[l[i]]);
+  for (int i = (D(r, 0), H(r, r), 1); i <= n; Do(_d[i], _d[i], a[i]), ++i) {
   }
-  while (q--) {
+  for (; q--; ) {
     cin >> o >> x;
     if (o == 1) {
-      cin >> y >> v;
-      for (; t[x] ^ t[y];) {
-        if (d[t[x]] < d[t[y]]) {
-          swap(x, y);
-        }
-        Do(_d[t[x]], _d[x], v), x = f[t[x]];
-      }
-      if (d[x] > d[y]) {
-        swap(x, y);
-      }
-      Do(_d[x], _d[y], v);
+      cin >> y >> v, P(x, y, v);
     } else if (o == 2) {
-      cin >> y;
-      LL s = 0;
-      for (; t[x] ^ t[y];) {
-        if (d[t[x]] < d[t[y]]) {
-          swap(x, y);
-        }
-        s = (s + Do(_d[t[x]], _d[x])) % p, x = f[t[x]];
-      }
-      if (d[x] > d[y]) {
-        swap(x, y);
-      }
-      cout << (s + Do(_d[x], _d[y])) % p << endl;
+      cin >> y, cout << P(x, y) << endl;
     } else if (o == 3) {
-      cin >> v;
-      Do(_d[x], _d[x] + s[x] - 1, v);
+      cin >> v, Do(_d[x], _d[x] + s[x] - 1, v);
     } else {
       cout << Do(_d[x], _d[x] + s[x] - 1) << endl;
     }
