@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.wls": "wolfram",
+    "type_traits": "cpp",
+    "iostream": "cpp"
+  }
+}

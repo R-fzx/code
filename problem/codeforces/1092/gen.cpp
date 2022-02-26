@@ -8,10 +8,12 @@
 #include <iostream>
 #include <map>
 #include <numeric>
+#include <queue>
 #include <set>
+#include <string>
 #include <vector>
 #include <iomanip>
-#include <type_traits>
+#include <random>
 // #define TIME
 
 using namespace std;
@@ -19,22 +21,22 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-int n;
-basic_string<int> s;
+random_device rd;
+mt19937 rnd(rd());
+
+vector<Pii> e;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n;
-  for (int i = 1, x; i <= n; ++i) {
-    cin >> x;
-    s.push_back(x & 1);
+  int n = uniform_int_distribution<int>(1, 1000)(rnd), m = uniform_int_distribution<int>(0, n - 1)(rnd);
+  cout << n << " " << m << endl;
+  for (int i = 2; i <= n; ++i) {
+    e.emplace_back(i, uniform_int_distribution<int>(1, i - 1)(rnd));
   }
-  for (int i = 0; i < n - 1; ++i) {
-    if (i >= 0 && s[i] == s[i + 1]) {
-      s.erase(i, 2), i -= 2, n -= 2;
-    }
+  shuffle(e.begin(), e.end(), rnd);
+  for (int i = 0; i < m; ++i) {
+    cout << e[i].first << " " << e[i].second << endl;
   }
-  cout << (n <= 1 ? "YES" : "NO");
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif

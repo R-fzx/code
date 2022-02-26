@@ -1,0 +1,1 @@
+{"name":"Local: H","url":"d:\\code\\problem\\atcoder\\abc221\\H.cpp","tests":[{"id":1645603359509,"input":"4 2","output":"1\n2\n1\n0"},{"id":1645603373109,"input":"7 7","output":"1\n3\n4\n3\n2\n1\n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\atcoder\\abc221\\H.cpp","group":"local","local":true}
