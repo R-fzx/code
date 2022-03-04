@@ -1,6 +1,7 @@
 {
   "C_Cpp.errorSquiggles": "Enabled",
   "files.associations": {
+    "*.wls": "wolfram",
     "iosfwd": "cpp",
     "limits": "cpp",
     "iostream": "cpp",
@@ -44,7 +45,17 @@
     "sstream": "cpp",
     "string_view": "cpp",
     "tuple": "cpp",
-    "utility": "cpp"
+    "utility": "cpp",
+    "queue": "cpp",
+    "atomic": "cpp",
+    "charconv": "cpp",
+    "deque": "cpp",
+    "forward_list": "cpp",
+    "list": "cpp",
+    "initializer_list": "cpp",
+    "ranges": "cpp",
+    "span": "cpp",
+    "syncstream": "cpp"
   },
   "git.ignoreLimitWarning": true
 }
