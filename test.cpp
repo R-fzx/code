@@ -1,29 +1,21 @@
-#include <algorithm>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <ctime>
-#include <deque>
-#include <functional>
+// #pragma optimize(3)
 #include <iostream>
-#include <map>
-#include <numeric>
-#include <queue>
-#include <set>
-#include <string>
-#include <vector>
-#include <iomanip>
-// #define TIME
+#include <ctime>
 
 using namespace std;
-using LL = long long;
-using Pii = pair<int, int>;
-using Pll = pair<LL, LL>;
+
+int a[1000000];
 
 int main() {
-  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-#ifdef TIME
-  fprintf(stderr, "\nTIME: %dms", clock());
-#endif
+  freopen("test.out", "w", stdout);
+  ios_base::sync_with_stdio(0);
+  cout.tie(0);
+  // int s = clock();
+  // for (int i = 1; i <= 999; i++)
+  //   for (int j = 1; j <= 999; j++)
+  //     for (int k = 1; k <= 999; k++)
+  //       cout << "Luogu!\n";
+  // cerr << clock() - s;
+  cout << "1";
   return 0;
 }

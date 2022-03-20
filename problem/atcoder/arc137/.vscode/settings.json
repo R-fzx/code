@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.wls": "wolfram",
+    "iomanip": "cpp",
+    "all": "cpp",
+    "string": "cpp"
+  }
+}

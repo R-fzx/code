@@ -1,0 +1,1 @@
+{"name":"Local: A","url":"d:\\code\\problem\\atcoder\\arc137\\A.cpp","tests":[{"id":1647691647494,"input":"2 4","output":"1"},{"id":1647691654485,"input":"14 21","output":"5"},{"id":1647691660637,"input":"1 100","output":"99"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\atcoder\\arc137\\A.cpp","group":"local","local":true}

@@ -5,12 +5,14 @@
 #include <ctime>
 #include <deque>
 #include <functional>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <numeric>
+#include <queue>
 #include <set>
+#include <string>
 #include <vector>
-#include <iomanip>
 // #define TIME
 
 using namespace std;
@@ -18,78 +20,50 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-const int kN = 17, kM = 1e4 + 1;
+const int kN = 16, kM = 10001;
 
-int n, m, a[kN][kM], d[kN], v[kN], t;
-vector<int> e[kN];
-
-bool F(int x, int k) {
-  if (x == n + 1) {
-    // for (int i = 1; i <= n; ++i) {
-    //   cerr << d[i] << " ";
-    // }
-    // cerr << endl;
-    bool f = 1;
-    for (int i = 1; i < m; ++i) {
-      f &= abs(a[d[n]][i] - a[d[1]][i + 1]) >= k;
-    }
-    return f;
-  }
-  for (int i : e[d[x - 1]]) {
-    if (v[i] ^ t) {
-      v[i] = t, d[x] = i;
-      if (F(x + 1, k)) {
-        return 1;
-      }
-      v[i] = 0;
-    }
-  }
-  return 0;
-}
-bool C(int x) {
-  for (int i = 1; i <= n; ++i) {
-    e[i].clear();
-    for (int j = 1; j <= n; ++j) {
-      bool f = 1;
-      for (int k = 1; k <= m; ++k) {
-        f &= abs(a[i][k] - a[j][k]) >= x;
-      }
-      if (f) {
-        e[i].push_back(j);
-      }
-    }
-    // cerr << "#" << i << ":";
-    // for (int j : e[i]) {
-    //   cerr << " " << j;
-    // }
-    // cerr << endl;
-  }
-  ++t;
-  return F(1, x);
-}
+int n, m, a[kN][kM], f[1 << kN][kN], b[kN][kN], ans;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   cin >> n >> m;
-  for (int i = 1; i <= n; ++i) {
+  for (int i = 0; i < n; ++i) {
     for (int j = 1; j <= m; ++j) {
       cin >> a[i][j];
     }
   }
-  for (int i = 1; i <= n; ++i) {
-    e[0].push_back(i);
-  }
-  int l = 0, r = 1e9;
-  while (l <= r) {
-    int m = l + r >> 1;
-    // cerr << l << " " << m << " " << r << endl;
-    if (C(m)) {
-      l = m + 1;
-    } else {
-      r = m - 1;
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < n; ++j) {
+      b[i][j] = INT32_MAX;
+      if (i ^ j) {
+        for (int k = 1; k <= m; ++k) {
+          b[i][j] = min(b[i][j], abs(a[i][k] - a[j][k]));
+        }
+      }
     }
   }
-  cout << r;
+  for (int i = 0; i < n; ++i) {
+    fill(&f[0][0], &f[(1 << n) - 1][n] + 1, 0), f[1 << i][i] = INT32_MAX;
+    for (int j = 0; j < (1 << n); ++j) {
+      for (int k = 0; k < n; ++k) {
+        if (j >> k & 1) {
+          for (int u = 0; u < n; ++u) {
+            if (j >> u & 1 ^ 1) {
+              f[j | 1 << u][u] = max(f[j | 1 << u][u], min(f[j][k], b[k][u]));
+            }
+          }
+        }
+      }
+    }
+    for (int j = 0; j < n; ++j) {
+      int x = f[(1 << n) - 1][j];
+      for (int k = 1; k < m; ++k) {
+        x = min(x, abs(a[i][k + 1] - a[j][k]));
+      }
+      ans = max(ans, x);
+    }
+  }
+  cout << ans;
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif
