@@ -1,48 +1,12 @@
 # test
 
 $$
-A=\begin{bmatrix}
-  0 & 1 \\
-  1 & 1 \\
-\end{bmatrix}\\[3ex]
+a_{i,j}\\
+f(i,j)=\min_{k=1}^m(a_{k,i}+a_{k,j})+\max_{k=1}^m(a_{k,i}+a_{k,j})\\
+\text{Solve:}\sum_{i=1}^n\sum_{j=1}^nf(i,j)\\
 \begin{aligned}
-  A^2 & =\begin{bmatrix}
-    0 & 1 \\
-    1 & 1 \\
-  \end{bmatrix}\begin{bmatrix}
-    0 & 1 \\
-    1 & 1 \\
-  \end{bmatrix}\\
-  & =\begin{bmatrix}
-    1 & 1 \\
-    1 & 2 \\
-  \end{bmatrix}
-\end{aligned}\\[3ex]
-\begin{aligned}
-  A^3 & =\begin{bmatrix}
-    0 & 1 \\
-    1 & 1 \\
-  \end{bmatrix}\begin{bmatrix}
-    1 & 1 \\
-    1 & 2 \\
-  \end{bmatrix}\\
-  & =\begin{bmatrix}
-    1 & 2 \\
-    2 & 3 \\
-  \end{bmatrix}
-\end{aligned}\\[3ex]
-\begin{aligned}
-  A^4 & =\begin{bmatrix}
-    0 & 1 \\
-    1 & 1 \\
-  \end{bmatrix}\begin{bmatrix}
-    1 & 2 \\
-    2 & 3 \\
-  \end{bmatrix}\\
-  & =\begin{bmatrix}
-    2 & 3 \\
-    3 & 5 \\
-  \end{bmatrix}
-\end{aligned}\\[3ex]
-\vec\mathbf{v_1}
+\text{ans}
+&=\sum_{i=1}^n(\sum_{j=1}^n\min_{k=1}^m(a_{k,i}+a_{k,j}))+(\sum_{j=1}^n\max_{k=1}^m(a_{k,i}+a_{k,j}))\\
+&=\sum_{i=1}^n\sum_{j=1}^n\min_{k=1}^m(a_{k,i}+a_{k,j})+\sum_{i=1}^n\sum_{j=1}^n\max_{k=1}^m(a_{k,i}+a_{k,j})\\
+\end{aligned}
 $$
