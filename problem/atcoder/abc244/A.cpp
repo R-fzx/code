@@ -8,7 +8,9 @@
 #include <iostream>
 #include <map>
 #include <numeric>
+#include <queue>
 #include <set>
+#include <string>
 #include <vector>
 #include <iomanip>
 // #define TIME
@@ -18,9 +20,13 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
+string s;
+
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  
+  int x;
+  cin >> x >> s;
+  cout << s.back();
 #ifdef TIME
   fprintf(stderr, "\nTIME: %dms", clock());
 #endif

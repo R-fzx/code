@@ -1,0 +1,1 @@
+{"name":"Local: P4015","url":"d:\\code\\problem\\P4000-P4999\\P4015.cpp","tests":[{"id":1647752218488,"input":"2 3\n220 280\n170 120 210\n77 39 105\n150 186 122","output":"48500\n69140"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P4000-P4999\\P4015.cpp","group":"local","local":true}

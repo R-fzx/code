@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "*.wls": "wolfram",
+    "algorithm": "cpp",
+    "cstdio": "cpp",
+    "numeric": "cpp",
+    "iostream": "cpp"
+  }
+}

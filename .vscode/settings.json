@@ -55,7 +55,8 @@
     "initializer_list": "cpp",
     "ranges": "cpp",
     "span": "cpp",
-    "syncstream": "cpp"
+    "syncstream": "cpp",
+    "ctime": "cpp"
   },
   "git.ignoreLimitWarning": true
 }
