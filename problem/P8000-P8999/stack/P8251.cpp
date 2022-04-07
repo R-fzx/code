@@ -1,23 +1,9 @@
 #include <algorithm>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <ctime>
-#include <deque>
-#include <functional>
-#include <iomanip>
 #include <iostream>
-#include <map>
-#include <numeric>
-#include <queue>
-#include <set>
-#include <string>
 #include <vector>
 
 using namespace std;
-using LL = long long;
 using Pii = pair<int, int>;
-using Pll = pair<LL, LL>;
 
 const int kN = 5e5 + 1;
 

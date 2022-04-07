@@ -1,0 +1,1 @@
+{"name":"Local: P2586","url":"d:\\code\\problem\\P2000-P2999\\P2586.cpp","tests":[{"id":1649072513303,"input":"3 5\n1 1 2\n2 2\n5","output":"The game is going on\n5\n5 1 3 1 4\n4 1 3 0 4\n3 1 3 0 3\n2 1 3 0 2\n1 1 4 0 1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P2000-P2999\\P2586.cpp","group":"local","local":true}

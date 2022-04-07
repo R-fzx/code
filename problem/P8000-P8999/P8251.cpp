@@ -68,9 +68,10 @@ int main() {
     d[i] = i;
   }
   sort(d + 1, d + q + 1, [](int i, int j) { return e[i] < e[j]; });
+  e[0].first = -1;
   for (int i = 1; i <= q; ++i) {
     // cerr << d[i] << endl;
-    for (int j = e[d[i - 1]].first; j <= e[d[i]].first; ++j) {
+    for (int j = e[d[i - 1]].first + 1; j <= e[d[i]].first; ++j) {
       for (int k : _p[j]) {
         A(k);
       }

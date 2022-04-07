@@ -13,7 +13,7 @@
 #include <set>
 #include <string>
 #include <vector>
-// #define _DEBUG
+#define _DEBUG
 #ifdef _DEBUG
 #define debug(...) fprintf(stderr, __VA_ARGS__)
 #else
@@ -25,8 +25,8 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-struct MCMF {  // Min Cost Max Flow
-  static const int kN = 203, kM = 10201;
+struct MCMF {
+  static const int kN = 4003, kM = 12001;
 
   struct E {
     int y, n;
@@ -38,7 +38,7 @@ struct MCMF {  // Min Cost Max Flow
     bool v;
   } a[kN];
   int n, s, t, _c = 1, q[kN], _h, _t;
-  LL mc, mf;
+  LL mf, mc;
 
   void _A(int x, int y, LL w, LL c) { e[++_c] = {y, a[x].h, w, c}, a[x].h = _c; }
   void A(int x, int y, LL w, LL c) { _A(x, y, w, c), _A(y, x, 0, -c); }
@@ -52,72 +52,66 @@ struct MCMF {  // Min Cost Max Flow
   }
   bool B() {
     for (int i = 1; i <= n; ++i) {
-      a[i]._h = a[i].h, a[i].d = INT64_MAX;
+      a[i].d = 1e18, a[i]._h = a[i].h;
     }
-    for (R(s, 0); _h != _t; ) {
+    for (R(s, 0); _h != _t;) {
       int x = q[_h = (_h + 1) % kN];
-      debug("  %d\n", x);
       a[x].v = 0;
       for (int i = a[x].h; i; i = e[i].n) {
-        debug("    %d %lld %lld\n", e[i].y, e[i].w, e[i].c);
         if (e[i].w) {
           R(e[i].y, a[x].d + e[i].c);
         }
       }
     }
-    return a[t].d != INT64_MAX;
+    return a[t].d != 1e18;
   }
   LL D(int x, LL f) {
     if (x == t) {
       return f;
     }
-    a[x].v = 1;
     LL s = f, r;
+    a[x].v = 1;
     for (int &i = a[x]._h; s && i; s && (i = e[i].n)) {
       if (e[i].w && !a[e[i].y].v && a[e[i].y].d == a[x].d + e[i].c && (r = D(e[i].y, min(s, e[i].w)))) {
-        e[i].w -= r, e[i ^ 1].w += r, s -= r, mc += r * e[i].c;
+        s -= r, e[i].w -= r, e[i ^ 1].w += r, mc += r * e[i].c;
       }
     }
     a[x].v = 0;
     return f - s;
   }
   void S() {
-    debug("Solving...\n");
-    for (; B(); mf += D(s, INT64_MAX)) {
-      debug("Running...\n");
+    for (; B(); mf += D(s, 1e18)) {
     }
   }
-} mi, mx;
-const int kN = 101;
-
-int n, m;
+} sl;
+int n, x, y;
 
 int main() {
+  // freopen("P1251_2.in", "r", stdin);
+  // freopen("P1251.out", "w", stdout);
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n >> m;
-  debug("Input Start...\n");
-  mi.n = n + m + 2, mi.s = n + m + 1, mi.t = n + m + 2;
-  mx.n = n + m + 2, mx.s = n + m + 1, mx.t = n + m + 2;
-  for (int i = 1, x; i <= n; ++i) {
-    cin >> x;
-    mi.A(mi.s, i, x, 0), mx.A(mx.s, i, x, 0);
-  }
-  debug("1\n");
-  for (int i = 1, x; i <= m; ++i) {
-    cin >> x;
-    mi.A(i + n, mi.t, x, 0), mx.A(i + n, mx.t, x, 0);
-  }
-  debug("2\n");
+  cin >> n;
+  sl.n = n * 2 + 2, sl.s = n * 2 + 1, sl.t = n * 2 + 2;
   for (int i = 1; i <= n; ++i) {
-    for (int j = 1, x; j <= m; ++j) {
-      cin >> x;
-      mi.A(i, j + n, INT32_MAX, x), mx.A(i, j + n, INT32_MAX, -x);
-  debug("%d %d ok\n", i, j);
+    cin >> x;
+    sl.A(sl.s, i + n, x, 0), sl.A(i, sl.t, x, 0);
+    if (i < n) {
+      sl.A(i + n, i + 1 + n, INT32_MAX, 0);
     }
   }
-  debug("3\n");
-  debug("Input\n");
-  mi.S(), mx.S();
-  cout << mi.mc << endl << -mx.mc;
+  cin >> x;
+  for (int i = 1; i <= n; ++i) {
+    sl.A(sl.s, i, INT32_MAX, x);
+  }
+  cin >> x >> y;
+  for (int i = 1; i + x <= n; ++i) {
+    sl.A(i + n, i + x, INT32_MAX, y);
+  }
+  cin >> x >> y;
+  for (int i = 1; i + x <= n; ++i) {
+    sl.A(i + n, i + x, INT32_MAX, y);
+  }
+  sl.S();
+  cout << sl.mc;
   return 0;
 }

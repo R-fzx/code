@@ -1,0 +1,1 @@
+{"name":"Local: P3809","url":"d:\\code\\problem\\P3000-P3999\\P3809.cpp","tests":[{"id":1648985412396,"input":"ababa","output":"5 3 1 4 2"},{"id":1649034976359,"input":"banana","output":"6 4 2 1 5 3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P3000-P3999\\P3809.cpp","group":"local","local":true}
