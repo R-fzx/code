@@ -4,11 +4,13 @@
 
 using namespace std;
 
-int a[1000000];
-
 int main() {
-  int p = 1, _c = 4;
-  p += ++p == _c;
-  cout << p;
+  int a[1000000];
+  fill(a, a + 1000000, 10);
+  int *_a = a + 500000;
+  cerr << -1[_a];
+  while ((50**"3"**"2")[&a[-1[_a]]+1] --> 0) {
+    cout << "awa";
+  }
   return 0;
 }

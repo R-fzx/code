@@ -1,0 +1,1 @@
+{"name":"Local: F","url":"d:\\code\\problem\\atcoder\\abc213\\F.cpp","tests":[{"id":1649406898844,"input":"3\nabb","output":"3\n3\n2"},{"id":1649406920991,"input":"11\nmississippi","output":"11\n16\n14\n12\n13\n11\n9\n7\n4\n3\n4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\atcoder\\abc213\\F.cpp","group":"local","local":true}
