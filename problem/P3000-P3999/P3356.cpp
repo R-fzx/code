@@ -5,7 +5,6 @@
 #include <ctime>
 #include <deque>
 #include <functional>
-#include <iomanip>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -13,6 +12,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <iomanip>
 #ifndef ONLINE_JUDGE
 #define debug(...) fprintf(stderr, __VA_ARGS__)
 #else
@@ -24,11 +24,8 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-const int kN = 101;
-int n, m, d[kN];
-string str[kN];
 struct MCMF {
-  static const int kN = 203, kM = 5053;
+  static const int kN = 2453, kM = 4903;
 
   struct E {
     int y, n, w, c;
@@ -37,13 +34,12 @@ struct MCMF {
     int h, _h, d;
     bool v;
   } a[kN];
-  int n, s, t, _c = 1, q[kN], _h, _t;
-  LL mc, mf;
+  int n, s, t, _c = 1, q[kN], _h, _t, mc, mf;
 
   void _A(int x, int y, int w, int c) { e[++_c] = {y, a[x].h, w, c}, a[x].h = _c; }
   void A(int x, int y, int w, int c) { _A(x, y, w, c), _A(y, x, 0, -c); }
   void R(int x, int d) {
-    if (a[x].d > d) {
+    if (d < a[x].d) {
       a[x].d = d;
       if (!a[x].v) {
         a[x].v = 1, q[_t = (_t + 1) % kN] = x;
@@ -54,7 +50,7 @@ struct MCMF {
     for (int i = 1; i <= n; ++i) {
       a[i]._h = a[i].h, a[i].d = INT32_MAX;
     }
-    for (R(s, 0); _h != _t;) {
+    for (R(s, 0); _h != _t; ) {
       int x = q[_h = (_h + 1) % kN];
       a[x].v = 0;
       for (int i = a[x].h; i; i = e[i].n) {
@@ -84,54 +80,61 @@ struct MCMF {
     }
   }
 } sl;
-vector<Pii> e[kN];
-void _P(int x, int y, bool p = 1) {
-  if (p) {
-    cout << str[x] << endl;
-  }
-  if (x == y) {
+const int kN = 36, kD[2][2] = {{1, 0}, {0, 1}};
+int c, p, q, x, e[kN][kN][2];
+
+int Ec(int x, int y) { return (x - 1) * q + y; }
+void P(int d, int x, int y) {
+  if (x == p && y == q) {
     return;
   }
-  sl.a[x].v = 1;
-  for (auto i : e[x]) {
-    if (!sl.a[i.first].v && sl.e[i.second].w < kN) {
-      _P(i.first, y);
-      return;
-    }
+  if (e[x][y][0]) {
+    cout << d << " 0\n";
+    --e[x][y][0], P(d, x + 1, y);
+  } else if (e[x][y][1]) {
+    cout << d << " 1\n";
+    --e[x][y][1], P(d, x, y + 1);
   }
 }
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n >> m;
-  for (int i = 1; i <= n; ++i) {
-    cin >> str[i];
-  }
-  sl.n = n * 2 + 2, sl.s = n * 2 + 1, sl.t = n * 2 + 2;
-  sl.A(1, n + 1, 2, -1), sl.A(sl.s, 1, 2, 0);
-  sl.A(n, n + n, 2, -1), sl.A(n + n, sl.t, 2, 0);
-  for (int i = 2; i < n; ++i) {
-    sl.A(i, i + n, 1, -1);
-  }
-  for (int i = 1; i <= m; ++i) {
-    string _x, _y;
-    cin >> _x >> _y;
-    int x = find(str + 1, str + n + 1, _x) - str, y = find(str + 1, str + n + 1, _y) - str;
-    if (x > y) {
-      swap(x, y);
+  cin >> c >> q >> p;
+  sl.n = p * q * 2 + 2, sl.s = sl.n - 1, sl.t = sl.n;
+  sl.A(sl.s, Ec(1, 1), c, 0), sl.A(Ec(p, q) + p * q, sl.t, c, 0);
+  for (int i = 1; i <= p; ++i) {
+    for (int j = 1; j <= q; ++j) {
+      cin >> x;
+      if (x == 0) {
+        sl.A(Ec(i, j), Ec(i, j) + p * q, c, 0);
+      } else if (x == 1) {
+        sl.A(Ec(i, j), Ec(i, j) + p * q, 0, 0);
+      } else {
+        sl.A(Ec(i, j), Ec(i, j) + p * q, c, 0);
+        sl.A(Ec(i, j), Ec(i, j) + p * q, 1, -1);
+      }
+      if (i < p) {
+        sl.A(Ec(i, j) + p * q, Ec(i + 1, j), c, 0);
+        e[i][j][0] = sl._c;
+      }
+      if (j < q) {
+        sl.A(Ec(i, j) + p * q, Ec(i, j + 1), c, 0);
+        e[i][j][1] = sl._c;
+      }
     }
-    e[x].push_back({y, sl._c + 1}), e[y].push_back({x, sl._c + 1});
-    sl.A(x + n, y, kN, 0);
   }
-  sl.S(), sl.mc *= -1;
-  debug("%d %d\n", sl.mf, sl.mc);
-  if (sl.mc <= 2) {
-    cout << "No Solution!";
-  } else {
-    cout << sl.mc - 2 << endl;
-    _P(1, n);
-    _P(n, 1, 0);
-    cout << str[1];
+  sl.S();
+  debug("%d %d\n", sl.mf, -sl.mc);
+  for (int i = 1; i <= p; ++i) {
+    for (int j = 1; j <= q; ++j) {
+      e[i][j][0] = sl.e[e[i][j][0]].w;
+      e[i][j][1] = sl.e[e[i][j][1]].w;
+      debug("(%d,%d) ", e[i][j][0], e[i][j][1]);
+    }
+    debug("\n");
+  }
+  for (int i = 1; i <= sl.mf; ++i) {
+    P(i, 1, 1);
   }
   return 0;
 }

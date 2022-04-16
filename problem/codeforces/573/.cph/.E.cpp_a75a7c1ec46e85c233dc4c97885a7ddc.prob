@@ -1,0 +1,1 @@
+{"name":"Local: E","url":"d:\\code\\problem\\codeforces\\573\\E.cpp","tests":[{"id":1649769746994,"input":"5\n-2 -8 0 5 -3","output":"13"},{"id":1649769752648,"input":"6\n-10 20 -30 40 -50 60","output":"400"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\codeforces\\573\\E.cpp","group":"local","local":true}

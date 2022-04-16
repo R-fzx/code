@@ -78,7 +78,7 @@ struct BMF {
     A_(t_ = t, s_ = s, INT32_MAX);
     s = ++n, t = ++n;
     LL _s = 0;
-    for (int i = 1; i <= n; ++i) {
+    for (int i = 1; i <= n - 2; ++i) {
       if (a[i]._d > 0) {
         _s += a[i]._d, A_(i, t, a[i]._d);
       } else if (a[i]._d < 0) {

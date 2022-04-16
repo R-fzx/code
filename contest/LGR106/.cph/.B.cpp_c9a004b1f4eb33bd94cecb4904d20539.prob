@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"d:\\code\\contest\\LGR106\\B.cpp","tests":[{"id":1649571230048,"input":"1\n4\n-1 34 367 -1\n3178 -1 -1 3333","output":"3 33 333 3333"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\contest\\LGR106\\B.cpp","group":"local","local":true}

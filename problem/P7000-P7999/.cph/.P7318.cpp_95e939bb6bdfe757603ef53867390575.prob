@@ -1,0 +1,1 @@
+{"name":"Local: P7318","url":"d:\\code\\problem\\P7000-P7999\\P7318.cpp","tests":[{"id":1649941611928,"input":"1 6 10","output":"6"},{"id":1649941616203,"input":"7 2 7","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P7000-P7999\\P7318.cpp","group":"local","local":true}
