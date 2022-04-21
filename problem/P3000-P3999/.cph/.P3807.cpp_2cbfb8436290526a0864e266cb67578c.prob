@@ -1,0 +1,1 @@
+{"name":"Local: P3807","url":"d:\\code\\problem\\P3000-P3999\\P3807.cpp","tests":[{"id":1650533905012,"input":"2\n1 2 5\n2 1 5","output":"3\n3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P3000-P3999\\P3807.cpp","group":"local","local":true}

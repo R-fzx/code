@@ -90,7 +90,21 @@
     "semaphore": "cpp",
     "stop_token": "cpp",
     "thread": "cpp",
-    "typeindex": "cpp"
+    "typeindex": "cpp",
+    "all": "cpp",
+    "convolution": "cpp",
+    "lazysegtree": "cpp",
+    "fenwicktree": "cpp",
+    "cassert": "cpp",
+    "math": "cpp",
+    "internal_math": "cpp",
+    "maxflow": "cpp",
+    "mincostflow": "cpp",
+    "modint": "cpp",
+    "scc": "cpp",
+    "internal_scc": "cpp",
+    "segtree": "cpp",
+    "twosat": "cpp"
   },
   "git.ignoreLimitWarning": true
 }
