@@ -13,8 +13,7 @@
 #include <set>
 #include <string>
 #include <vector>
-#define _DEBUG
-#ifdef _DEBUG
+#ifndef ONLINE_JUDGE
 #define debug(...) fprintf(stderr, __VA_ARGS__)
 #else
 #define debug
@@ -34,7 +33,7 @@ struct BMF {
   } e[kM << 1];
   struct V {
     int h, _h, d;
-    LL _d;
+    LL _d;  // 出流-入流
   } a[kN];
   int n, s, t, s_, t_, c = 1, q[kN], _h, _t;
   LL mf;
@@ -59,6 +58,10 @@ struct BMF {
         }
       }
     }
+    for (int i = 1; i <= n; ++i) {
+      debug("%d ", a[i].d);
+    }
+    debug("\n");
     return a[t].d;
   }
   LL D(int x, LL f) {
@@ -77,6 +80,7 @@ struct BMF {
     int _c = c;
     A_(t_ = t, s_ = s, INT32_MAX);
     s = ++n, t = ++n;
+    debug("%d %d %d %d %d %d\n", s, t, s_, t_, c, _c);
     LL _s = 0;
     for (int i = 1; i <= n - 2; ++i) {
       if (a[i]._d > 0) {
@@ -85,17 +89,21 @@ struct BMF {
         A_(s, i, -a[i]._d);
       }
     }
+    debug("%d %d %d %d %d %d\n", s, t, s_, t_, c, _c);
     for (; B(); mf += D(s, INT32_MAX)) {
     }
     if (mf != _s) {
       mf = -1;
       return;
     }
-    for (int i = c; i > _c; --i) {
-      e[i].w = 0;
-    }
+    // for (; c > _c; --c) {
+    //   e[c].w = 0;
+    // }
+    // n -= 2;
+    debug("%d %d %d %d %d %d\n", s, t, s_, t_, c, _c);
     for (s = s_, t = t_; B(); mf += D(s, INT32_MAX)) {
     }
+    debug("%d %d %d %d\n", s, t, s_, t_);
   }
 } sl;
 int m;
@@ -109,7 +117,7 @@ int main() {
   }
   sl.S();
   if (~sl.mf) {
-    cout << sl.mf;
+    cout << (sl.mf + 1) / 2;
   } else {
     cout << "please go home to sleep";
   }
