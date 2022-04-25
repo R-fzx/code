@@ -44,16 +44,10 @@ int main() {
   }
   for (int i = 1, x, y; i <= m; ++i) {
     cin >> x >> y;
-    if (a[x] > a[y]) {
-      swap(x, y);
-    }
-    e[x].emplace_back(y, (a[y] - a[x]) * 3), e[y].emplace_back(x, 0);
+    e[x].emplace_back(y, max(0LL, a[y] - a[x])), e[y].emplace_back(x, max(0LL, a[x] - a[y]));
   }
   for (int i = 1; i <= n; ++i) {
     d[i] = 1e18;
-    for (auto [y, w] : e[i]) {
-      debug("%d %lld %lld\n", i, y, w);
-    }
   }
   for (R(1, 0); !q.empty(); ) {
     int x = q.top().second;
@@ -64,7 +58,7 @@ int main() {
   }
   LL ans = -1e18;
   for (int i = 1; i <= n; ++i) {
-    ans = max(ans, -d[i] - a[i] + a[1]);
+    ans = max(ans, -d[i] + a[1] - a[i]);
   }
   cout << ans;
   return 0;

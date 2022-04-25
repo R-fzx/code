@@ -1,40 +1,59 @@
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <iostream>
+
 using namespace std;
-int n, m;
-long long ans;
-int dx[] = {0, 1, -1, 0, 0}, dy[] = {0, 0, 0, 1, -1};
-bool vis[15][15];
-void Dfs(int x, int y) {
-  if (x < 1 || x >= n || y < 1 || y >= m)
-    ans++;
-  else {
-    vis[x][y] = 1;
-    for (int i = 1; i <= 4; i++) {
-      int nx = x + dx[i], ny = y + dy[i];
-      if (!vis[nx][ny]) Dfs(nx, ny);
+
+const int kMaxN = 2e5 + 1;
+
+struct T {
+  int s, a = -1;
+} t[kMaxN * 4];
+int n, q, x, y, p, o, c, l, r, s;
+
+void U(int i, int l, int r, int tl, int tr, int v) {
+  if (l == tl && r == tr) {
+    if (v == -1) {
+      s += t[i].s;
+    } else {
+      t[i].a = v, t[i].s = (r - l + 1) * v;
     }
-    vis[x][y] = 0;
+    return;
   }
+  int m = (l + r) / 2;
+  if (t[i].a != -1) {
+    U(i * 2, l, m, l, m, t[i].a), U(i * 2 + 1, m + 1, r, m + 1, r, t[i].a);
+    t[i].a = -1;
+  }
+  if (tl <= m) {
+    U(i * 2, l, m, tl, min(tr, m), v);
+  }
+  if (tr > m) {
+    U(i * 2 + 1, m + 1, r, max(m + 1, tl), tr, v);
+  }
+  t[i].s = t[i * 2].s + t[i * 2 + 1].s;
 }
+
 int main() {
-  // freopen("1.txt", "r", stdin);
-  freopen("ans2.txt", "w", stdout);
-  for (int _n = 1; _n <= 7; ++_n) {
-    for (int _m = 1; _m <= 8; ++_m) {
-      n = _n, m = _m;
-      ans = 0;
-      for (int i = 1; i < n; i++) {
-        memset(vis, 0, sizeof(vis));
-        vis[i][0] = 1;
-        Dfs(i, 1);
-      }
-      for (int i = 1; i < m; i++) {
-        memset(vis, 0, sizeof(vis));
-        vis[0][i] = 1;
-        Dfs(1, i);
-      }
-      printf("t[%d][%d]=%lld;\n", n, m, ans * 2);
+  cin >> n >> q >> x;
+  for (int i = 1; i <= n; i++) {
+    cin >> y;
+    U(1, 1, n, i, i, y < x);
+    y == x && (p = i);
+  }
+  while (q--) {
+    cin >> c >> l >> r;
+    int b = l <= p && p <= r;
+    s = 0, U(1, 1, n, l, r, -1);
+    if (c == 1) {
+      U(1, 1, n, l, l + s - 1, 1);
+      U(1, 1, n, l + s, r, 0);
+      b && (p = l + s);
+    } else {
+      U(1, 1, n, r - s + 1, r, 1);
+      U(1, 1, n, l, r - s, 0);
+      b && (p = r - s);
     }
   }
+  cout << p;
   return 0;
 }

@@ -62,7 +62,7 @@ struct BMF {
       debug("%d ", a[i].d);
     }
     debug("\n");
-    return a[t].d;
+    return a[t].d != 0;
   }
   LL D(int x, LL f) {
     if (x == t) {
@@ -96,10 +96,11 @@ struct BMF {
       mf = -1;
       return;
     }
-    // for (; c > _c; --c) {
-    //   e[c].w = 0;
-    // }
-    // n -= 2;
+    c = _c, n -= 2;
+    for (int i = 1; i <= n; ++i) {
+      for (; a[i].h > _c; a[i].h = e[a[i].h].n) {
+      }
+    }
     debug("%d %d %d %d %d %d\n", s, t, s_, t_, c, _c);
     for (s = s_, t = t_; B(); mf += D(s, INT32_MAX)) {
     }
@@ -117,7 +118,7 @@ int main() {
   }
   sl.S();
   if (~sl.mf) {
-    cout << (sl.mf + 1) / 2;
+    cout << sl.mf;
   } else {
     cout << "please go home to sleep";
   }
