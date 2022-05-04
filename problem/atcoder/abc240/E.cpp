@@ -22,21 +22,36 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-int main() {
-  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  int c = 0;
-  for (int i = 0; i <= 8; ++i) {
-    for (int j = 0; j <= 8; ++j) {
-      if ((j - 4) * (j - 4) + (i - 4) * (i - 4) <= 4 * 4) {
-        cout << i << " " << j << endl;
-        ++c;
-      }
+const int kN = 2e5 + 1;
+
+int n;
+vector<int> e[kN];
+Pii a[kN];
+
+int D(int x, int f, int l) {
+  int r = l - 1;
+  for (int i : e[x]) {
+    if (i ^ f) {
+      r = D(i, x, r + 1);
     }
   }
-  cout << c;
+  a[x] = {l, max(l, r)};
+  return max(l, r);
+}
+
+int main() {
+  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+  cin >> n;
+  for (int i = 1, x, y; i < n; ++i) {
+    cin >> x >> y;
+    e[x].push_back(y), e[y].push_back(x);
+  }
+  D(1, 0, 1);
+  for (int i = 1; i <= n; ++i) {
+    cout << a[i].first << " " << a[i].second << endl;
+  }
   return 0;
 }
 /*
-(i,j) to (4,4)
-(j-4)*(j-4)+(i-4)*(i-4)<=4*4
+
 */

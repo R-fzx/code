@@ -22,21 +22,23 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
+struct MCMF {
+  int mf, mc;
+  void A(int x, int y, int w, int c);
+  void S();
+} sl;
+int n, m;
+
+void A(int x, int y, int w, int c, int t) { sl.A(t ? y : x, t ? x : y, w, c); }
+
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  int c = 0;
-  for (int i = 0; i <= 8; ++i) {
-    for (int j = 0; j <= 8; ++j) {
-      if ((j - 4) * (j - 4) + (i - 4) * (i - 4) <= 4 * 4) {
-        cout << i << " " << j << endl;
-        ++c;
-      }
+  cin >> n >> m;
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1, x; j <= m; ++j) {
+      cin >> x;
+      
     }
   }
-  cout << c;
   return 0;
 }
-/*
-(i,j) to (4,4)
-(j-4)*(j-4)+(i-4)*(i-4)<=4*4
-*/

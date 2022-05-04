@@ -96,10 +96,8 @@ struct BMF {
       mf = -1;
       return;
     }
-    c = _c, n -= 2;
-    for (int i = 1; i <= n; ++i) {
-      for (; a[i].h > _c; a[i].h = e[a[i].h].n) {
-      }
+    for (n -= 2; c > _c; --c) {
+      e[c].w = 0;
     }
     debug("%d %d %d %d %d %d\n", s, t, s_, t_, c, _c);
     for (s = s_, t = t_; B(); mf += D(s, INT32_MAX)) {

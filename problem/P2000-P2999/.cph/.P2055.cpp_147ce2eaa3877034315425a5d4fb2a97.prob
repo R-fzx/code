@@ -1,0 +1,1 @@
+{"name":"Local: P2055","url":"d:\\code\\problem\\P2000-P2999\\P2055.cpp","tests":[{"id":1651279844341,"input":"1\n3\n1 1 0\n0 1 0\n0 1 1\n1 0 0\n1 0 0","output":"^_^"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P2000-P2999\\P2055.cpp","group":"local","local":true}

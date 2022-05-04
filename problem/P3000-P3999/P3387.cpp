@@ -22,21 +22,12 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
+const int kN = 1e4 + 1;
+
+int n, m, a[kN];
+
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  int c = 0;
-  for (int i = 0; i <= 8; ++i) {
-    for (int j = 0; j <= 8; ++j) {
-      if ((j - 4) * (j - 4) + (i - 4) * (i - 4) <= 4 * 4) {
-        cout << i << " " << j << endl;
-        ++c;
-      }
-    }
-  }
-  cout << c;
+
   return 0;
 }
-/*
-(i,j) to (4,4)
-(j-4)*(j-4)+(i-4)*(i-4)<=4*4
-*/

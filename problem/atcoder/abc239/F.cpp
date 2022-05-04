@@ -1,16 +1,12 @@
-#include <algorithm>
+#include <atcoder/all>
 #include <bitset>
 #include <cmath>
 #include <cstdio>
-#include <ctime>
 #include <deque>
 #include <functional>
 #include <iomanip>
-#include <iostream>
 #include <map>
-#include <numeric>
 #include <set>
-#include <vector>
 #ifndef ONLINE_JUDGE
 #define debug(...) fprintf(stderr, __VA_ARGS__)
 #else
@@ -18,25 +14,30 @@
 #endif
 
 using namespace std;
+using namespace atcoder;
 using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
+const int kN = 2e5 + 1;
+
+int n, m, d[kN];
+vector<int> e[kN];
+
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  int c = 0;
-  for (int i = 0; i <= 8; ++i) {
-    for (int j = 0; j <= 8; ++j) {
-      if ((j - 4) * (j - 4) + (i - 4) * (i - 4) <= 4 * 4) {
-        cout << i << " " << j << endl;
-        ++c;
-      }
-    }
+  cin >> n >> m;
+  for (int i = 1; i <= n; ++i) {
+    cin >> d[i];
   }
-  cout << c;
+  if (accumulate(d + 1, d + n + 1, 0) != (n - 1) * 2) {
+    cout << -1;
+    return 0;
+  }
+  for (int i = 1, x, y; i <= m; ++i) {
+    cin >> x >> y;
+    e[x].push_back(y), e[y].push_back(x);
+  }
+  
   return 0;
 }
-/*
-(i,j) to (4,4)
-(j-4)*(j-4)+(i-4)*(i-4)<=4*4
-*/

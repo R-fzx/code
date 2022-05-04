@@ -1,0 +1,1 @@
+{"name":"Local: G","url":"d:\\code\\problem\\atcoder\\abc238\\G.cpp","tests":[{"id":1650884740583,"input":"8 5\n7 49 30 1 15 8 6 10\n1 2\n2 3\n4 4\n5 8\n3 8","output":"Yes\nNo\nYes\nNo\nYes"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\atcoder\\abc238\\G.cpp","group":"local","local":true}
