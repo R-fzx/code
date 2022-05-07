@@ -1,0 +1,1 @@
+{"name":"Local: P4551","url":"d:\\code\\problem\\P4000-P4999\\P4551.cpp","tests":[{"id":1651756271327,"input":"4\n1 2 3\n2 3 4\n2 4 6","output":"7"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P4000-P4999\\P4551.cpp","group":"local","local":true}

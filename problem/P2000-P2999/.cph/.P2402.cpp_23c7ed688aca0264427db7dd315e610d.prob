@@ -1,0 +1,1 @@
+{"name":"Local: P2402","url":"d:\\code\\problem\\P2000-P2999\\P2402.cpp","tests":[{"id":1651916677482,"input":"3 4 \n7 2 \n0 4 \n2 6 \n1 2 40 \n3 2 70 \n2 3 90 \n1 3 120","output":"110"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P2000-P2999\\P2402.cpp","group":"local","local":true}
