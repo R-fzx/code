@@ -1,0 +1,1 @@
+{"name":"Local: P1361","url":"d:\\code\\problem\\P1000-P1999\\P1361.cpp","tests":[{"id":1651929888940,"input":"3\n4 2 1\n2 3 2\n1\n2 3 2 1 2","output":"11"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P1000-P1999\\P1361.cpp","group":"local","local":true}

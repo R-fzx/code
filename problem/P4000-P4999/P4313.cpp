@@ -23,7 +23,7 @@ using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
 struct MF {
-  static const int kN = 4e4 + 3, kM = 6e4 + 1;
+  static const int kN = 3e4 + 3, kM = 9e4 + 1;
 
   struct V {
     int h, _h, d;
@@ -68,39 +68,58 @@ struct MF {
     return f - s;
   }
   void S() {
-    for (; B(); mf += D(s, INT32_MAX)) {
+    for (; B(); mf += D(s, 1e9)) {
     }
   }
 } sl;
 
-int n1, n2, n3, m;
+const int kD[5][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+int n, m;
+
+int E(int i, int j) { return (i - 1) * m + j; }
 
 int main() {
-  freopen("P1231_2.in", "r", stdin);
-  freopen("P1231.out", "w", stdout);
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n1 >> n2 >> n3;
-  sl.n = sl.t = (sl.s = n1 * 2 + n2 + n3 + 1) + 1;
-  cin >> m;
-  for (int i = 1, x, y; i <= m; ++i) {
-    cin >> x >> y;
-    sl.A(y + n1 * 2, x, 1);
+  cin >> n >> m;
+  sl.n = sl.t = (sl.s = n * m * 2 + 1) + 1;
+  int s = 0;
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1, x; j <= m; ++j) {
+      cin >> x;
+      s += x, sl.A(sl.s, E(i, j), x);
+    }
   }
-  cin >> m;
-  for (int i = 1, x, y; i <= m; ++i) {
-    cin >> x >> y;
-    sl.A(x + n1, y + n1 * 2 + n2, 1);
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1, x; j <= m; ++j) {
+      cin >> x;
+      s += x, sl.A(E(i, j), sl.t, x);
+    }
   }
-  for (int i = 1; i <= n1; ++i) {
-    sl.A(i, i + n1, 1);
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1, x; j <= m; ++j) {
+      cin >> x;
+      s += x, sl.A(sl.s, n * m + E(i, j), x);
+      for (int k = 0; k < 5; ++k) {
+        int ni = i + kD[k][0], nj = j + kD[k][1];
+        if (ni >= 1 && ni <= n && nj >= 1 && nj <= m) {
+          sl.A(n * m + E(i, j), E(ni, nj), 1e9);
+        }
+      }
+    }
   }
-  for (int i = 1; i <= n2; ++i) {
-    sl.A(sl.s, i + n1 * 2, 1);
-  }
-  for (int i = 1; i <= n3; ++i) {
-    sl.A(i + n1 * 2 + n2, sl.t, 1);
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1, x; j <= m; ++j) {
+      cin >> x;
+      s += x, sl.A(n * m * 2 + E(i, j), sl.t, x);
+      for (int k = 0; k < 5; ++k) {
+        int ni = i + kD[k][0], nj = j + kD[k][1];
+        if (ni >= 1 && ni <= n && nj >= 1 && nj <= m) {
+          sl.A(E(ni, nj), n * m * 2 + E(i, j), 1e9);
+        }
+      }
+    }
   }
   sl.S();
-  cout << sl.mf;
+  cout << s - sl.mf;
   return 0;
 }

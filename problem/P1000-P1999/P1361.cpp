@@ -23,7 +23,7 @@ using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
 struct MF {
-  static const int kN = 4e4 + 3, kM = 6e4 + 1;
+  static const int kN = 3003, kM = 1003001;
 
   struct V {
     int h, _h, d;
@@ -35,7 +35,7 @@ struct MF {
   int mf;
 
   void _A(int x, int y, int w) { e[++c] = {y, a[x].h, w}, a[x].h = c; }
-  void A(int x, int y, int w) { _A(x, y, w), _A(y, x, 0); }
+  void A(int x, int y, int w) { _A(x, y, w), _A(y, x, 0); } 
   void R(int x, int d) {
     if (!a[x].d) {
       a[x].d = d, q[++_t] = x;
@@ -68,39 +68,49 @@ struct MF {
     return f - s;
   }
   void S() {
-    for (; B(); mf += D(s, INT32_MAX)) {
+    for (; B(); mf += D(s, 1e9)) {
     }
   }
 } sl;
 
-int n1, n2, n3, m;
+const int kN = 1001;
+
+int n, m, a[kN], b[kN], c[kN][2];
+vector<int> l[kN];
 
 int main() {
-  freopen("P1231_2.in", "r", stdin);
-  freopen("P1231.out", "w", stdout);
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n1 >> n2 >> n3;
-  sl.n = sl.t = (sl.s = n1 * 2 + n2 + n3 + 1) + 1;
-  cin >> m;
-  for (int i = 1, x, y; i <= m; ++i) {
-    cin >> x >> y;
-    sl.A(y + n1 * 2, x, 1);
+  cin >> n;
+  int s = 0;
+  for (int i = 1; i <= n; ++i) {
+    cin >> a[i];
+    s += a[i];
+  }
+  for (int i = 1; i <= n; ++i) {
+    cin >> b[i];
+    s += b[i];
   }
   cin >> m;
-  for (int i = 1, x, y; i <= m; ++i) {
-    cin >> x >> y;
-    sl.A(x + n1, y + n1 * 2 + n2, 1);
+  for (int i = 1, k; i <= m; ++i) {
+    cin >> k >> c[i][0] >> c[i][1];
+    s += c[i][0] + c[i][1];
+    l[i].resize(k);
+    for (int &j : l[i]) {
+      cin >> j;
+    }
   }
-  for (int i = 1; i <= n1; ++i) {
-    sl.A(i, i + n1, 1);
+  sl.n = sl.t = (sl.s = n + m * 2 + 1) + 1;
+  for (int i = 1; i <= n; ++i) {
+    sl.A(sl.s, i, a[i]), sl.A(i, sl.t, b[i]);
   }
-  for (int i = 1; i <= n2; ++i) {
-    sl.A(sl.s, i + n1 * 2, 1);
-  }
-  for (int i = 1; i <= n3; ++i) {
-    sl.A(i + n1 * 2 + n2, sl.t, 1);
+  for (int i = 1; i <= m; ++i) {
+    sl.A(sl.s, n + i, c[i][0]), sl.A(n + m + i, sl.t, c[i][1]);
+    for (int j : l[i]) {
+      sl.A(n + i, j, 1e9);
+      sl.A(j, n + m + i, 1e9);
+    }
   }
   sl.S();
-  cout << sl.mf;
+  cout << s - sl.mf;
   return 0;
 }
