@@ -22,12 +22,13 @@ void A(int x) { s += !c[x]++; }
 void D(int x) { s -= !--c[x]; }
 void U(int _l, int _r, int t) {
   int &x = r[t].first, &y = r[t].second;
-  swap(a[x], y), x >= _l && x <= _r && (A(a[x]), D(y), 0);
+  swap(a[x], y);
+  if (x >= _l && x <= _r) {
+    A(a[x]), D(y);
+  }
 }
 
 int main() {
-  // freopen("P1903.in", "r", stdin);
-  // freopen("P1903.out", "w", stdout);
   cin >> n >> m;
   b = pow(n, 2.0 / 3);
   for (int i = 1; i <= n; ++i) cin >> a[i];
@@ -46,8 +47,10 @@ int main() {
     while (r < q[i].r) A(a[++r]);
     while (l < q[i].l) D(a[l++]);
     while (r > q[i].r) D(a[r--]);
-    while (t < q[i].t) U(l, r, ++t);
-    while (t > q[i].t) U(l, r, t--);
+    for (; t < q[i].t; U(l, r, ++t)) {
+    }
+    for (; t > q[i].t; U(l, r, t--)) {
+    }
     ans[q[i].i] = s;
   }
   for (int i = 1; i <= nq; ++i) cout << ans[i] << endl;

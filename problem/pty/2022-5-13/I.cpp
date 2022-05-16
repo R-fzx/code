@@ -18,17 +18,27 @@ using namespace atcoder;
 using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
+using mL = modint998244353;
 
-int t, n, m;
+int t, n;
+string s;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   cin >> t;
   while (t--) {
-    cin >> n >> m;
-    for (int i = 1, x, y; i <= n; ++i) {
-      cin >> x >> y;
+    cin >> n >> s;
+    int l = 0;
+    string _s(n, ' ');
+    for (int i = 0, j = n - 1; i <= j; ++i, --j, ++l) {
+      _s[i] = _s[j] = s[i];
     }
+    mL ans = 0;
+    for (int i = 0; i < l; ++i) {
+      ans = ans * 26 + s[i] - 'A';
+    }
+    ans += _s <= s;
+    cout << ans.val() << endl;
   }
   return 0;
 }

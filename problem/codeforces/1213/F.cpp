@@ -22,7 +22,7 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-const int kN = 2e5 + 1;
+const int kN = 2e5 + 2;
 
 int n, k, a[kN], b[kN], m, ans[kN];
 Pii p[kN];
@@ -63,9 +63,13 @@ int main() {
     cout << "YES\n";
     for (int i = 1, j = 1, c = -1; i <= n; ++i) {
       if (i == p[j].first) {
-        fill(ans + i, ans + p[j].second + 1, min(k, ++c)), i = p[j].second, ++j;
+        ++c;
+        for (; i <= p[j].second; ++i) {
+          ans[a[i]] = min(k, c);
+        }
+        ++j, --i;
       } else {
-        ans[i] = min(k, ++c);
+        ans[a[i]] = min(k, ++c);
       }
     }
     for (int i = 1; i <= n; ++i) {

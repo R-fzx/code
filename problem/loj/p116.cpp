@@ -33,14 +33,14 @@ struct BMF {
   } e[kM << 1];
   struct V {
     int h, _h, d;
-    LL _d;  // 出流-入流
+    LL _d;  // 入流-出流
   } a[kN];
   int n, s, t, s_, t_, c = 1, q[kN], _h, _t;
   LL mf;
 
   void _A(int x, int y, LL w) { e[++c] = {y, a[x].h, w}, a[x].h = c; }
   void A_(int x, int y, LL w) { _A(x, y, w), _A(y, x, 0); }
-  void A(int x, int y, LL l, LL r) { a[x]._d += l, a[y]._d -= l, A_(x, y, r - l); }
+  void A(int x, int y, LL l, LL r) { a[x]._d -= l, a[y]._d += l, A_(x, y, r - l); }
   void R(int x, int d) {
     if (!a[x].d) {
       a[x].d = d, q[++_t] = x;
@@ -84,9 +84,9 @@ struct BMF {
     LL _s = 0;
     for (int i = 1; i <= n - 2; ++i) {
       if (a[i]._d > 0) {
-        _s += a[i]._d, A_(i, t, a[i]._d);
+        _s += a[i]._d, A_(s, i, a[i]._d);
       } else if (a[i]._d < 0) {
-        A_(s, i, -a[i]._d);
+        A_(i, t, -a[i]._d);
       }
     }
     debug("%d %d %d %d %d %d\n", s, t, s_, t_, c, _c);

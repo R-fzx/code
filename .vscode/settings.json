@@ -104,7 +104,20 @@
     "scc": "cpp",
     "internal_scc": "cpp",
     "segtree": "cpp",
-    "twosat": "cpp"
+    "twosat": "cpp",
+    "ccomplex": "cpp",
+    "cerrno": "cpp",
+    "cfloat": "cpp",
+    "ciso646": "cpp",
+    "climits": "cpp",
+    "cstdalign": "cpp",
+    "cstdbool": "cpp",
+    "ctgmath": "cpp",
+    "filesystem": "cpp",
+    "ios": "cpp",
+    "locale": "cpp",
+    "stack": "cpp",
+    "version": "cpp"
   },
   "git.ignoreLimitWarning": true
 }
