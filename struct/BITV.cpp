@@ -7,7 +7,6 @@ const int kV = 1e7 + 1;
 int q, o, x, s[kV << 1];
 
 void Add(int x, int v) {
-  
   for (; x < kV * 2; s[x] += v, x += x & -x) {
   }
 }
