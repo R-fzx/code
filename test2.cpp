@@ -1,59 +1,53 @@
-#include <algorithm>
-#include <iostream>
-
+#include<bits/stdc++.h>
 using namespace std;
-
-const int kMaxN = 2e5 + 1;
-
-struct T {
-  int s, a = -1;
-} t[kMaxN * 4];
-int n, q, x, y, p, o, c, l, r, s;
-
-void U(int i, int l, int r, int tl, int tr, int v) {
-  if (l == tl && r == tr) {
-    if (v == -1) {
-      s += t[i].s;
-    } else {
-      t[i].a = v, t[i].s = (r - l + 1) * v;
-    }
-    return;
-  }
-  int m = (l + r) / 2;
-  if (t[i].a != -1) {
-    U(i * 2, l, m, l, m, t[i].a), U(i * 2 + 1, m + 1, r, m + 1, r, t[i].a);
-    t[i].a = -1;
-  }
-  if (tl <= m) {
-    U(i * 2, l, m, tl, min(tr, m), v);
-  }
-  if (tr > m) {
-    U(i * 2 + 1, m + 1, r, max(m + 1, tl), tr, v);
-  }
-  t[i].s = t[i * 2].s + t[i * 2 + 1].s;
+const int N=1000000+10;
+const int inf=0x3f3f3f3f;
+typedef long long ll;
+typedef double ddf;
+int n,m;
+int l[N],g[N],f[2][N][2],pr,nt;
+int t[2],s[2][N];
+int ass;
+void fuck(){
+	memset(f,0x3f,sizeof(f));
+	t[1]=0;
+	for(int j=1;j<=3;j++){
+		for(int k=g[j];k<=g[j]+2;k++){
+			if(k>=g[1])s[1][++t[1]]=k;
+		}
+	}
+	for(int i=1;i<=t[1];i++)f[1][i][0]=s[1][i]-g[1];
+	pr=0,nt=1;
+	for(int i=2;i<=n;i++){
+		pr^=1,nt^=1;t[nt]=0;
+		int lf=max(1,i-2),rf=min(n,i+2);
+		for(int j=lf;j<=rf;j++){
+			for(int k=g[j];k<=g[j]+2;k++){
+				if(k>=g[i])s[nt][++t[nt]]=k;
+			}
+		}
+		for(int j=1;j<=t[nt];j++){
+			f[nt][j][1]=f[nt][j][0]=inf;
+			for(int k=1;k<=t[pr];k++){
+				if(s[pr][k]>s[nt][j])f[nt][j][0]=min(f[nt][j][0],f[pr][k][1]);
+				else if(s[pr][k]<s[nt][j])f[nt][j][1]=min(f[nt][j][1],f[pr][k][0]);
+				else f[nt][j][0]=min(f[nt][j][0],f[pr][k][0]),f[nt][j][1]=min(f[nt][j][1],f[pr][k][1]);
+			}
+			f[nt][j][0]+=s[nt][j]-g[i];
+			f[nt][j][1]+=s[nt][j]-g[i];
+		}
+	}
+	int re=inf;
+	for(int i=1;i<=t[nt];i++)re=min(re,f[nt][i][0]);
+	ass+=re;
 }
-
-int main() {
-  cin >> n >> q >> x;
-  for (int i = 1; i <= n; i++) {
-    cin >> y;
-    U(1, 1, n, i, i, y < x);
-    y == x && (p = i);
-  }
-  while (q--) {
-    cin >> c >> l >> r;
-    int b = l <= p && p <= r;
-    s = 0, U(1, 1, n, l, r, -1);
-    if (c == 1) {
-      U(1, 1, n, l, l + s - 1, 1);
-      U(1, 1, n, l + s, r, 0);
-      b && (p = l + s);
-    } else {
-      U(1, 1, n, r - s + 1, r, 1);
-      U(1, 1, n, l, r - s, 0);
-      b && (p = r - s);
-    }
-  }
-  cout << p;
-  return 0;
+int main(){
+	scanf("%d",&n);
+	for(int i=1;i<=n;i++)scanf("%d%d",&l[i],&g[i]);
+	fuck();
+//	cout<<ass<<endl;
+	for(int i=1;i<=n;i++)g[i]=N-l[i];
+	fuck();
+	printf("%d",ass);
+	return 0;
 }

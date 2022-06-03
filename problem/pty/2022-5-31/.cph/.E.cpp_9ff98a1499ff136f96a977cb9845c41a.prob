@@ -1,0 +1,1 @@
+{"name":"Local: E","url":"d:\\code\\problem\\pty\\2022-5-31\\E.cpp","tests":[{"id":1653984210593,"input":"1 2\n2 1\n12 14 8 2","output":"6 4 2"},{"id":1653984216943,"input":"1 1\n100 1\n10000 0 -1","output":"100 -1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\pty\\2022-5-31\\E.cpp","group":"local","local":true}

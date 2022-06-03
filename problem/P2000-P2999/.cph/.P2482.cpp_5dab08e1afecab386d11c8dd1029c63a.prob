@@ -1,0 +1,1 @@
+{"name":"Local: P2482","url":"d:\\code\\problem\\P2000-P2999\\P2482.cpp","tests":[{"id":1653708926216,"input":"3 10\nMP D D F F\nZP N N N D\nFP J J J J\nF F D D J J F F K D","output":"FP\nDEAD\nDEAD\nJ J J J J J D"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P2000-P2999\\P2482.cpp","group":"local","local":true}

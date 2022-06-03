@@ -23,7 +23,7 @@ using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
 struct MF {
-  static const int kN = 4e4 + 3, kM = 6e4 + 1;
+  static const int kN = 4e4 + 3, kM = 7e4 + 1;
 
   struct V {
     int h, _h, d;
@@ -76,10 +76,8 @@ struct MF {
 int n1, n2, n3, m;
 
 int main() {
-  freopen("P1231_2.in", "r", stdin);
-  freopen("P1231.out", "w", stdout);
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n1 >> n2 >> n3;
+  cin >> n1 >> n2 >> n3;  
   sl.n = sl.t = (sl.s = n1 * 2 + n2 + n3 + 1) + 1;
   cin >> m;
   for (int i = 1, x, y; i <= m; ++i) {
