@@ -1,13 +1,3 @@
-# test
-
 $$
-a_{i,j}\\
-f(i,j)=\min_{k=1}^m(a_{k,i}+a_{k,j})+\max_{k=1}^m(a_{k,i}+a_{k,j})\\
-\text{Solve:}\sum_{i=1}^n\sum_{j=1}^nf(i,j)\\
-\begin{aligned}
-\text{ans}
-&=\sum_{i=1}^n(\sum_{j=1}^n\min_{k=1}^m(a_{k,i}+a_{k,j}))+(\sum_{j=1}^n\max_{k=1}^m(a_{k,i}+a_{k,j}))\\
-&=\sum_{i=1}^n\sum_{j=1}^n\min_{k=1}^m(a_{k,i}+a_{k,j})+\sum_{i=1}^n\sum_{j=1}^n\max_{k=1}^m(a_{k,i}+a_{k,j})\\
-\end{aligned}
-\pm
+\begin{eqnarray} (AB)C_{i,j} & = & \sum_{l=1}^p AB_{i,l} \times C_{l,j} \\ & = & \sum_{l=1}^p (\sum_{k=1}^m A_{i,k} \times B_{k,l}) \times C_{l,j} \\ & = & \sum_{l=1}^p \sum_{k=1}^m A_{i,k} \times B_{k,l} \times C_{l,j} \\ & = & \sum_{k=1}^m \sum_{l=1}^p A_{i,k} \times B_{k,l} \times C_{l,j} \\ & = & \sum_{k=1}^m (\sum_{l=1}^p B_{k,l} \times C_{l,j}) \times A_{i,k} \\ & = & \sum_{k=1}^m A_{i,k} \times BC_{k,j} \\ & = & A(BC)_{i,j} \end{eqnarray}
 $$

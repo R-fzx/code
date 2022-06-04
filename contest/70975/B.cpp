@@ -22,40 +22,53 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-int t, r;
-char o, c;
-deque<char> q;
+const int kN = 1e5 + 1;
+
+int t, r, o, _h, _t;
+char c, a[kN];
+
+int A(int x) {
+  if (++x == kN) {
+    x = 0;
+  }
+  return x;
+}
+int D(int x) {
+  if (!x--) {
+    x = 1e5;
+  }
+  return x;
+}
 
 int main() {
-  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> t;
+  scanf("%d", &t);
   while (t--) {
-    cin >> o;
-    if (o == '1') {
-      cin >> c;
+    scanf("%d", &o);
+    if (o == 1) {
+      scanf(" %c", &c);
       if (r) {
-        if (!q.empty() && q.front() == c) {
-          q.pop_front();
+        if (_h != _t && a[_h] == c) {
+          _h = A(_h);
         } else {
-          q.push_front(c);
+          _h = D(_h), a[_h] = c;
         }
       } else {
-        if (!q.empty() && q.back() == c) {
-          q.pop_back();
+        if (_h != _t && a[D(_t)] == c) {
+          _t = D(_t);
         } else {
-          q.push_back(c);
+          a[_t] = c, _t = A(_t);
         }
       }
-    } else if (o == '2') {
+    } else if (o == 2) {
       r ^= 1;
-    } else {
+    } else if (o == 3) {
       if (r) {
-        for (int i = q.size() - 1; i >= 0; --i) {
-          putchar(q[i]);
+        for (int i = D(_t); A(i) != _h; i = D(i)) {
+          putchar(a[i]);
         }
       } else {
-        for (int i = 0; i < q.size(); ++i) {
-          putchar(q[i]);
+        for (int i = _h; i != _t; i = A(i)) {
+          putchar(a[i]);
         }
       }
       puts("");
