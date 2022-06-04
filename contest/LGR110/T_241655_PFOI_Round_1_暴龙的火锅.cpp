@@ -22,18 +22,29 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-const LL kM = 1e9 + 7;
+const int kN = 1e6 + 1;
 
-LL l, r;
-int t;
+int t, n;
+LL f[kN], s[kN];
 
-
+LL S(LL x) {
+  LL s = 0;
+  for (; x; x /= 10) {
+    s += x % 10;
+  }
+  return s;
+}
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  for (cin >> t; t--;) {
-    cin >> l >> r;
-
+  f[1] = s[1] = 1;
+  for (int i = 2; i < kN; ++i) {
+    f[i] = S(f[i - 1] + f[i - 2]), s[i] = (s[i - 1] + f[i]) % 9;
+  }
+  cin >> t;
+  while (t--) {
+    cin >> n;
+    cout << s[n] << "\n";
   }
   return 0;
 }

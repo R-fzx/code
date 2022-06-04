@@ -22,18 +22,23 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-const LL kM = 1e9 + 7;
+const int kN = 1e6 + 1;
 
-LL l, r;
-int t;
-
-
+int n, m, a[kN], b[kN], ans;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  for (cin >> t; t--;) {
-    cin >> l >> r;
-
+  cin >> n >> m;
+  for (int i = 1; i <= n; ++i) {
+    cin >> a[i] >> b[i];
   }
+  for (int i = 1, j = 0, s = 0, v = 0; i <= n; s -= a[i], v -= b[i], ++i) {
+    for (; j <= n && s <= m; ++j, s += a[j], v += b[j]) {
+    }
+    s -= a[j], v -= b[j], --j;
+    debug("%d %d\n", i, j);
+    ans = max(ans, v);
+  }
+  cout << ans;
   return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: P4588","url":"d:\\code\\problem\\P4000-P4999\\P4588.cpp","tests":[{"id":1654308357029,"input":"1\n10 1000000000\n1 2\n2 1\n1 2\n1 10\n2 3\n2 4\n1 6\n1 7\n1 12\n2 7","output":"2\n1\n2\n20\n10\n1\n6\n42\n504\n84"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\P4000-P4999\\P4588.cpp","group":"local","local":true}
