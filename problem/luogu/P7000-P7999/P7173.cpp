@@ -9,14 +9,12 @@
 #include <iostream>
 #include <map>
 #include <numeric>
-#include <queue>
 #include <set>
-#include <string>
 #include <vector>
 #ifndef ONLINE_JUDGE
 #define debug(...) fprintf(stderr, __VA_ARGS__)
 #else
-#define debug
+#define debug(...)
 #endif
 
 using namespace std;
@@ -25,22 +23,20 @@ using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
 struct BMF {
-  static const int kN = 205, kM = 10206;
+  static const int kN = 203, kM = 3e4 + 1;
 
   struct E {
-    int y, n;
-    LL w;
+    int y, n, w, c;
   } e[kM << 1];
   struct V {
     int h, _h, d;
-    LL _d;
+    int _d;
   } a[kN];
-  int n, s, t, s_, t_, c = 1, q[kN], _h, _t;
-  LL mf;
+  int n, s, t, s_, t_, _c = 1, q[kN], _h, _t, mf, mc;
 
-  void _A(int x, int y, LL w) { e[++c] = {y, a[x].h, w}, a[x].h = c; }
-  void A_(int x, int y, LL w) { _A(x, y, w), _A(y, x, 0); }
-  void A(int x, int y, LL l, LL r) { a[x]._d -= l, a[y]._d += l, A_(x, y, r - l); }
+  void _A(int x, int y, int w, int c) { e[++_c] = {y, a[x].h, w, c}, a[x].h = _c; }
+  void A_(int x, int y, int w, int c) { _A(x, y, w, c), _A(y, x, 0, -c); }
+  void A(int x, int y, int l, int r, int c) { a[x]._d -= l, a[y]._d += l, A_(x, y, r - l, c); }
   void R(int x, int d) {
     if (!a[x].d) {
       a[x].d = d, q[++_t] = x;
@@ -60,11 +56,11 @@ struct BMF {
     }
     return a[t].d != 0;
   }
-  LL D(int x, int t, LL f) {
+  int D(int x, int t, int f) {
     if (x == t) {
       return f;
     }
-    LL s = f, r;
+    int s = f, r;
     for (int &i = a[x]._h; s && i; s && (i = e[i].n)) {
       if (e[i].w && a[e[i].y].d == a[x].d + 1 && (r = D(e[i].y, t, min(s, e[i].w)))) {
         s -= r, e[i].w -= r, e[i ^ 1].w += r;
@@ -72,43 +68,32 @@ struct BMF {
     }
     return f - s;
   }
-  LL S(int s, int t) {
-    LL f = 0;
-    for (; B(s, t); f += D(s, t, 1e15)) {
+  int S(int s, int t) {
+    int f = 0;
+    for (; B(s, t); f += D(s, t, 1e9)) {
     }
     return f;
   }
   void S() {
-    LL _s = 0;
+    int _s = 0;
     for (int i = 1; i <= n; ++i) {
       if (a[i]._d > 0) {
-        _s += a[i]._d, A_(n + 1, i, a[i]._d);
+        _s += a[i]._d, A_(n + 1, i, a[i]._d, 0);
       } else if (a[i]._d < 0) {
-        A_(i, n + 2, -a[i]._d);
+        A_(i, n + 2, -a[i]._d, 0);
       }
     }
-    A_(t, s, INT32_MAX);
+    A_(t, s, INT32_MAX, 0);
     if (S(n + 1, n + 2) != _s) {
       mf = -1;
       return;
     }
-    e[c - 1].w = 0, mf = e[c].w, e[c].w = 0, mf += S(s, t);
+    e[_c - 1].w = 0, mf = e[_c].w, e[_c].w = 0, mf += S(s, t);
   }
 } sl;
-int m;
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> sl.n >> m >> sl.s >> sl.t;
-  for (int i = 1, x, y, l, r; i <= m; ++i) {
-    cin >> x >> y >> l >> r;
-    sl.A(x, y, l, r);
-  }
-  sl.S();
-  if (~sl.mf) {
-    cout << sl.mf;
-  } else {
-    cout << "please go home to sleep";
-  }
+
   return 0;
 }

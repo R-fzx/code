@@ -1,7 +1,4 @@
-def Encode(msg):
-    """Encode a message
+from decimal import Decimal
 
-    Args:
-        msg ([type]): [description]
-    """
-    return msg.encode()
+
+Decimal()

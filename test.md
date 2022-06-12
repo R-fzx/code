@@ -1,3 +1,4 @@
 $$
-\begin{eqnarray} (AB)C_{i,j} & = & \sum_{l=1}^p AB_{i,l} \times C_{l,j} \\ & = & \sum_{l=1}^p (\sum_{k=1}^m A_{i,k} \times B_{k,l}) \times C_{l,j} \\ & = & \sum_{l=1}^p \sum_{k=1}^m A_{i,k} \times B_{k,l} \times C_{l,j} \\ & = & \sum_{k=1}^m \sum_{l=1}^p A_{i,k} \times B_{k,l} \times C_{l,j} \\ & = & \sum_{k=1}^m (\sum_{l=1}^p B_{k,l} \times C_{l,j}) \times A_{i,k} \\ & = & \sum_{k=1}^m A_{i,k} \times BC_{k,j} \\ & = & A(BC)_{i,j} \end{eqnarray}
+a=1-b\\
+(1-b)^2+b^2\\
 $$

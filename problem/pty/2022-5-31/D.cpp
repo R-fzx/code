@@ -1,26 +1,9 @@
 #include <algorithm>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <ctime>
-#include <deque>
-#include <functional>
-#include <iomanip>
 #include <iostream>
-#include <map>
-#include <numeric>
-#include <set>
 #include <vector>
-#ifndef ONLINE_JUDGE
-#define debug(...) fprintf(stderr, __VA_ARGS__)
-#else
-#define debug(...)
-#endif
 
 using namespace std;
-using LL = long long;
 using Pii = pair<int, int>;
-using Pll = pair<LL, LL>;
 
 const int kN = 2e5 + 1;
 
@@ -35,17 +18,15 @@ void D(int x, int f) {
     }
   }
 }
+Pii U(Pii x) { return {x.first + 1, x.second}; }
 Pii S(int x, int f) {
-  int d = 0, y = x;
+  Pii d = {0, x};
   for (int i : e[x]) {
     if (i ^ f) {
-      Pii v = S(i, x);
-      if (v.first > d) {
-        d = v.first, y = v.second;
-      }
+      d = max(d, U(S(i, x)));
     }
   }
-  return {d, y};
+  return d;
 }
 
 int main() {
@@ -56,32 +37,19 @@ int main() {
     e[x].push_back(y), e[y].push_back(x);
   }
   D(1, 0), x = max_element(d + 1, d + n + 1) - d, D(x, 0), y = max_element(d + 1, d + n + 1) - d, s += d[y] - 1;
-  debug("%d\n", s);
-  for (int i = y; i != x; i = p[i]) {
-    l.push_back(i);
+  for (int i = y; i != x; l.push_back(i), i = p[i]) {
   }
   l.push_back(x);
-  for (int i : l) {
-    debug("%d ", i);
-  }
-  debug("\n");
-  int _s = 0;
+  Pii ans = {0, 0};
   for (int i = 0; i < l.size(); ++i) {
-    int d = 0, y = -1;
+    Pii d = {0, -1};
     for (int j : e[l[i]]) {
       if ((!i || j != l[i - 1]) && (i + 1 == l.size() || j != l[i + 1])) {
-        Pii x = S(j, l[i]);
-        debug("(%d,%d) ", x.first, x.second);
-        if (x.first + 1 > d) {
-          d = x.first + 1, y = x.second;
-        }
+        d = max(d, U(S(j, l[i])));
       }
     }
-    debug("%d %d\n", d, y);
-    if (d > _s) {
-      _s = d, z = y;
-    }
+    ans = max(ans, d);
   }
-  printf("%d\n%d %d %d", s + _s, x, y, z ? z : l[1]);
+  printf("%d\n%d %d %d", s + ans.first, x, y, ans.second ? ans.second : l[1]);
   return 0;
 }

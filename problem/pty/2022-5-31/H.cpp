@@ -1,37 +1,19 @@
 #include <atcoder/all>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <deque>
-#include <functional>
-#include <iomanip>
-#include <map>
-#include <set>
-#ifndef ONLINE_JUDGE
-#define debug(...) fprintf(stderr, __VA_ARGS__)
-#else
-#define debug(...)
-#endif
 
 using namespace std;
-using namespace atcoder;
 using LL = long long;
 using Pii = pair<int, int>;
-using Pll = pair<LL, LL>;
-using mL = modint998244353;
 
 const int kN = 1e5 + 1;
 
 struct Q {
   int x, f;
   LL d;
-
-  bool operator<(const Q &o) const { return d > o.d; }
+  bool operator<(const Q& o) const { return d > o.d; }
 };
-int n, m, k, l, a[kN];
-vector<Pii> e[kN];
+int n, m, k, l, a[kN], p[kN], c[kN];
 LL d[kN][2];
-bool v[kN];
+vector<Pii> e[kN];
 priority_queue<Q> q;
 
 int main() {
@@ -42,26 +24,25 @@ int main() {
   }
   for (int i = 1, x; i <= l; ++i) {
     cin >> x;
-    q.push({x, x, 0});
+    q.push({x, a[x], 0});
   }
   for (int i = 1, x, y, w; i <= m; ++i) {
     cin >> x >> y >> w;
-    e[x].emplace_back(y, w), e[y].emplace_back(x, w);
+    e[x].push_back({y, w}), e[y].push_back({x, w});
   }
-  for (Q x; !q.empty();) {
-    x = q.top(), q.pop();
-    if (d[x.x][a[x.x] == a[x.f]] > x.d) {
-      d[x.x][a[x.x] == a[x.f]] = x.d;
-    } else {
+  while (!q.empty()) {
+    auto [x, f, _d] = q.top();
+    q.pop();
+    if (c[x] == 2 || p[x] == f) {
       continue;
     }
-    debug("%d %d %lld\n", x.x, x.f, x.d);
-    for (auto [y, w] : e[x.x]) {
-      q.push({y, x.f, x.d + w});
+    c[x] || (p[x] = f), d[x][c[x]++] = _d;
+    for (auto [i, w] : e[x]) {
+      q.push({i, f, _d + w});
     }
   }
   for (int i = 1; i <= n; ++i) {
-    cout << (d[i][0] == 1e18 ? -1 : d[i][0]) << ' ';
+    cout << (d[i][a[i] == p[i]] == 1e18 ? -1 : d[i][a[i] == p[i]]) << " ";
   }
   return 0;
 }

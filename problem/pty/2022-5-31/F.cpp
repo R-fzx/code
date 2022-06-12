@@ -1,24 +1,8 @@
-#include <atcoder/all>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <deque>
-#include <functional>
-#include <iomanip>
-#include <map>
+#include <algorithm>
+#include <iostream>
 #include <set>
-#ifndef ONLINE_JUDGE
-#define debug(...) fprintf(stderr, __VA_ARGS__)
-#else
-#define debug(...)
-#endif
 
 using namespace std;
-using namespace atcoder;
-using LL = long long;
-using Pii = pair<int, int>;
-using Pll = pair<LL, LL>;
-using mL = modint998244353;
 
 const int kN = 2e5 + 1;
 
@@ -32,13 +16,11 @@ multiset<int> s;
 bool S() {
   sort(e + 1, e + n + m + 1);
   for (int i = 1; i <= n + m; ++i) {
-    debug("%d %d %d\n", e[i].a, e[i].b, e[i].t);
     if (e[i].t) {
       s.insert(e[i].b);
     } else {
       auto x = s.lower_bound(e[i].b);
       if (x != s.end()) {
-        debug("%d %d\n", *x, e[i].b);
         s.erase(x);
       } else {
         return 0;

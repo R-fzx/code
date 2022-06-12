@@ -1,27 +1,8 @@
 #include <algorithm>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <ctime>
-#include <deque>
-#include <functional>
-#include <iomanip>
 #include <iostream>
-#include <map>
-#include <numeric>
 #include <queue>
-#include <set>
-#include <vector>
-#ifndef ONLINE_JUDGE
-#define debug(...) fprintf(stderr, __VA_ARGS__)
-#else
-#define debug(...)
-#endif
 
 using namespace std;
-using LL = long long;
-using Pii = pair<int, int>;
-using Pll = pair<LL, LL>;
 
 const int kN = 2e5 + 1;
 
@@ -43,9 +24,7 @@ int main() {
   cout << a[1] << endl;
   for (int i = n - 1; i >= 1; --i) {
     int x = q.top();
-    q.pop();
-    cout << x << " " << a[i] << endl;
-    --c[a[i]], R(a[i]);
+    q.pop(), cout << x << " " << a[i] << endl, --c[a[i]], R(a[i]);
   }
   return 0;
 }
