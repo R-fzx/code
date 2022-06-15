@@ -1,0 +1,1 @@
+{"name":"Local: P1343","url":"d:\\code\\problem\\luogu\\P1000-P1999\\P1343.cpp","tests":[{"id":1655115951354,"input":"6 7 7\n1 2 1\n1 4 2\n2 3 1\n4 5 1\n4 3 1\n3 6 2\n5 6 1","output":"3 3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\luogu\\P1000-P1999\\P1343.cpp","group":"local","local":true}

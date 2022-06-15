@@ -1,0 +1,1 @@
+{"name":"Local: P2891","url":"d:\\code\\problem\\luogu\\P2000-P2999\\P2891.cpp","tests":[{"id":1655116057496,"input":"4 3 3\n2 2 1 2 3 1\n2 2 2 3 1 2\n2 2 1 3 1 2\n2 1 1 3 3","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\luogu\\P2000-P2999\\P2891.cpp","group":"local","local":true}

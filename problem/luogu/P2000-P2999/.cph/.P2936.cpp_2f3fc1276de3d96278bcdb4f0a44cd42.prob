@@ -1,0 +1,1 @@
+{"name":"Local: P2936","url":"d:\\code\\problem\\luogu\\P2000-P2999\\P2936.cpp","tests":[{"id":1655116713857,"input":"5 \nA B 3 \nB C 3 \nC D 5 \nD Z 4 \nB Z 6 ","output":"3 "}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\luogu\\P2000-P2999\\P2936.cpp","group":"local","local":true}

@@ -1,10 +1,30 @@
+#include <algorithm>
+#include <bitset>
+#include <cmath>
+#include <cstdio>
+#include <ctime>
+#include <deque>
+#include <functional>
+#include <iomanip>
 #include <iostream>
+#include <map>
+#include <numeric>
+#include <set>
+#include <vector>
+#include <random>
+#ifndef ONLINE_JUDGE
+#define debug(...) fprintf(stderr, __VA_ARGS__)
+#else
+#define debug(...)
+#endif
 
 using namespace std;
 using LL = long long;
+using Pii = pair<int, int>;
+using Pll = pair<LL, LL>;
 
 struct MF {
-  static const int kN = 203, kM = 5001;
+  static const int kN = 33, kM = 1001;
 
   struct E {
     int y, n;
@@ -55,15 +75,18 @@ struct MF {
     }
   }
 } s;
+
 int m;
 
 int main() {
-  cin >> s.n >> m >> s.s >> s.t;
+  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+  cin >> s.n >> m;
+  s.s = 1, s.t = s.n;
   for (int i = 1, x, y, w; i <= m; ++i) {
     cin >> x >> y >> w;
-    s.A(x, y, w);
+    s.A(x, y, w * 1001LL + 1);
   }
   s.S();
-  cout << s.mf;
+  cout << s.mf / 1001 << " " << s.mf % 1001;
   return 0;
 }

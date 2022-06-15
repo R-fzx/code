@@ -37,15 +37,12 @@ int main() {
     cin >> n >> m >> a >> b;
     a = " " + a, b = " " + b;
     int l = count(a.begin(), a.end(), '-');
-    debug("%d\n", l);
-    debug("%d %d\n", n, m);
-    debug("%s %s\n", a.c_str(), b.c_str());
     if (n - l * 2 != m) {
-      cout << 0 << endl;
+      cout << "0\n";
     } else {
       for (int i = 0; i <= n; ++i) {
-        for (int j = 0; j <= m; ++j) {
-          for (int k = 0; k <= m; ++k) {
+        for (int j = 0; j <= l + 1; ++j) {
+          for (int k = 0; k <= l + 1; ++k) {
             f[i][j][k] = 0;
           }
         }
@@ -54,7 +51,7 @@ int main() {
       for (int i = 1, c = 0; i <= n; ++i) {
         c += (a[i] == '-' ? -1 : 1);
         for (int j = 0; j <= l; ++j) {
-          for (int k = 0; j <= l; ++k) {
+          for (int k = 0; k <= l; ++k) {
             if (a[i] == '-') {
               f[i][j][k] = (f[i - 1][j + 1][k] + f[i - 1][j][k + 1]) % kM;
             } else {
@@ -70,7 +67,7 @@ int main() {
           }
         }
       }
-      cout << f[n][0][0] << endl;
+      cout << f[n][0][0] << '\n';
     }
   }
   return 0;

@@ -1,0 +1,1 @@
+{"name":"Local: P4001","url":"d:\\code\\problem\\luogu\\P4000-P4999\\P4001.cpp","tests":[{"id":1655202109649,"input":"3 4\n5 6 4\n4 3 1\n7 5 3\n5 6 7 8\n8 7 6 5\n5 5 5\n6 6 6","output":"14"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\luogu\\P4000-P4999\\P4001.cpp","group":"local","local":true}
