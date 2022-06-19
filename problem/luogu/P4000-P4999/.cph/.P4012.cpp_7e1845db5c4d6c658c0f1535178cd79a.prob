@@ -1,0 +1,1 @@
+{"name":"Local: P4012","url":"d:\\code\\problem\\luogu\\P4000-P4999\\P4012.cpp","tests":[{"id":1655464948166,"input":"1 1\n2 2\n1 2\n3 4\n5 6\n7 2\n8 10\n9 3\n2 0 0\n2 2 2","output":"42"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\luogu\\P4000-P4999\\P4012.cpp","group":"local","local":true}
