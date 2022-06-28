@@ -1,0 +1,1 @@
+{"name":"Local: P7453","url":"d:\\code\\problem\\luogu\\P7000-P7999\\P7453.cpp","tests":[{"id":1655939900394,"input":"2\n2 3 3\n6 6 6\n4\n7 1 2\n1 1 2\n4 1 2 3\n7 1 2","output":"8 9 9\n23 9 9"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\luogu\\P7000-P7999\\P7453.cpp","group":"local","local":true}

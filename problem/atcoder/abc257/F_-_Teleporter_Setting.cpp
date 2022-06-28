@@ -20,8 +20,18 @@ using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 using mL = modint998244353;
 
+const int kN = 3e5 + 1;
+
+int n, m, d[kN];
+vector<int> e[kN];
+
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-
+  cin >> n >> m;
+  for (int i = 1, x, y; i <= m; ++i) {
+    cin >> x >> y;
+    e[x].push_back(y), e[y].push_back(x);
+  }
+  
   return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: P3980","url":"d:\\code\\problem\\luogu\\P3000-P3999\\P3980.cpp","tests":[{"id":1655986474457,"input":"3 3\n2 3 4\n1 2 2\n2 3 5\n3 3 2","output":"14"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\luogu\\P3000-P3999\\P3980.cpp","group":"local","local":true}
