@@ -1,0 +1,1 @@
+{"name":"Local: A","url":"d:\\code\\contest\\FAOI-R1\\A.cpp","tests":[{"id":1658488897088,"input":"1\n5\n1 1\n2 2 3\n3 4 5 6\n4 7 8 9 10\n5 11 12 13 14 15","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\contest\\FAOI-R1\\A.cpp","group":"local","local":true}

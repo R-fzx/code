@@ -1,0 +1,1 @@
+{"name":"Local: P1080","url":"d:\\code\\problem\\luogu\\P1000-P1999\\P1080.py","tests":[{"id":1657799816335,"input":"3 \n1 1 \n2 3 \n7 4 \n4 6","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\code\\problem\\luogu\\P1000-P1999\\P1080.py","group":"local","local":true}
