@@ -1,55 +1,41 @@
-#include <algorithm>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <ctime>
-#include <deque>
-#include <functional>
-#include <iomanip>
 #include <iostream>
-#include <map>
-#include <numeric>
-#include <queue>
-#include <random>
-#include <set>
-#include <vector>
-#ifndef ONLINE_JUDGE
-#define debug(...) fprintf(stderr, __VA_ARGS__)
-#else
-#define debug(...)
-#endif
 
 using namespace std;
 using LL = long long;
-using Pii = pair<int, int>;
-using Pll = pair<LL, LL>;
 
-const int kN = 51;
+const int kN = 1e5 + 1;
 
-LL f[kN][kN][kN * kN];
+int n;
+LL a[kN], x, s, k;
 
 int main() {
-  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  f[0][0][0] = 1;
-  for (int i = 1; i <= 50; ++i) {
-    for (int j = 0; j <= i; ++j) {
-      for (int k = 0; k <= 2500; ++k) {
-        f[i][j][k] = f[i - 1][j][k] + (j && k >= i ? f[i - 1][j - 1][k - i] : 0);
-        // cout << f[i][j][k] << ' ';
-      }
-      // cout << '\n';
+  cin >> n;
+  bool f = 1;
+  for (int i = 1; i <= n; ++i) {  // 输入
+    cin >> a[i];
+    f &= a[i] % LL(1e12) == 0;
+  }
+  string _;
+  cin >> _;
+  if (_.size() > 18 && f) {  // 处理 x<=1e30 但 x 和 ai 都是 1e12 的倍数的情况
+    for (int i = 0; i < _.size() - 12; ++i) {
+      x = x * 10 + _[i] - '0';
     }
-    // cout << '\n';
+    for (int i = 1; i <= n; ++i) {
+      a[i] /= LL(1e12);
+    }
+  } else {
+    for (int i = 0; i < _.size(); ++i) {
+      x = x * 10 + _[i] - '0';
+    }
   }
-  LL s = 0;
-  for (int i = 1; i <= 50; ++i) {
-    s += f[50][i][36 * i];
-    cout << f[50][i][36 * i] << '\n';
+  for (int i = 1; i <= n; ++i) {  // 统计数列和
+    s += a[i];
   }
-  cout << s;
+  k = x / s * n, x %= s;              // 计算有多少个整块序列
+  for (int i = 1; x > 0; ++i, ++k) {  // 暴力计算剩下部分
+    x -= a[i];
+  }
+  cout << k;
   return 0;
 }
-/*
-1 2 3 ... 50
-Sum = 36 * i
-*/

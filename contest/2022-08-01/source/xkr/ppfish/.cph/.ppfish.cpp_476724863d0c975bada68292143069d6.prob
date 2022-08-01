@@ -1,0 +1,1 @@
+{"name":"Local: ppfish","url":"c:\\Users\\Administrator\\Desktop\\xkr\\ppfish\\ppfish.cpp","tests":[{"id":1659315946292,"input":"5\nhe\nshe\nher\nhers\nhis\nhershe\n0.30 5","output":"0.198 0.036 0.036 0.036 0.002"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Administrator\\Desktop\\xkr\\ppfish\\ppfish.cpp","group":"local","local":true}

@@ -83,11 +83,9 @@ struct LCT {
   void S(int x, int y) {
     M(x), A(y), S(y);
   }
-  void L(int x, int y) {
-    M(x);
-    if (F(y) != x) {
-      e[x].f = y;
-    }
+  void L(int x, int y) { M(x), e[x].f = y; }
+  void C(int x, int y) {
+    M(x);   
   }
 } t[kC];
 int n, m, c, q;
