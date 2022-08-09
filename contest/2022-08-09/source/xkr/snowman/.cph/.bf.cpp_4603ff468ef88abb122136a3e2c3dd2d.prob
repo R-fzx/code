@@ -1,0 +1,1 @@
+{"name":"Local: bf","url":"c:\\Users\\Administrator\\Desktop\\xkr\\snowman\\bf.cpp","tests":[{"id":1660010816558,"input":"10 1 2 3 4 5 6 7 8 9 10","output":"5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Administrator\\Desktop\\xkr\\snowman\\bf.cpp","group":"local","local":true}

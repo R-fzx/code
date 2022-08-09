@@ -1,41 +1,50 @@
 #include <iostream>
+#include <queue>
 
 using namespace std;
-using LL = long long;
 
-const int kN = 1e5 + 1;
+const int kN = 1e3 + 1;
 
-int n;
-LL a[kN], x, s, k;
+struct Q {
+  int x, y, t, d;
+
+  bool operator<(const Q &o) const { return d > o.d; }
+};
+priority_queue<Q> q;
+int t, n, m, d[kN][kN][2];
+bool a[kN][kN];
+
+void R(int x, int y, int t, int _d) {
+  if (x >= 1 && x <= n && y >= 1 && y <= m) {
+    if (a[x][y]) {
+      t = 1;
+    } else if (t) {
+      t = 0, ++_d;
+    }
+    if (d[x][y][t] > _d) {
+      d[x][y][t] = _d, q.push({x, y, t, _d});
+    }
+  }
+}
 
 int main() {
-  cin >> n;
-  bool f = 1;
-  for (int i = 1; i <= n; ++i) {  // 输入
-    cin >> a[i];
-    f &= a[i] % LL(1e12) == 0;
-  }
-  string _;
-  cin >> _;
-  if (_.size() > 18 && f) {  // 处理 x<=1e30 但 x 和 ai 都是 1e12 的倍数的情况
-    for (int i = 0; i < _.size() - 12; ++i) {
-      x = x * 10 + _[i] - '0';
-    }
+  cin >> t;
+  while (t--) {
+    cin >> n >> m;
     for (int i = 1; i <= n; ++i) {
-      a[i] /= LL(1e12);
+      for (int j = 1; j <= m; ++j) {
+        cin >> a[i][j];
+        d[i][j][0] = d[i][j][1] = 1e9;
+      }
     }
-  } else {
-    for (int i = 0; i < _.size(); ++i) {
-      x = x * 10 + _[i] - '0';
+    for (R(1, 1, 0, 0); !q.empty(); ) {
+      Q x = q.top();
+      q.pop();
+      for (int i = 0; i < 2; ++i) {
+        R(x.x + i, x.y + !i, x.t, x.d);
+      }
     }
+    cout << min(d[n][m][0], d[n][m][1] + 1) << '\n';
   }
-  for (int i = 1; i <= n; ++i) {  // 统计数列和
-    s += a[i];
-  }
-  k = x / s * n, x %= s;              // 计算有多少个整块序列
-  for (int i = 1; x > 0; ++i, ++k) {  // 暴力计算剩下部分
-    x -= a[i];
-  }
-  cout << k;
   return 0;
 }

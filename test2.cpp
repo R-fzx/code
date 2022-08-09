@@ -26,6 +26,17 @@ using Pll = pair<LL, LL>;
 
 int main() {
 	ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-	cout << gcd(0, 1);
+	LL s = 0;
+	for (int i = 1; i <= 1000000; ++i) {
+		int x = i, c = 0;
+    for (int j = 2; ++c, j * j <= x; ++j, ++c) {
+      if (x % j == 0) {
+        for (; ++c, x % j == 0; x /= j, ++c) {
+        }
+      }
+    }
+    s += c;
+  }
+  cout << s;
 	return 0;
-} //
+}

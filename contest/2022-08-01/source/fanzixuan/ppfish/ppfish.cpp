@@ -12,7 +12,7 @@ using Pll = pair<LL, LL>;
 const int kC = 4001, kN = 201, kK = 1001;
 
 int n, ne[kC][26], fa[kC], d[kC], _d[2][kN], c[kN], _c, q[kC], h = 1, t, k;
-double p, f[kN];
+double p, f[kK][kN];
 
 void I(const string &s, int id) {
   int x = 0;
@@ -62,7 +62,7 @@ void I() {
 
 int main() {
 #define RF(x) freopen(x ".in", "r", stdin), freopen(x ".out", "w", stdout)
-  RF("ppfish");
+  // RF("ppfish0");
   cin >> n;
   for (int i = 1; i <= n; ++i) {
     string x;
@@ -93,20 +93,21 @@ int main() {
   for (int i = 1; i <= n; ++i) {
     _d[1][_d[0][i]] = i;
   }
-  for (int i = 1; i <= n; ++i) {
-    f[i] = 1;
+  for (int i = 0; i <= n; ++i) {
+    f[0][i] = 1;
   }
   // cout << fixed << setprecision(3);
   // cout << p << '\n';
   for (int i = 1; i <= k; ++i) {
-    double x = 1;
+    // double x = 1;
     for (int j = 1, u = 1; j <= n;) {
       for (; u <= n && c[_d[0][j]] == c[_d[0][u]]; ++u) {
       }
-      double y = x;
+      double y = f[i - 1][j - 1];
       for (; j < u; ++j) {
-        x *= 1 - f[j];
-        f[j] *= 1 - y + y * p;
+        // x *= 1 - f[j];
+        // f[j] *= 1 - y + y * p;
+        f[i][j] = f[i - 1][j] * (1 - y) * p + y;
         // cout << f[j] << ' ';
       }
       // cout << '#';
@@ -114,7 +115,7 @@ int main() {
     // cout << '\n';
   }
   for (int i = 1; i <= n; ++i) {
-    cout << fixed << setprecision(3) << f[_d[1][i]] << ' ';
+    cout << fixed << setprecision(3) << f[k][_d[1][i]] << ' ';
   }
   return 0;
 }
