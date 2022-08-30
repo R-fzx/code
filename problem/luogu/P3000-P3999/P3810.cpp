@@ -1,67 +1,74 @@
 #include <algorithm>
+#include <bitset>
+#include <cmath>
+#include <cstdio>
+#include <ctime>
+#include <deque>
+#include <functional>
+#include <iomanip>
 #include <iostream>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <random>
+#include <set>
+#include <vector>
+#ifndef ONLINE_JUDGE
+#define debug(...) fprintf(stderr, __VA_ARGS__)
+#else
+#define debug(...)
+#endif
 
 using namespace std;
+using LL = long long;
+using Pii = pair<int, int>;
+using Pll = pair<LL, LL>;
 
-const int kN = 1e5 + 1, kK = 2e5 + 1;
+const int kN = 1e5 + 1, kV = 2e5 + 1;
 
 struct E {
-  int a, b, c, _c = 1, f;
-  bool operator<(const E &o) const {
-    return a < o.a || a == o.a && (b < o.b || b == o.b && c < o.c);
-  }
-} e[kN], _e[kN];
-int n, k, m, c[kN], s[kK];
+  int a, b, c, p, f;
+  bool operator<(const E &o) const { return tie(a, b, c) < tie(o.a, o.b, o.c); }
+} a[kN];
+int n, k;
 
-void A(int x, int v) {
-  for (; x <= k; s[x] += v, x += x & -x) {
-  }
-}
-int Q(int x) {
-  int _s = 0;
-  for (; x; _s += s[x], x -= x & -x) {
-  }
-  return _s;
-}
 void S(int l, int r) {
   if (l == r) {
     return;
   }
   int m = l + r >> 1;
   S(l, m), S(m + 1, r);
-  for (int i = l, j = m + 1, k = l; k <= r; ) {
-    if (j > r || (i <= m && e[i].b <= e[j].b)) {
-      A(e[i].c, e[i]._c), _e[k++] = e[i++];
-    } else {
-      e[j].f += Q(e[j].c), _e[k++] = e[j++];
-    }
-  }
-  for (int i = l; i <= m; ++i) {
-    A(e[i].c, -e[i]._c);
-  }
-  copy(_e + l, _e + r + 1, e + l);
+  // a[l...m].a <= a[m+1...r].a
+  // a[l...m].b sorted
+  // a[m+1...r].b sorted
+  /*
+  a 1 1 1 2 3 2
+  b 1 2 3 2 4 5
+  c 3 2 2 1 1 2
+  ----------------------
+  a 1 1 2 1 3 2
+  b 1 2 2 3 4 5
+  c 3 2 1 2 1 2
+  */
 }
 
 int main() {
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
   cin >> n >> k;
   for (int i = 1; i <= n; ++i) {
-    cin >> e[i].a >> e[i].b >> e[i].c;
+    cin >> a[i].a >> a[i].b >> a[i].c;
   }
-  sort(e + 1, e + n + 1);
-  for (int i = 1; i <= n; ++i) {
-    if (e[i].a == e[m].a && e[i].b == e[m].b && e[i].c == e[m].c) {
-      ++e[m]._c;
-    } else {  
-      e[++m] = e[i];
+  sort(a + 1, a + n + 1);
+  for (int _n = exchange(n, 0), i = 1; i <= _n; ++i) {
+    if (a[i] < a[n] || a[n] < a[i]) {
+      a[++n] = a[i], a[n].p = 1;
+    } else {
+      ++a[n].p;
     }
   }
-  S(1, m);
-  for (int i = 1; i <= m; ++i) {
-    c[e[i].f + e[i]._c - 1] += e[i]._c;
+  for (int i = 1; i <= n; ++i) {
+    debug("%d %d %d %d\n", a[i].a, a[i].b, a[i].c, a[i].p);
   }
-  for (int i = 0; i < n; ++i) {
-    cout << c[i] << '\n';
-  }
+  S(1, n);
   return 0;
 }

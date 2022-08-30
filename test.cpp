@@ -1,50 +1,46 @@
+#include <algorithm>
 #include <iostream>
+#include <numeric>
 #include <queue>
+#include <vector>
 
 using namespace std;
+using LL = long long;
+using Pll = pair<LL, LL>;
 
-const int kN = 1e3 + 1;
+const int kN = 1e5 + 1;
 
-struct Q {
-  int x, y, t, d;
+int n, m, s;
+vector<Pll> e[kN];
+LL ans;
+using A = pair<Pll, int>;
+priority_queue<A, vector<A>, greater<A>> q;
+Pll d[kN];
 
-  bool operator<(const Q &o) const { return d > o.d; }
-};
-priority_queue<Q> q;
-int t, n, m, d[kN][kN][2];
-bool a[kN][kN];
-
-void R(int x, int y, int t, int _d) {
-  if (x >= 1 && x <= n && y >= 1 && y <= m) {
-    if (a[x][y]) {
-      t = 1;
-    } else if (t) {
-      t = 0, ++_d;
-    }
-    if (d[x][y][t] > _d) {
-      d[x][y][t] = _d, q.push({x, y, t, _d});
-    }
+void R(int x, Pll _d) {
+  if (_d < d[x]) {
+    d[x] = _d, q.emplace(_d, x);
   }
 }
 
 int main() {
-  cin >> t;
-  while (t--) {
-    cin >> n >> m;
-    for (int i = 1; i <= n; ++i) {
-      for (int j = 1; j <= m; ++j) {
-        cin >> a[i][j];
-        d[i][j][0] = d[i][j][1] = 1e9;
-      }
-    }
-    for (R(1, 1, 0, 0); !q.empty(); ) {
-      Q x = q.top();
-      q.pop();
-      for (int i = 0; i < 2; ++i) {
-        R(x.x + i, x.y + !i, x.t, x.d);
-      }
-    }
-    cout << min(d[n][m][0], d[n][m][1] + 1) << '\n';
+  cin >> n >> m;
+  for (int i = 1, x, y, w; i <= m; ++i) {
+    cin >> x >> y >> w;
+    e[x].emplace_back(y, w), e[y].emplace_back(x, w);
   }
+  fill_n(d + 1, n, Pll{1e18, 1e18});
+  cin >> s;
+  for (R(s, {0, 0}); !q.empty();) {
+    A x = q.top();
+    q.pop();
+    for (Pll &i : e[x.second]) {
+      R(i.first, {d[x.second].first + i.second, i.second});
+    }
+  }
+  for (int i = 1; i <= n; ++i) {
+    ans += d[i].second;
+  }
+  cout << n - 1 << ' ' << ans;
   return 0;
 }
