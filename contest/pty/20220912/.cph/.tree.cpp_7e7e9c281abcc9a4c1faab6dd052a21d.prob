@@ -1,0 +1,1 @@
+{"name":"Local: tree","url":"f:\\code\\contest\\pty\\20220912\\tree.cpp","tests":[{"id":1663163747216,"input":"1 \n3 \n1 2 4 \n2 3 7","output":"19"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\code\\contest\\pty\\20220912\\tree.cpp","group":"local","local":true}

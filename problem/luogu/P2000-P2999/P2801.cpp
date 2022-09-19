@@ -1,57 +1,90 @@
 #include <algorithm>
+#include <bitset>
 #include <cmath>
+#include <cstdio>
+#include <ctime>
+#include <deque>
+#include <functional>
+#include <iomanip>
 #include <iostream>
+#include <map>
 #include <numeric>
-#define id(x) ((x - 1) / bs + 1)
+#include <queue>
+#include <random>
+#include <set>
+#include <vector>
+#ifndef ONLINE_JUDGE
+#define debug(...) fprintf(stderr, __VA_ARGS__)
+#else
+#define debug(...)
+#endif
 
 using namespace std;
 using LL = long long;
+using Pii = pair<int, int>;
+using Pll = pair<LL, LL>;
 
-const int kN = 1.5e6 + 1;
-const int kB = 4000;
+const int kN = 1e6 + 1, kB = 1e3 + 1;
 
-int n, q, bs, c, l[kB], r[kB], _l, _r, v;
-LL a[kN], t[kB], b[kN];
-char o;
+int n, b, m, q, d[kN], l, r, v;
+LL a[kN], t[kN];
 
-void rebuild(int x) { copy(a + l[x], a + r[x] + 1, b + l[x]), sort(b + l[x], b + r[x] + 1); }
+bool C(int i, int j) { return a[i] < a[j]; }
+int I(int x) { return (x + b - 1) / b; }
+int L(int i) { return (i - 1) * b + 1; }
+int R(int i) { return min(n, i * b); }
+void Rs(int i) { sort(d + L(i), d + R(i) + 1, C); }
 
 int main() {
-  cin >> n >> q;
-  for (int i = 1; i <= n; ++i) cin >> a[i];
-  bs = sqrt(n * log(n)) + 1, c = (n + bs - 1) / bs;
-  for (int i = 1; i <= c; ++i) l[i] = (i - 1) * bs + 1, r[i] = i * bs;
-  r[c] = n;
-  for (int i = 1; i <= c; ++i) rebuild(i);
-  while (q--) {
-    cin >> o >> _l >> _r >> v;
+  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+  cin >> n >> q, b = sqrt(n * log2(n)), m = (n + b - 1) / b;
+  for (int i = 1; i <= n; ++i) {
+    cin >> a[i], d[i] = i;
+  }
+  for (int i = 1; i <= m; ++i) {
+    Rs(i);
+  }
+  for (char o; q--;) {
+    cin >> o >> l >> r >> v;
     if (o == 'M') {
-      if (id(_l) == id(_r)) {
-        for (int i = _l; i <= _r; ++i) a[i] += v;
-        rebuild(id(_l));
+      for (int i = I(l) + 1; i < I(r); ++i) {
+        t[i] += v;
+      }
+      if (I(l) == I(r)) {
+        for (int i = l; i <= r; ++i) {
+          a[i] += v;
+        }
+        Rs(I(l));
       } else {
-        for (int i = _l; i <= r[id(_l)]; ++i) a[i] += v;
-        rebuild(id(_l));
-        for (int i = l[id(_r)]; i <= _r; ++i) a[i] += v;
-        rebuild(id(_r));
-        for (int i = id(_l) + 1; i < id(_r); ++i) t[i] += v;
+        for (int i = l; i <= R(I(l)); ++i) {
+          a[i] += v;
+        }
+        Rs(I(l));
+        for (int i = L(I(r)); i <= r; ++i) {
+          a[i] += v;
+        }
+        Rs(I(r));
       }
     } else {
-      int _c = 0;
-      if (id(_l) == id(_r)) {
-        for (int i = _l; i <= _r; ++i) _c += a[i] + t[id(i)] >= v;
-      } else {
-        for (int i = _l; i <= r[id(_l)]; ++i) _c += a[i] + t[id(i)] >= v;
-        for (int i = l[id(_r)]; i <= _r; ++i) _c += a[i] + t[id(i)] >= v;
-        for (int i = id(_l) + 1; i < id(_r); ++i) _c += bs - (lower_bound(b + l[i], b + r[i] + 1, v - t[i]) - b - l[i]);
+      int ans = 0;
+      for (int i = I(l) + 1; i < I(r); ++i) {
+        int x = lower_bound(d + L(i), d + R(i) + 1, v - t[i], [](int i, LL j) { return a[i] < j; }) - d - L(i);
+        ans += R(i) - L(i) + 1 - x;
       }
-      cout << _c << endl;
+      if (I(l) == I(r)) {
+        for (int i = l; i <= r; ++i) {
+          ans += a[i] + t[I(l)] >= v;
+        }
+      } else {
+        for (int i = l; i <= R(I(l)); ++i) {
+          ans += a[i] + t[I(l)] >= v;
+        }
+        for (int i = L(I(r)); i <= r; ++i) {
+          ans += a[i] + t[I(r)] >= v;
+        }
+      }
+      cout << ans << '\n';
     }
   }
   return 0;
 }
-/*
-0 1 2 3 4
-1 2 4 7 9
-
-*/

@@ -1,0 +1,1 @@
+{"name":"Local: candy","url":"f:\\code\\contest\\pty\\20220912\\candy.cpp","tests":[{"id":1663161118846,"input":"1\n3 10 4\n1 1 2","output":"2 3 5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\code\\contest\\pty\\20220912\\candy.cpp","group":"local","local":true}
