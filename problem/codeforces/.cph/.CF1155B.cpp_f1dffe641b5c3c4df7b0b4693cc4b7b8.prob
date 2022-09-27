@@ -1,0 +1,1 @@
+{"name":"Local: CF1155B","url":"f:\\code\\problem\\codeforces\\CF1155B.cpp","tests":[{"id":1663840460766,"input":"13\n8380011223344","output":"YES"},{"id":1663840467371,"input":"15\n807345619350641","output":"NO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\code\\problem\\codeforces\\CF1155B.cpp","group":"local","local":true}

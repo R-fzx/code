@@ -1,28 +1,7 @@
-#include <algorithm>
-#include <bitset>
-#include <cmath>
-#include <cstdio>
-#include <ctime>
-#include <deque>
-#include <functional>
-#include <iomanip>
 #include <iostream>
-#include <map>
-#include <numeric>
-#include <queue>
-#include <random>
-#include <set>
 #include <vector>
-#ifndef ONLINE_JUDGE
-#define debug(...) fprintf(stderr, __VA_ARGS__)
-#else
-#define debug(...)
-#endif
 
 using namespace std;
-using LL = long long;
-using Pii = pair<int, int>;
-using Pll = pair<LL, LL>;
 using i128 = __int128_t;
 
 const int kN = 101;
@@ -53,24 +32,10 @@ int main() {
     for (int i = 1; i <= n; ++i) {
       v[i] = s[i] = 0, fill_n(e[i] + 1, n, 0), e[i][i] = 1;
     }
-    // for (int i = 1; i <= n; ++i) {
-    //   for (int j = 1; j <= n; ++j) {
-    //     debug("%d ", e[i][j]);
-    //   }
-    //   debug("\n");
-    // }
-    // debug("------------------------------\n");
     for (int i = 1, x, y; i <= m; ++i) {
       cin >> x >> y;
       e[x][y] = 1;
     }
-    // for (int i = 1; i <= n; ++i) {
-    //   for (int j = 1; j <= n; ++j) {
-    //     debug("%d ", e[i][j]);
-    //   }
-    //   debug("\n");
-    // }
-    // debug("------------------------------\n");
     for (int k = 1; k <= n; ++k) {
       for (int i = 1; i <= n; ++i) {
         for (int j = 1; j <= n; ++j) {
@@ -78,13 +43,6 @@ int main() {
         }
       }
     }
-    // for (int i = 1; i <= n; ++i) {
-    //   for (int j = 1; j <= n; ++j) {
-    //     debug("%d ", e[i][j]);
-    //   }
-    //   debug("\n");
-    // }
-    // debug("------------------------------\n");
     for (int i = 1; i <= n; ++i) {
       if (!v[i]) {
         v[i] = ++b;
@@ -100,25 +58,10 @@ int main() {
         }
       }
     }
-    // for (int i = 1; i <= n; ++i) {
-    //   debug("%d ", v[i]);
-    // }
-    // debug("\n");
-    // for (int i = 1; i <= b; ++i) {
-    //   debug("%d ", s[i]);
-    // }
-    // debug("\n");
     if (b == 1) {
       W(c[n][k]), puts("");
       continue;
     }
-    // for (int i = 1; i <= n; ++i) {
-    //   for (int j = 1; j <= n; ++j) {
-    //     debug("%d ", e[i][j]);
-    //   }
-    //   debug("\n");
-    // }
-    // debug("------------------------------\n");
     fill(_v[0] + 1, _v[1] + b + 1, 1);
     for (int i = 1; i <= n; ++i) {
       bool f = 0;
