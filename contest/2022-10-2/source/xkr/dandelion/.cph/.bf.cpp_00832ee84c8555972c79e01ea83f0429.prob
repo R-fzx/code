@@ -1,0 +1,1 @@
+{"name":"Local: bf","url":"c:\\Users\\yl\\Desktop\\xkr\\dandelion\\bf.cpp","tests":[{"id":1664676595775,"input":"6 3\n1 2 3 2 1 2\n1 5\n3 6\n1 5","output":"1\n2\n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\yl\\Desktop\\xkr\\dandelion\\bf.cpp","group":"local","local":true}
