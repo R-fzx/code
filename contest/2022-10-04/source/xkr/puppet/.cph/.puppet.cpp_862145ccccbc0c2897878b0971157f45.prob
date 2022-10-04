@@ -1,0 +1,1 @@
+{"name":"Local: puppet","url":"c:\\Users\\yl\\Desktop\\xkr\\puppet\\puppet.cpp","tests":[{"id":1664846238091,"input":"3\n1 2 3\n8\n1 2 3 3 4 2 5 4\n5\n1 2 2 3 3","output":"1\n2\n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\yl\\Desktop\\xkr\\puppet\\puppet.cpp","group":"local","local":true}

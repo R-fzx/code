@@ -1,0 +1,1 @@
+{"name":"Local: link","url":"c:\\Users\\Administrator\\Desktop\\xkr\\link\\link.cpp","tests":[{"id":1658281063649,"input":"0 1 1 1 4 4","output":"1"},{"id":1658281809316,"input":"0 1 2 1 4 4 6 6 6 1","output":"14"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Administrator\\Desktop\\xkr\\link\\link.cpp","group":"local","local":true}

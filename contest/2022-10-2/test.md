@@ -1,0 +1,9 @@
+$$
+f_{i,j,u}=\frac{(n-u-1)!\dfrac{k!}{(k-u)!}(n-k+1)}{n!}\\
+f_{i,j,u}=\frac{(n-k+1)(n-u-1)!k!}{n!(k-u)!}\\
+\sum_{i=1}^m\sum_{j=1}^n\sum_{u=1}^j\frac{(n-k+1)(n-u-1)!k!}{n!(k-u)!}\\
+\sum_{i=1}^m\frac{(n+k-1)k!}{n!}\sum_{j=1}^n\sum_{u=1}^j\frac{(n-u-1)!}{(k-u)!}\\
+\sum_{i=1}^m\frac{(n+k-1)k!}{n!}\sum_{u=1}^n\sum_{j=u}^n\frac{(n-u-1)!}{(k-u)!}\\
+\sum_{i=1}^m\frac{(n+k-1)k!}{n!}\sum_{u=1}^n\frac{(n-u+1)(n-u-1)!}{(k-u)!}\\
+\sum_{i=1}^m\frac{n+k-1}{\prod_{i=k+1}^ni}\sum_{u=1}^n\frac{n-u+1}{\prod_{i=k+1}^{n-1}i+u}\\
+$$

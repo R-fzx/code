@@ -1,0 +1,75 @@
+题目下载地址：http://115.com/file/andx5fyz
+压缩包为 rar 格式带加密。
+为 Linux 选手准备的 zip 压缩包：http://115.com/file/bexkrc48
+压缩包密码：Hatsune3Miku9
+数据包密码：U1Tsu2Ku3Shi4I5Mo6No7
+第一题样例复制粘贴的时候可能会吃空格！附送可复制粘贴版本。
+2
+2.5 4 5
+#####
+#S  #
+#  E#
+#####
+21 13 12
+############
+#S##     #E#
+# ##  #  # #
+#   # #  # #
+### # #  # #
+#   # #  # #
+#  ## #  # #
+##  # #  # #
+### # #  # #
+##  # #  # #
+#  ## #    #
+#     #    #
+############
+提交已结束！
+结果发表：
+经过 8 个小时的鏖战……
+XHR 神犇用一个马甲以绝对优势虐爆全场。果然人神之间的差距是巨大的……
+第一题为 maze，第二题为 puppet，第三题为 chaser。
+顺序按照 Rank 排列。相同得分的情况下排在前面的人总时间比较短。
+T 超时 / B 崩溃 / A 正确 / W 错误的答案 / ? 无程序 / - 编译错误
+所有的编译错误我都人工检查了，都是因为选手自己的原因。基本都是少include了什么头文件……
+VIOLET_I_LAST_ONE：AAAAAAAAAA,AAAAAAAAAA,AAAAAAAAAA 总分 300
+Mr.Phone：AAAAAAAAAA,WWWWWWWWWT,AAAAWAWWWW 总分 150
+Variantf：AAAAAAAAAA,??????????,AAAWAATTTT 总分 150
+This_poet：AAAAAAAAAA,??????????,AAWWWWTTTT 总分 120
+lydrainbowcat：WAAAAWAAAA,AWWWWWWWWA,AWWWWWWWWW 总分 110
+考太差,只好匿名了：WAAAAAAAAA,??????????,AAWWWWWWWW 总分 110
+zdf615328619：AAAAAAAAAA,WWWWWWWWWW,?????????? 总分 100
+XLk：WAAAAAAAAA,----------,---------- 总分 90
+zxy：WAAAWAWAAA,WWWWWWWWWW,WAWWWWWWWW 总分 80
+杨文韬：WAAAAWAAAA,TTTTTTTTTT,---------- 总分 80
+acybl：WAAAAWAAAA,??????????,---------- 总分 80
+kAc：WAAAAWAAWT,WTTTTTTTTT,AAWWWWTTTT 总分 80
+yinyu：BAAAAWAAAA,??????????,?????????? 总分 80
+郑泽宇：WAAAAWAWWA,TTTTWWWWWW,WAWWWWWWWW 总分 70
+PiEt：WAAAAAWWAA,TTTTTTTTTT,---------- 总分 70
+Logic_IU：WAAAAWAAAT,WWWWWWWWWW,WWWWWWWWWW 总分 70
+山大附中 王菲芃：TAATTTTTTT,----------,AAWWWWWWWW 总分 40
+jzjsuper：WWWWTWTTTT,??????????,?????????? 总分 0
+简要题解如下。
+maze：(by zxk) 
+题目来源 POJ 3897 Maze Stretching, Southeastern European Regional Programming Contest 2009
+显然，最短路长度 D 随着所设定的 v 增大而增大，即 D = F(V) 是单调的。因此可以二分答案 v，再求 D。
+这题凡是没 AC 的多半是由于精度问题。这题的随机数据竟然很好地卡了精度……二分精度如果只有 1e-06 的话就会出错，标程和 AC 的同学基本都设置在了 1e-07 以上。
+puppet：(by lxy)
+题目来源 TopCoder SRM 308, Div 1 1000pt
+首先可以发现匹配必然不会相交。
+所以可以写出一个 DP 方程： f[i] = max(f[j] + Match(j + 1, i));
+Match(l,r) 这个函数计算在 [l,r] 这个区间内，所能产生的最大剩余。
+我们假设剩余 k 个，那么显然剩余的 k 个就是最小的 k 个木偶和最大的 k 个提线（或者反过来），
+那么我们枚举 k 检查一下就可以了
+Match 函数复杂度为 O(N^2)，DP 复杂度为 O(N^2)，所以总复杂度为 O(N^4)。
+至于两个相邻区间会不会相互影响，我们可以对所有相邻的区间都做如下图调整：
+00011111111 1111111000
+11111111000 0001111111
+0 表示没有匹配。
+另外此题有 O(N^3) 做法。请诸位自行移步 TC 题解。(thank jzp)
+chaser：(by dyf)
+题目来源：POJ 3924 Tornado, Beijing 2008
+请移步 http://hi.baidu.com/billdu/blog/item/3c81b9edef0edc2127979145.html。
+以上是数学方法。可以认为每个case计算的复杂度都是 O(1)。
+另外这个题也可以三分。大神 XHR 就是使用这种方法当场 AC 的……
