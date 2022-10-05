@@ -1,0 +1,1 @@
+{"name":"Local: desert","url":"c:\\Users\\yl\\Desktop\\xkr\\desert\\desert.cpp","tests":[{"id":1664934341851,"input":"3\n--*\n@-*\nX--","output":"2"},{"id":1664934554740,"input":"3\n--*\n@--\nX--","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\yl\\Desktop\\xkr\\desert\\desert.cpp","group":"local","local":true}

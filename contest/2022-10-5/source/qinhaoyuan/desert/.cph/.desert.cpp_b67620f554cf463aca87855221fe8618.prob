@@ -1,0 +1,1 @@
+{"name":"Local: desert","url":"d:\\qy\\qinhaoyuan\\desert\\desert.cpp","tests":[{"id":1664940914942,"input":"3\n- - *\n@ - *\nX - -","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\qy\\qinhaoyuan\\desert\\desert.cpp","group":"local","local":true}

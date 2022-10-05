@@ -1,0 +1,1 @@
+{"name":"Local: perm","url":"d:\\qy\\qinhaoyuan\\perm\\perm.cpp","tests":[{"id":1664938257719,"input":"1020","output":"7"},{"id":1664938298315,"input":"210","output":"5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\qy\\qinhaoyuan\\perm\\perm.cpp","group":"local","local":true}

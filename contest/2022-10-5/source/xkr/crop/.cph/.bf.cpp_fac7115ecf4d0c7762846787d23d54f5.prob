@@ -1,0 +1,1 @@
+{"name":"Local: bf","url":"c:\\Users\\yl\\Desktop\\xkr\\crop\\bf.cpp","tests":[{"id":1664930829444,"input":"6 2 0 2 1 1 2 11","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\yl\\Desktop\\xkr\\crop\\bf.cpp","group":"local","local":true}

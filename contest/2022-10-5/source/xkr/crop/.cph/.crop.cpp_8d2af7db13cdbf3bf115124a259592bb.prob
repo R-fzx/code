@@ -1,0 +1,1 @@
+{"name":"Local: crop","url":"c:\\Users\\yl\\Desktop\\xkr\\crop\\crop.cpp","tests":[{"id":1664929959405,"input":"6 2 0 2 1 1 2 11","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\yl\\Desktop\\xkr\\crop\\crop.cpp","group":"local","local":true}
