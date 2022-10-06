@@ -1,0 +1,4 @@
+E:\OI\校内讲课\Poetize\Nescafe17\src\std\magician\magician\bin\Debug\magician.exe
+E:\OI\校内讲课\Poetize\Nescafe17\src\std\magician\magician\bin\Debug\magician.pdb
+E:\OI\校内讲课\Poetize\Nescafe17\src\std\magician\magician\obj\x86\Debug\magician.exe
+E:\OI\校内讲课\Poetize\Nescafe17\src\std\magician\magician\obj\x86\Debug\magician.pdb
