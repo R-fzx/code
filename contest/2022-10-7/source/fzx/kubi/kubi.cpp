@@ -25,17 +25,40 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-const int kN = 1e4 + 1;
+const int kV = 1e6 + 1;
 
-int n, k;
-Pll a[kN];
+int t;
+bool v[kV];
+vector<int> lp, lk, lb;
+LL a, b, k;
 
 int main() {
-  RF("laser");
+  RF("kubi");
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> n >> k;
-  for (int i = 1; i <= n; ++i) {
-    cin >> a[i].first >> a[i].second;
+  for (int i = 2; i < kV; ++i) {
+    if (!v[i]) {
+      lp.push_back(i);
+      for (LL j = 1LL * i * i; j < kV; j += i) {
+        v[j] = 1;
+      }
+    }
+  }
+  for (cin >> t; t--;) {
+    cin >> a >> b >> k;
+    lk.clear(), lb.clear();
+    for (int i : lp) {
+      if (k % i == 0) {
+        lk.push_back(i);
+        for (; k % i == 0; k /= i) {
+        }
+      }
+      if (b % i == 0) {
+        lb.push_back(i);
+        for (; b % i == 0; b /= i) {
+        }
+      }
+    }
+    lk.push_back(k), lb.push_back(b);
   }
   return 0;
 }

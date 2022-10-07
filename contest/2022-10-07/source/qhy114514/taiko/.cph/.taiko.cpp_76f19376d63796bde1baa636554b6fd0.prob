@@ -1,0 +1,1 @@
+{"name":"Local: taiko","url":"q:\\programs\\contests\\qhy114514\\taiko\\taiko.cpp","tests":[{"id":1665104690805,"input":"3","output":"8 00010111"},{"id":1665105382035,"input":"2","output":"4 0011"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"q:\\programs\\contests\\qhy114514\\taiko\\taiko.cpp","group":"local","local":true}
