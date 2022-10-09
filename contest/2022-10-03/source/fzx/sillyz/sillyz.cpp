@@ -26,23 +26,33 @@ using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
 LL a, b, ans;
-int c[10], _c[10], p[18], pc[18];
+int c[10], _c[10], p[20], pc[20];
 
 int S(LL n) { return log10(n) + 1; }
 void A(int x, int v) {
   for (; x != 1; pc[p[x]] += v, x /= p[x]) {
   }
 }
+LL P(LL b, LL e) {
+  LL s = 1;
+  for (; e; e >>= 1, b *= b) {
+    (e & 1) && (s *= b);
+  }
+  return s;
+}
 LL C() {
   int s = accumulate(_c + 1, _c + 10, 0);
   for (int i = 1; i <= s; A(i++, 1)) {
   }
   for (int i = 1; i < 10; ++i) {
-    
+    for (int j = 1; j <= _c[i]; A(j++, -1)) {
+    }
+  }
+  for (int i = 1; i < 20; ++i) {
+    ans *= P(i, p[i]);
   }
 }
 void S(int l, LL n) {
-  
 }
 void D(int x, int l, LL n) {
   if (l > S(n)) {
