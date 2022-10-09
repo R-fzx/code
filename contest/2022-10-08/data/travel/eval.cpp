@@ -27,13 +27,13 @@ inline int Check(void) {
 	int Ans, c_Ans;
 	fscanf(fstd, "%d", &Ans);
 	fscanf(fout, "%d", &c_Ans);
-	if (Ans != c_Ans) { fprintf(freport, "����Ĵ𰸡�\n"); return 0; }
+	if (Ans != c_Ans) { fprintf(freport, "Wrong answer\n"); return 0; }
 	for (int i = 1; i <= c_Ans; i++) { 
-		if (fscanf(fout, "%d", stack + i) != 1) { fprintf(freport, "������㡣\n"); return 0; }
-		if (stack[i] < 1 || stack[i] > n) { fprintf(freport, "�Ƿ������\n"); return 0; }
-		for (int j = 1; j <= i - 1; j++) if (a[stack[i]][stack[j]] || a[stack[j]][stack[i]]) { fprintf(freport, "��\n"); return 0; }
+		if (fscanf(fout, "%d", stack + i) != 1) { fprintf(freport, "Too short\n"); return 0; }
+		if (stack[i] < 1 || stack[i] > n) { fprintf(freport, "Out of bound\n"); return 0; }
+		for (int j = 1; j <= i - 1; j++) if (a[stack[i]][stack[j]] || a[stack[j]][stack[i]]) { fprintf(freport, "Wrong list\n"); return 0; }
 	}
-	if (fscanf(fout, "%d", stack) == 1) { fprintf(freport, "�����ʣ��\n"); return 0; }
+	if (fscanf(fout, "%d", stack) == 1) { fprintf(freport, "Too long\n"); return 0; }
 	return S;
 }
 
