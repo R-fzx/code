@@ -1,12 +1,13 @@
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 using LL = long long;
 
 const int kL = 20;
 
-ifstream fin("sillyz.in");
-ofstream fout("sillyz.out");
+// ifstream fin("sillyz.in");
+// ofstream fout("sillyz.out");
 
 int a[kL], c[10], _c[10], f[kL], t[kL];
 LL l, r, ans, ansr;
@@ -96,9 +97,9 @@ int main() {
       }
     }
   }
-  fin >> l >> r;
+  cin >> l >> r;
   ans = 0, S(1, 0, r), ansr = ans;
   ans = 0, S(1, 0, l - 1);
-  fout << ansr - ans;
+  cout << ansr - ans;
   return 0;
 }
