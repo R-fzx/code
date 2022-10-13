@@ -55,8 +55,8 @@ void S() {
   }
 }
 int main() {
-  freopen("Castle.in", "r", stdin);
-  freopen("Castle.out", "w", stdout);
+  // freopen("Castle.in", "r", stdin);
+  // freopen("Castle.out", "w", stdout);
   ios ::sync_with_stdio(false);
   cin.tie(0), cout.tie(0);
 

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <fstream>
 
 using namespace std;
@@ -45,7 +46,13 @@ int main() {
   ans = 1;
   for (int i = 1; i <= n; i++) {
     ans = ans * d[i].second % kM;
+    fout << d[i].second << ' ';
   }
+  fout << '\n';
+  for (int i = 1; i <= n; ++i) {
+    fout << d[i].first << ' ';
+  }
+  fout << '\n';
   fout << ans;
   return 0;
 }
