@@ -25,65 +25,54 @@ using LL = long long;
 using Pii = pair<int, int>;
 using Pll = pair<LL, LL>;
 
-const int kN = 3e4 + 2;
+const int kN = 2e5 + 1;
+const auto C = [](const Pll &i, const Pll &j) { return i.second < j.second; };
 
-string s;
-int n, m, d[kN], ans;
+int n;
+Pll a[kN];
+
+double D(int i, int j) { return hypot(a[i].first - a[j].first, a[i].second - a[j].second); }
+double S(int l, int r) {
+  if (l >= r) {
+    return 1e9;
+  }
+  int m = l + r >> 1;
+  LL mx = a[m].first;
+  double d = min(S(l, m), S(m + 1, r));
+  inplace_merge(a + l, a + m + 1, a + r + 1, C);
+  vector<int> b;
+  for (int i = l; i <= r; ++i) {
+    if (abs(mx - a[i].first) <= d) {
+      b.push_back(i);
+    }
+  }
+  for (int i = 0; i < b.size(); ++i) {
+    for (int j = i + 1; j < b.size() && a[b[j]].second - a[b[i]].second <= d; ++j) {
+      d = min(d, D(b[i], b[j]));
+    }
+  }
+  return d;
+}
 
 int main() {
-  // RF("agnus");
+  // RF("dark");
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-  cin >> s;
-  n = s.size(), s = " " + s;
+  cin >> n;
   for (int i = 1; i <= n; ++i) {
-    for (int j = i + 4; j <= n; ++j) {
-      if (s.substr(i, j - i + 1).find("agnus") != string::npos) {
-        ++ans;
-      }
-    }
-    // if (s.substr(i, 5) == "agnus") {
-    //   d[++m] = i;
-    // }
+    cin >> a[i].first >> a[i].second;
   }
-  cout << ans;
+  double ans = 1e9;
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j < i; ++j) {
+      ans = min(ans, D(i, j));
+    }
+  }
+  cout << fixed << setprecision(3) << ans / 2;
+  // sort(a + 1, a + n + 1);
+  // cout << fixed << setprecision(3) << S(1, n) / 2;
   return 0;
 }
 /*
-s[x]=s[x-1]+l[x]
-p[x]=p[x+1]+l[x]
-l1agnusl2agnusl3agnusl4
-  i1     i2     i3
-+ i1*(n-i1-3)+i2*(n-i2-3)+i3*(n-i3-3)
-- i1*(n-i2-3)+i2*(n-i3-3)
-
- 2     8
-pagnuspagnusp
-pagnus
-pagnusp
-pagnuspa
-pagnuspag
-pagnuspagn
-pagnuspagnu
-pagnuspagnus
-pagnuspagnusp
- agnus
- agnusp
- agnuspa
- agnuspag
- agnuspagn
- agnuspagnu
- agnuspagnus
- agnuspagnusp
-  gnuspagnus
-  gnuspagnusp
-   nuspagnus
-   nuspagnusp
-    uspagnus
-    uspagnusp
-     spagnus
-     spagnusp
-      pagnus
-      pagnusp
-       agnus
-       agnusp
+i j
+sqrt((i.x-j.x)^2+(i.y-j.y)^2)/2
 */

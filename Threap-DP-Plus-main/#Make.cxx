@@ -5,15 +5,10 @@
 using namespace std;
 
 int main() {
-  int c = rd(10);
-  for (int i = 0; i < c; ++i) {
-    for (int j = 0, l = rd(10); j < l; ++j) {
-      cout << char(rd(26) + 'a');
-    }
-    cout << "agnus";
-  }
-  for (int j = 0, l = rd(10); j < l; ++j) {
-    cout << char(rd(26) + 'a');
+  int n = rd(10);
+  cout << n << '\n';
+  for (int i = 1; i <= n; ++i) {
+    cout << rd(10) << ' ' << rd(10) << '\n';
   }
   return 0;
 }

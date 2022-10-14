@@ -38,10 +38,11 @@ int main() {
     cin >> n >> q;
     for (int i = 1; i <= n; ++i) {
       cin >> a[i].first >> a[i].second;
-      bx[i] = a[i].first += a[i].second, by[i] = a[i].second = a[i].first - 2 * a[i].second;
+      bx[i] = a[i].first += a[i].second, by[i] = a[i].second += a[i].second - a[i].first;
     }
     sort(bx + 1, bx + n + 1), mx = unique(bx + 1, bx + n + 1) - bx - 1;
     sort(by + 1, by + n + 1), my = unique(by + 1, by + n + 1) - by - 1;
+    fill_n(cx + 1, mx, 0), fill_n(cy + 1, my, 0);
     for (int i = 1; i <= n; ++i) {
       a[i].first = lower_bound(bx + 1, bx + mx + 1, a[i].first) - bx, ++cx[a[i].first];
       a[i].second = lower_bound(by + 1, by + my + 1, a[i].second) - by, ++cy[a[i].second];
@@ -54,8 +55,9 @@ int main() {
     }
     for (LL x, y; q--; ) {
       cin >> x >> y;
-      x += y, y = x - 2 * y;
-      
+      x += y, y += y - x;
+      int dx = upper_bound(bx + 1, bx + mx + 1, x) - bx - 1, dy = upper_bound(by + 1, by + my + 1, y) - by - 1;
+      cout << (x * cx[dx] - sx[dx] + (sx[mx] - sx[dx]) - x * (cx[mx] - cx[dx]) + y * cy[dy] - sy[dy] + (sy[my] - sy[dy]) - y * (cy[my] - cy[dy])) / 2 << '\n';
     }
   }
   return 0;
