@@ -1,0 +1,1 @@
+{"name":"Local: dark","url":"d:\\home\\Code\\xkr\\dark\\dark.cpp","tests":[{"id":1665717009118,"input":"4\n0 0\n0 1\n1 0\n0 0","output":"0.000"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\home\\Code\\xkr\\dark\\dark.cpp","group":"local","local":true}

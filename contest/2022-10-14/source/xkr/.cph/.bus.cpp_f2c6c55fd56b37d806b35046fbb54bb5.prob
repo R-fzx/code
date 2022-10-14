@@ -1,0 +1,1 @@
+{"name":"Local: bus","url":"d:\\home\\Code\\xkr\\bus.cpp","tests":[{"id":1665716271799,"input":"2\n2 1","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\home\\Code\\xkr\\bus.cpp","group":"local","local":true}
