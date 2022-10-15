@@ -1,0 +1,1 @@
+{"name":"Local: test","url":"c:\\Users\\yl\\Desktop\\xkr\\road\\test.cpp","tests":[{"id":1665451015850,"input":"2 1\n1 2\n1 2 5 8\n","output":"21"},{"id":1665451136950,"input":"2 0\n1 1","output":"-1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\yl\\Desktop\\xkr\\road\\test.cpp","group":"local","local":true}
