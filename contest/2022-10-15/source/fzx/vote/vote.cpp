@@ -41,17 +41,22 @@ int main() {
     mx = max(mx, c[i]);
   }
   for (int i = 1; i <= n; ++i) {
-    s += mx - 1 - c[i], cm += mx == c[i];
+    if (mx == c[i]) {
+      ++cm;
+    } else {
+      s += mx - 1 - c[i];
+    }
   }
   // cerr << s << ' ' << cm << '\n';
   if (s < p) {
-    cout << "1145141919810wssb";
+    cout << "0.0000";
   } else {
     double ans = 1;
-    for (p = n - cm; n - p != 1 && p % (n - p); p = n - p % (n - p)) {
-      ans *= 1.0 * (p % (n - p)) / (n - p);
+    for (p = n - cm * mx; n - p != mx && p % ((n - p) / mx); p += ((n - p) / mx - p % ((n - p) / mx)) * mx) {
+      // cout << p << '\n';
+      ans *= 1.0 * (p % ((n - p) / mx)) / ((n - p) / mx);
     }
-    cout << fixed << setprecision(4) << (n - p == 1 ? ans : 0);
+    cout << fixed << setprecision(4) << (n - p == mx ? ans : 0);
   }
   return 0;
 }
