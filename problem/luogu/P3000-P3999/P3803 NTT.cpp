@@ -1,44 +1,47 @@
-#include <iostream>
+#include <algorithm>
+#include <bitset>
+#include <cmath>
+#include <cstdio>
 #include <ctime>
+#include <deque>
+#include <functional>
+#include <iomanip>
+#include <iostream>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <random>
+#include <set>
+#include <vector>
+#ifndef ONLINE_JUDGE
+#define debug(...) fprintf(stderr, __VA_ARGS__)
+#else
+#define debug(...)
+#endif
+#define RF(s) freopen(s".in", "r", stdin), freopen(s".out", "w", stdout)
 
 using namespace std;
 using LL = long long;
+using Pii = pair<int, int>;
+using Pll = pair<LL, LL>;
 
-const int kN = 1 << 21;
-const LL kM = 998244353;
-const int kG = 3;
-
-LL P(LL b, LL e = kM - 2) {
+const int kN = 2097152;
+const LL kM = 998244353, kG = 3;
+LL P(LL b, LL e) {
   LL s = 1;
-  for (; e; e >>= 1, b = b * b % kM) (e & 1) && (s = s * b % kM);
+  for (; e; e >>= 1, b = b * b % kM) {
+    (e & 1) && (s = s * b % kM);
+  }
   return s;
 }
-const LL kIG = P(kG);
+const LL kiG = P(kG, kM - 2);
 
-int n, m, r[kN], In;
-LL f[kN], g[kN];
-
-void NTT(LL *f, int s) {
-  for (int i = 0; i < n; ++i) i < r[i] && (swap(f[i], f[r[i]]), 0);
-  for (int l = 2; l <= n; l <<= 1) {
-    int _l = l >> 1, u = P(~s ? kG : kIG, (kM - 1) / l);
-    for (int i = 0; i < n; i += l) {
-      LL w = 1, x;
-      for (int j = i; j < i + _l; w = w * u % kM, ++j) x = w * f[j + _l] % kM, f[j + _l] = f[j] - x, f[j + _l] < 0 && (f[j + _l] += kM), f[j] = f[j] + x, f[j] > kM && (f[j] -= kM);
-    }
-  }
+void NTT(LL *a, int l, bool t) {
+  
 }
 
 int main() {
-  // freopen("P3803.in", "r", stdin);
-  cin >> n >> m, ++n, ++m;
-  for (int i = 0; i < n; ++i) cin >> f[i];
-  for (int i = 0; i < m; ++i) cin >> g[i];
-  for (m += n, n = 1; n < m;) n <<= 1;
-  for (int i = 0; i < n; ++i) r[i] = (r[i >> 1] >> 1) | ((i & 1) ? n >> 1 : 0);
-  NTT(f, 1), NTT(g, 1);
-  for (int i = 0; i < n; ++i) f[i] = f[i] * g[i] % kM;
-  NTT(f, -1), In = P(n);
-  for (int i = 0; i < m - 1; ++i) cout << f[i] * In % kM << " ";
+  ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+
   return 0;
 }

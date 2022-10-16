@@ -1,0 +1,1 @@
+{"name":"Local: P3803 FFT","url":"f:\\code\\problem\\luogu\\P3000-P3999\\P3803 FFT.cpp","tests":[{"id":1665838656283,"input":"1 2\n1 2\n1 2 1","output":"1 4 5 2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\code\\problem\\luogu\\P3000-P3999\\P3803 FFT.cpp","group":"local","local":true}
