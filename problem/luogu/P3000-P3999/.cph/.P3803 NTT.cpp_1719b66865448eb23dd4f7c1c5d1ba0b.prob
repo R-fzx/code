@@ -1,0 +1,1 @@
+{"name":"Local: P3803 NTT","url":"f:\\code\\problem\\luogu\\P3000-P3999\\P3803 NTT.cpp","tests":[{"id":1665904126465,"input":"1 2\n1 2\n1 2 1","output":"1 4 5 2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"f:\\code\\problem\\luogu\\P3000-P3999\\P3803 NTT.cpp","group":"local","local":true}
