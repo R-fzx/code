@@ -1,0 +1,1 @@
+{"name":"Local: gugu","url":"q:\\programs\\contests\\qhy114514\\gugu\\gugu.cpp","tests":[{"id":1666659937308,"input":"10 10 5\n6 9 7 9\n9 10 10 10\n3 3 4 3\n7 1 7 2\n6 4 7 4","output":"31068"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"q:\\programs\\contests\\qhy114514\\gugu\\gugu.cpp","group":"local","local":true}

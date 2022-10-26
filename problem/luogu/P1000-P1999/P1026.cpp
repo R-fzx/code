@@ -53,7 +53,7 @@ int main() {
     cin >> a[i];
     for (int j = 1; j <= n; ++j) {
       if (s.substr(j - 1, a[i].size()) == a[i]) {
-        b[j] = min(b[j], (int)a[i].size() + i - 1);
+        b[j] = min(b[j], (int)a[i].size() + j - 1);
       }
     }
   }
@@ -65,8 +65,8 @@ int main() {
   for (int i = 1; i <= n; ++i) {
     for (int j = 0; j <= k; ++j) {
       f[i][j] = -1000;
-      for (int k = i; k >= 1; --k) {
-        f[i][j] = max(f[i][j], f[k - 1][j - 1] + C(k, i));
+      for (int x = i; x >= 1; --x) {
+        f[i][j] = max(f[i][j], f[x - 1][j - 1] + C(x, i));
       }
     }
   }
